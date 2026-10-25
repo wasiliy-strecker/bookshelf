@@ -139,8 +139,10 @@ final class MainWindow {
     status.setMinHeight(Region.USE_PREF_SIZE);
     status.getStyleClass().add("muted");
     status.setMaxWidth(Double.MAX_VALUE);
+    status.setMinWidth(0);
     HBox.setHgrow(status, Priority.ALWAYS);
     reload.setOnAction(event -> load());
+    reload.setPrefWidth(120);
     reload.setMinWidth(Region.USE_PREF_SIZE);
     HBox footer = new HBox(16, status, reload);
     footer.setAlignment(Pos.CENTER_LEFT);

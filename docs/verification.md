@@ -55,6 +55,7 @@ Verzeichnissen unter `target` verwendet.
 | Gleichnamiges Buch anlegen | Separate ID, unabhängige Bearbeitung und Löschung |
 | Löschbestätigung abbrechen | Eintrag bleibt erhalten |
 | SQLite während Löschen sperren | Eintrag bleibt sichtbar und gespeichert |
+| Lange Fehlermeldung im Hauptfenster | Vollständiger Hinweis und lesbare Schaltfläche „Neu laden“ |
 | Löschen nach Freigabe bestätigen | Nur der ausgewählte Eintrag entfernt |
 | Letzten Eintrag löschen | Einladung zur leeren Sammlung wieder sichtbar |
 
