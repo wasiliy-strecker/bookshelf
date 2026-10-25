@@ -1,0 +1,47 @@
+.root {
+  -fx-font-family: "System";
+  -fx-font-size: 14px;
+  -fx-background-color: #f7f6f2;
+  -fx-text-base-color: #253c34;
+  -fx-accent: #38664f;
+  -fx-focus-color: #38664f;
+  -fx-faint-focus-color: #38664f25;
+}
+.app-heading { -fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: #244535; }
+.section-heading { -fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #244535; }
+.field-label { -fx-font-weight: bold; }
+.muted { -fx-text-fill: #65736a; }
+.error-text { -fx-text-fill: #9b352c; }
+.button {
+  -fx-background-radius: 7px;
+  -fx-padding: 10px 17px;
+  -fx-cursor: hand;
+  -fx-background-color: #e9ece6;
+  -fx-text-fill: #294535;
+}
+.button:hover { -fx-background-color: #dce3da; }
+.button:focused { -fx-border-color: #38664f; -fx-border-radius: 7px; -fx-border-width: 2px; -fx-padding: 8px 15px; }
+.button.primary { -fx-background-color: #38664f; -fx-text-fill: white; -fx-font-weight: bold; }
+.button.primary:hover { -fx-background-color: #294e3b; }
+.button.primary:focused { -fx-border-color: #b2ceb7; }
+.button.danger { -fx-text-fill: #963e32; -fx-background-color: #f2e7e1; }
+.text-field, .text-area {
+  -fx-background-color: white;
+  -fx-background-radius: 6px;
+  -fx-border-color: #cbd2c8;
+  -fx-border-radius: 6px;
+  -fx-padding: 10px;
+  -fx-prompt-text-fill: #738077;
+}
+.text-field:focused, .text-area:focused { -fx-border-color: #38664f; }
+.text-area .content { -fx-background-color: white; }
+.table-view { -fx-background-color: white; -fx-border-color: #dce1d8; -fx-border-radius: 7px; -fx-background-radius: 7px; -fx-padding: 1px; }
+.table-view .column-header-background, .table-view .column-header, .table-view .filler { -fx-background-color: #eef1e9; }
+.table-view .column-header { -fx-padding: 12px 8px; }
+.table-view .column-header .label { -fx-alignment: CENTER_LEFT; -fx-text-fill: #506453; }
+.table-row-cell { -fx-cell-size: 48px; -fx-background-color: white; }
+.table-row-cell:odd { -fx-background-color: #fbfcf9; }
+.table-cell { -fx-padding: 12px 10px; -fx-border-color: transparent; -fx-text-fill: #253c34; }
+.table-row-cell:selected { -fx-background-color: #e2eddf; }
+.table-row-cell:filled:focused { -fx-background-insets: 0; -fx-border-color: #73987b; }
+.table-view .placeholder .label { -fx-text-alignment: CENTER; }
