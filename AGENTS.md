@@ -47,3 +47,23 @@ Paketierung ersetzt `verify` nicht. Das App-Image zusätzlich sichtbar starten.
 Ein erfolgreicher `--version`-Aufruf allein belegt keine funktionierende GUI.
 Keine generierten Pakete, Datenbanken oder lokale Konfiguration committen.
 Kein Push, Upload oder Store-Release ohne ausdrücklichen Auftrag.
+
+## Internationalisierung und Vorschau
+
+Sechs Sprachen: de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR. Alle eigenen
+sichtbaren Texte liegen in UTF-8-ResourceBundles. Der Markenname bleibt
+BücherRegal. Keine übersetzten Speicherfehler im Repository erzeugen.
+`StorageException.Code` wird erst in der UI übersetzt. Neue Schlüssel in allen
+sechs Dateien ergänzen. Sprachwechsel dürfen Buchdaten nicht verändern.
+
+GUI-Aufnahmen verwenden `scripts/store_assets/run_gui.py`, die echte
+`BooksApplication` und einen eigenen Xvfb-Prozess. Keine Nutzerfenster bedienen.
+Die Datenverzeichnisse müssen ausdrücklich als synthetisch markiert sein.
+Vor Aufnahmen `test-compile` und den Test-Classpath aktualisieren. Nach finalen
+Quelländerungen Aufnahmen neu erstellen, damit die Prüfsummen übereinstimmen.
+Die Anleitung steht in `docs/internationalization.md`.
+
+Lieferpakete sind Linux-Vorschauen. Keine Windows-Abnahme daraus ableiten.
+`assemble.py` verlangt den sauberen lokalen Commit des geprüften Quellstands.
+Generierte Lieferungen gehören unter `build/` und nicht in Git. Roadmap unter
+`/tmp/app-factory-cpp-roadmap.lock` frisch lesen und gezielt aktualisieren.

@@ -88,27 +88,27 @@ class BookServiceTest {
   private static final class FailingRepository implements BookRepository {
     @Override
     public void initialize() {
-      throw new StorageException("Testfehler");
+      throw new StorageException(StorageException.Code.OPERATION);
     }
 
     @Override
     public List<Book> findAll() {
-      throw new StorageException("Testfehler");
+      throw new StorageException(StorageException.Code.OPERATION);
     }
 
     @Override
     public Book create(BookDraft draft) {
-      throw new StorageException("Testfehler");
+      throw new StorageException(StorageException.Code.OPERATION);
     }
 
     @Override
     public Book update(long id, BookDraft draft) {
-      throw new StorageException("Testfehler");
+      throw new StorageException(StorageException.Code.OPERATION);
     }
 
     @Override
     public void delete(long id) {
-      throw new StorageException("Testfehler");
+      throw new StorageException(StorageException.Code.OPERATION);
     }
   }
 }

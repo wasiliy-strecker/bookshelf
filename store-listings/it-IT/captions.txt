@@ -1,0 +1,4 @@
+Raccolta locale con titoli, autori e posizioni dei libri
+Modifica un libro e conserva le tue note personali
+Trova un libro tramite titolo, autore, posizione o note
+Scegli la lingua dell’interfaccia

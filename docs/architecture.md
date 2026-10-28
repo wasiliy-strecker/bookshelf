@@ -1,6 +1,6 @@
 # Architektur in fünf Minuten
 
-BücherRegal besteht aus einem Maven-Modul mit vier getrennten Bereichen.
+BücherRegal besteht aus einem Maven-Modul mit getrennten Bereichen.
 Ein Eintrag ist klein genug für einen unveränderlichen Java-Record.
 Die Oberfläche verwendet normale JavaFX-Steuerelemente und eine CSS-Datei.
 
@@ -20,7 +20,8 @@ flowchart LR
 | `domain` | `Book` mit stabiler ID und `BookDraft` mit Pflichtfeldprüfung |
 | `application` | `BookService`, Speichervertrag `BookRepository`, Speicherfehler |
 | `persistence` | Betriebssystemspezifischer Datenpfad, Schema und JDBC-Anweisungen |
-| `ui` | Hauptfenster, Eingabedialog, Hintergrundaufgaben und Rückmeldungen |
+| `ui` | Hauptfenster, Eingabedialog, Sprachwahl, Hintergrundaufgaben und Rückmeldungen |
+| `i18n` | Unterstützte Sprachen und unveränderliche ResourceBundles pro App-Start |
 
 `BooksApplication` verbindet die Komponenten über Konstruktoren. Das Modell
 und die Anwendungslogik kennen weder JavaFX noch JDBC. Tests können deshalb
@@ -51,7 +52,7 @@ Die Repository-Schnittstelle macht diese Identität im Datenzugriff sichtbar.
 
 Die Suche filtert die bereits geladene, kleine Sammlung mit Java-Streams.
 Unicode-Normalisierung und `Locale.ROOT` sorgen für reproduzierbare Vergleiche
-einschließlich Umlauten. Ein deutscher `Collator` sortiert nach Titel.
+einschließlich Umlauten. Ein `Collator` der gewählten App-Sprache sortiert nach Titel.
 Bei gleichem Titel stabilisiert die ID die Reihenfolge. Die Arbeit ist linear
 zur Textmenge der Sammlung. Eine große Bibliothek würde eine andere
 Suchstrategie benötigen.
@@ -76,3 +77,26 @@ JUnit prüft Fachregeln und echte SQLite-Dateien. Der GUI-Prüfbericht ergänzt
 Dialogbedienung, Abbruchschutz und die Nutzung der eingebetteten Laufzeit.
 SpotBugs hat genau eine begründete Ausnahme für die absichtlich injizierte
 Repository-Referenz. Sie ist auf diesen Konstruktor beschränkt.
+
+## Internationalisierung
+
+`Messages` bindet ein ResourceBundle für die beim Start gewählte Sprache.
+Das englische Basisbundle ist die letzte Rückfallebene. Ein ausdrückliches
+NoFallback-Control verhindert einen unbeabsichtigten Rückfall auf die
+Systemsprache. UTF-8-Dateien enthalten identische Schlüssel. Apostrophe
+werden als Klartext behandelt, Parameter separat in MessageFormat eingesetzt.
+Zähler verwenden regionale Zahlenformate und sprachabhängige Pluralformen.
+Da die App keine Datumsfelder besitzt, gibt es keine sichtbaren Datumsformate.
+
+`StorageException.Code` trägt stabile Fehlerursachen. Das Repository erzeugt
+keine übersetzten Meldungen. Erst `UiSupport` ordnet einen Code einem Text zu.
+Pflichtfeldhinweise werden ebenfalls an der Oberfläche übersetzt. Eigene
+Text-Kontextmenüs vermeiden gemischte Sprachen bei abweichender Systemsprache.
+
+`LanguagePreferences` liest eine kleine Datei im bestehenden Datenverzeichnis.
+Die Datei ist durch `--data-dir` vollständig von echten Nutzerdaten isolierbar.
+Der Start liest sie in `Application.init` außerhalb des JavaFX-Threads.
+Schreibvorgänge laufen über den vorhandenen Hintergrund-Executor und ersetzen
+nur die Einstellungsdatei atomar. Die SQLite-Struktur und technische App-ID
+bleiben unverändert. Eine Sprachänderung gilt erst beim nächsten Prozessstart,
+sodass laufende Dialoge und asynchrone Rückmeldungen dieselbe Sprache behalten.

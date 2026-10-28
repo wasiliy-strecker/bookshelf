@@ -1,0 +1,6 @@
+Add and edit books with a title, author, storage location and notes
+Search all text fields
+Keep independent entries for different copies of the same book
+Protect unsaved changes with a confirmation
+Store your collection locally on your computer
+Choose from six interface languages

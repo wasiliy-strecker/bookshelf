@@ -1,0 +1,4 @@
+Colección local con títulos, autores y ubicaciones
+Editar un libro y conservar tus notas personales
+Encontrar un libro por título, autor, ubicación o notas
+Elegir el idioma de la interfaz

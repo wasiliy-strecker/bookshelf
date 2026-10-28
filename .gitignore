@@ -8,3 +8,5 @@ target/
 *.sqlite*
 *.log
 .env
+build/
+__pycache__/

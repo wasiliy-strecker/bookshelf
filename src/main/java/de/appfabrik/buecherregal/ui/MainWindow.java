@@ -2,6 +2,8 @@ package de.appfabrik.buecherregal.ui;
 
 import de.appfabrik.buecherregal.application.BookService;
 import de.appfabrik.buecherregal.domain.Book;
+import de.appfabrik.buecherregal.i18n.Messages;
+import de.appfabrik.buecherregal.persistence.LanguagePreferences;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -26,6 +28,11 @@ import javafx.stage.Stage;
 
 final class MainWindow {
   private final Stage stage;
+  private final Messages messages;
+  private final LanguagePreferences preferences;
+  private String languageChoice;
+  private final boolean languageReadFailed;
+  private final Button language = new Button();
   private final BookService service;
   private final AsyncTasks tasks;
   private final TableView<Book> table = new TableView<>();
@@ -35,23 +42,53 @@ final class MainWindow {
   private final Label emptyHint = new Label();
   private final Label status = new Label();
   private final TextArea note = new TextArea();
-  private final Button add = new Button("+  Buch hinzufügen");
-  private final Button edit = new Button("Bearbeiten");
-  private final Button delete = new Button("Löschen");
-  private final Button reload = new Button("Neu laden");
+  private final Button add = new Button();
+  private final Button edit = new Button();
+  private final Button delete = new Button();
+  private final Button reload = new Button();
   private final List<Book> books = new ArrayList<>();
   private boolean busy;
   private boolean ready;
   private boolean loadFailed;
   private BookEditor editor;
 
-  MainWindow(Stage stage, BookService service, AsyncTasks tasks) {
+  MainWindow(
+      Stage stage,
+      BookService service,
+      AsyncTasks tasks,
+      Messages messages,
+      LanguagePreferences preferences,
+      String languageChoice,
+      boolean languageReadFailed) {
+    this.messages = messages;
+    this.preferences = preferences;
+    this.languageChoice = languageChoice;
+    this.languageReadFailed = languageReadFailed;
+    add.setText("+  " + messages.text("book.add"));
+    edit.setText(messages.text("action.edit"));
+    delete.setText(messages.text("action.delete"));
+    reload.setText(messages.text("action.reload"));
+    language.setText(messages.text("language.title"));
+    language.setId("language-settings");
+    language.setOnAction(
+        event ->
+            new LanguageDialog(
+                    stage,
+                    messages,
+                    tasks,
+                    preferences,
+                    this.languageChoice,
+                    choice -> {
+                      this.languageChoice = choice;
+                      showStatus(messages.text("language.saved"), false);
+                    })
+                .show());
     this.stage = stage;
     this.service = service;
     this.tasks = tasks;
     Label heading = new Label("BücherRegal");
     heading.getStyleClass().add("app-heading");
-    Label subtitle = new Label("Deine Bücher an einem Platz.");
+    Label subtitle = new Label(messages.text("app.subtitle"));
     subtitle.getStyleClass().add("muted");
     Region spacer = new Region();
     HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -60,12 +97,21 @@ final class MainWindow {
     add.setOnAction(event -> openEditor(null));
     HBox header = new HBox(20, new VBox(4, heading, subtitle), spacer, add);
     header.setAlignment(Pos.CENTER_LEFT);
+    UiSupport.textMenu(search, messages);
+    UiSupport.textMenu(note, messages);
+    note.setId("selected-note");
+    status.setId("status-message");
+    count.setId("book-count");
+    edit.setId("edit-book");
+    delete.setId("delete-book");
+    reload.setId("reload-books");
     search.setId("search-books");
-    search.setPromptText("Titel, Autor, Aufbewahrungsort oder Notiz suchen");
-    search.setAccessibleText("Bücher durchsuchen");
+    search.setPromptText(messages.text("search.prompt"));
+    search.setAccessibleText(messages.text("search.accessible"));
     search.textProperty().addListener((observable, previous, current) -> refresh(null));
     HBox.setHgrow(search, Priority.ALWAYS);
-    Button clear = new Button("Suche leeren");
+    Button clear = new Button(messages.text("search.clear"));
+    clear.setId("clear-search");
     clear.setOnAction(
         event -> {
           search.clear();
@@ -75,9 +121,9 @@ final class MainWindow {
     HBox searchBar = new HBox(10, search, clear);
     table.setId("books-table");
     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-    table.getColumns().add(column("Buchtitel", Book::title, 360));
-    table.getColumns().add(column("Autor", Book::author, 220));
-    table.getColumns().add(column("Aufbewahrungsort", Book::location, 240));
+    table.getColumns().add(column(messages.text("field.title"), Book::title, 360));
+    table.getColumns().add(column(messages.text("field.author"), Book::author, 220));
+    table.getColumns().add(column(messages.text("field.location"), Book::location, 240));
     table
         .getSelectionModel()
         .selectedItemProperty()
@@ -85,9 +131,7 @@ final class MainWindow {
             (observable, previous, selected) -> {
               note.setText(selected == null ? "" : selected.note());
               note.setPromptText(
-                  selected == null
-                      ? "Wähle ein Buch aus, um seine Notiz zu lesen."
-                      : "Für dieses Buch ist keine Notiz hinterlegt.");
+                  selected == null ? messages.text("note.select") : messages.text("note.empty"));
               updateButtons();
             });
     table.setOnMouseClicked(
@@ -128,13 +172,13 @@ final class MainWindow {
     HBox.setHgrow(actionsSpacer, Priority.ALWAYS);
     HBox actions = new HBox(10, count, actionsSpacer, edit, delete);
     actions.setAlignment(Pos.CENTER_LEFT);
-    Label noteHeading = new Label("Notiz");
+    Label noteHeading = new Label(messages.text("field.note"));
     noteHeading.getStyleClass().add("field-label");
     note.setEditable(false);
     note.setWrapText(true);
     note.setPrefRowCount(3);
-    note.setPromptText("Wähle ein Buch aus, um seine Notiz zu lesen.");
-    note.setAccessibleText("Notiz des ausgewählten Buches");
+    note.setPromptText(messages.text("note.select"));
+    note.setAccessibleText(messages.text("note.accessible"));
     status.setWrapText(true);
     status.setMinHeight(Region.USE_PREF_SIZE);
     status.getStyleClass().add("muted");
@@ -142,9 +186,9 @@ final class MainWindow {
     status.setMinWidth(0);
     HBox.setHgrow(status, Priority.ALWAYS);
     reload.setOnAction(event -> load());
-    reload.setPrefWidth(120);
+
     reload.setMinWidth(Region.USE_PREF_SIZE);
-    HBox footer = new HBox(16, status, reload);
+    HBox footer = new HBox(16, status, language, reload);
     footer.setAlignment(Pos.CENTER_LEFT);
     VBox root =
         new VBox(18, header, searchBar, table, actions, new VBox(6, noteHeading, note), footer);
@@ -166,6 +210,7 @@ final class MainWindow {
               search.selectAll();
             });
     stage.setTitle("BücherRegal");
+    UiSupport.icon(stage);
     stage.setMinWidth(760);
     stage.setMinHeight(620);
     stage.setScene(scene);
@@ -200,7 +245,7 @@ final class MainWindow {
     }
     setBusy(true);
     loadFailed = false;
-    showStatus("Sammlung wird geöffnet …", false);
+    showStatus(messages.text("loading"), false);
     refresh(null);
     tasks.submit(
         service::load,
@@ -210,20 +255,22 @@ final class MainWindow {
           ready = true;
           setBusy(false);
           refresh(null);
-          showStatus("Lokal auf diesem Computer gespeichert", false);
+          showStatus(
+              messages.text(languageReadFailed ? "language.loadError" : "stored"),
+              languageReadFailed);
         },
         failure -> {
           loadFailed = true;
           setBusy(false);
           refresh(null);
-          showStatus(UiSupport.message(failure), true);
+          showStatus(UiSupport.message(failure, messages), true);
         });
   }
 
   private void refresh(Long preferredId) {
     Book selected = table.getSelectionModel().getSelectedItem();
     Long selection = preferredId != null ? preferredId : selected == null ? null : selected.id();
-    List<Book> matches = BookService.search(books, search.getText());
+    List<Book> matches = BookService.search(books, search.getText(), messages.locale());
     table.getItems().setAll(matches);
     if (selection != null) {
       matches.stream()
@@ -238,25 +285,19 @@ final class MainWindow {
               });
     }
     count.setText(
-        !ready
-            ? ""
-            : search.getText().isBlank()
-                ? books.size() + (books.size() == 1 ? " Buch" : " Bücher")
-                : matches.size() + " von " + books.size() + " Büchern");
+        !ready ? "" : messages.count(matches.size(), books.size(), !search.getText().isBlank()));
     if (loadFailed) {
-      emptyTitle.setText("Sammlung nicht geladen");
-      emptyHint.setText("Bitte beachte den Hinweis unten und versuche es mit „Neu laden“ erneut.");
+      emptyTitle.setText(messages.text("empty.failed"));
+      emptyHint.setText(messages.text("empty.failedHint"));
     } else if (!ready) {
-      emptyTitle.setText("Deine Sammlung wird geöffnet …");
+      emptyTitle.setText(messages.text("loading"));
       emptyHint.setText("");
     } else if (books.isEmpty()) {
-      emptyTitle.setText("Dein erstes Buch wartet schon");
-      emptyHint.setText(
-          "Mit „Buch hinzufügen“ legst du deine Sammlung an. Ein Titel genügt für den Anfang.");
+      emptyTitle.setText(messages.text("empty.title"));
+      emptyHint.setText(messages.text("empty.hint"));
     } else {
-      emptyTitle.setText("Keine Bücher gefunden");
-      emptyHint.setText(
-          "Versuche einen anderen Suchbegriff oder leere die Suche, um alle Bücher zu sehen.");
+      emptyTitle.setText(messages.text("empty.search"));
+      emptyHint.setText(messages.text("empty.searchHint"));
     }
     updateButtons();
   }
@@ -271,14 +312,15 @@ final class MainWindow {
             book,
             service,
             tasks,
+            messages,
             saved -> {
               books.removeIf(existing -> existing.id() == saved.id());
               books.add(saved);
               refresh(saved.id());
               showStatus(
-                  BookService.search(List.of(saved), search.getText()).isEmpty()
-                      ? "Buch gespeichert. Es passt nicht zur aktuellen Suche."
-                      : "Lokal auf diesem Computer gespeichert",
+                  BookService.search(List.of(saved), search.getText(), messages.locale()).isEmpty()
+                      ? messages.text("saved.filtered")
+                      : messages.text("stored"),
                   false);
             });
     editor.show();
@@ -298,14 +340,14 @@ final class MainWindow {
     }
     if (!UiSupport.confirm(
         stage,
-        "Buch löschen?",
-        "„" + selected.title() + "“ wird dauerhaft aus deiner Sammlung entfernt.",
-        "Löschen",
-        "Abbrechen")) {
+        messages.text("delete.title"),
+        messages.text("delete.detail", selected.title()),
+        messages.text("action.delete"),
+        messages.text("action.cancel"))) {
       return;
     }
     setBusy(true);
-    showStatus("Buch wird gelöscht …", false);
+    showStatus(messages.text("delete.busy"), false);
     tasks.submit(
         () -> {
           service.delete(selected.id());
@@ -315,11 +357,11 @@ final class MainWindow {
           books.removeIf(book -> book.id() == deleted.id());
           setBusy(false);
           refresh(null);
-          showStatus("Lokal auf diesem Computer gespeichert", false);
+          showStatus(messages.text("stored"), false);
         },
         failure -> {
           setBusy(false);
-          showStatus(UiSupport.message(failure), true);
+          showStatus(UiSupport.message(failure, messages), true);
         });
   }
 
@@ -327,6 +369,7 @@ final class MainWindow {
     busy = value;
     table.setDisable(value);
     reload.setDisable(value);
+    language.setDisable(value);
     updateButtons();
   }
 

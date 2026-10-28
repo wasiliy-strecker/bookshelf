@@ -1,0 +1,4 @@
+A local collection with book titles, authors and storage locations
+Edit a book and keep your notes together
+Find a book by searching its title, author, location or notes
+Choose your preferred interface language

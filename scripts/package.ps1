@@ -40,7 +40,7 @@ try {
         "--input", $InputDirectory, "--main-jar", "buecherregal-$Version.jar",
         "--main-class", "de.appfabrik.buecherregal.Launcher",
         "--module-path", "$env:JAVA_HOME\jmods;$Modules",
-        "--add-modules", "java.se,javafx.controls,jdk.unsupported",
+        "--add-modules", "java.se,javafx.controls,jdk.unsupported,jdk.localedata",
         "--java-options", "--add-modules=javafx.controls",
         "--java-options", "-Dfile.encoding=UTF-8"
     )

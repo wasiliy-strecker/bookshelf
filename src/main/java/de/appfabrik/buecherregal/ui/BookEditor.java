@@ -3,6 +3,7 @@ package de.appfabrik.buecherregal.ui;
 import de.appfabrik.buecherregal.application.BookService;
 import de.appfabrik.buecherregal.domain.Book;
 import de.appfabrik.buecherregal.domain.BookDraft;
+import de.appfabrik.buecherregal.i18n.Messages;
 import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -24,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 final class BookEditor {
+  private final Messages messages;
   private final Stage stage = new Stage();
   private final TextField title = new TextField();
   private final TextField author = new TextField();
@@ -31,8 +33,8 @@ final class BookEditor {
   private final TextArea note = new TextArea();
   private final Label validation = new Label();
   private final Label error = new Label();
-  private final Button save = new Button("Speichern");
-  private final Button cancel = new Button("Abbrechen");
+  private final Button save = new Button();
+  private final Button cancel = new Button();
   private final BookService service;
   private final AsyncTasks tasks;
   private final Long id;
@@ -41,7 +43,24 @@ final class BookEditor {
   private boolean saving;
 
   BookEditor(
-      Window owner, Book existing, BookService service, AsyncTasks tasks, Consumer<Book> onSaved) {
+      Window owner,
+      Book existing,
+      BookService service,
+      AsyncTasks tasks,
+      Messages messages,
+      Consumer<Book> onSaved) {
+    this.messages = messages;
+    save.setText(messages.text("action.save"));
+    cancel.setText(messages.text("action.cancel"));
+    cancel.setId("cancel-book");
+    validation.setId("title-validation");
+    validation.setWrapText(true);
+    error.setId("save-error");
+    UiSupport.icon(stage);
+    UiSupport.textMenu(title, messages);
+    UiSupport.textMenu(author, messages);
+    UiSupport.textMenu(location, messages);
+    UiSupport.textMenu(note, messages);
     this.service = service;
     this.tasks = tasks;
     this.onSaved = onSaved;
@@ -55,21 +74,22 @@ final class BookEditor {
     original = input();
     stage.initOwner(owner);
     stage.initModality(Modality.WINDOW_MODAL);
-    stage.setTitle(existing == null ? "Buch hinzufügen" : "Buch bearbeiten");
+    stage.setTitle(existing == null ? messages.text("book.add") : messages.text("book.edit"));
     stage.setMinWidth(480);
     stage.setMinHeight(590);
     Label heading = new Label(stage.getTitle());
     heading.getStyleClass().add("section-heading");
-    Label hint = new Label("Nur der Buchtitel ist erforderlich.");
+    Label hint = new Label(messages.text("editor.hint"));
     hint.getStyleClass().add("muted");
+    hint.setWrapText(true);
     title.setId("book-title");
     author.setId("book-author");
     location.setId("book-location");
     note.setId("book-note");
-    title.setPromptText("Wie heißt das Buch?");
-    author.setPromptText("Optional");
-    location.setPromptText("Zum Beispiel Wohnzimmer, Regal 2");
-    note.setPromptText("Was möchtest du dir zu diesem Buch merken?");
+    title.setPromptText(messages.text("editor.titlePrompt"));
+    author.setPromptText(messages.text("field.optional"));
+    location.setPromptText(messages.text("editor.locationPrompt"));
+    note.setPromptText(messages.text("editor.notePrompt"));
     note.setWrapText(true);
     note.setPrefRowCount(5);
     validation.getStyleClass().add("error-text");
@@ -96,11 +116,11 @@ final class BookEditor {
             14,
             heading,
             hint,
-            field("Buchtitel *", title),
+            field(messages.text("field.requiredTitle"), title),
             validation,
-            field("Autor", author),
-            field("Aufbewahrungsort", location),
-            field("Notiz", note),
+            field(messages.text("field.author"), author),
+            field(messages.text("field.location"), location),
+            field(messages.text("field.note"), note),
             error,
             actions);
     VBox.setVgrow(form.getChildren().get(6), Priority.ALWAYS);
@@ -160,7 +180,7 @@ final class BookEditor {
       Input current = input();
       draft = new BookDraft(current.title(), current.author(), current.location(), current.note());
     } catch (IllegalArgumentException exception) {
-      validation.setText(exception.getMessage());
+      validation.setText(messages.text("validation.title"));
       validation.setVisible(true);
       title.requestFocus();
       return;
@@ -176,7 +196,7 @@ final class BookEditor {
         },
         failure -> {
           setSaving(false);
-          error.setText(UiSupport.message(failure));
+          error.setText(UiSupport.message(failure, messages));
           error.setVisible(true);
         });
   }
@@ -189,7 +209,7 @@ final class BookEditor {
     author.setDisable(value);
     location.setDisable(value);
     note.setDisable(value);
-    save.setText(value ? "Wird gespeichert …" : "Speichern");
+    save.setText(value ? messages.text("save.busy") : messages.text("action.save"));
   }
 
   void requestClose() {
@@ -199,10 +219,10 @@ final class BookEditor {
     if (input().equals(original)
         || UiSupport.confirm(
             stage,
-            "Änderungen verwerfen?",
-            "Deine ungespeicherten Eingaben gehen beim Verwerfen verloren.",
-            "Verwerfen",
-            "Weiterbearbeiten")) {
+            messages.text("discard.title"),
+            messages.text("discard.detail"),
+            messages.text("action.discard"),
+            messages.text("action.keep"))) {
       stage.hide();
     }
   }

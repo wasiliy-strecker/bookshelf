@@ -1,0 +1,6 @@
+Bücher mit Titel, Autor, Aufbewahrungsort und Notiz anlegen und bearbeiten
+Alle Textfelder durchsuchen
+Verschiedene Exemplare desselben Buches unabhängig erfassen
+Ungespeicherte Änderungen durch eine Rückfrage schützen
+Die Sammlung lokal auf dem Computer speichern
+Aus sechs Oberflächensprachen wählen

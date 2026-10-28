@@ -1,0 +1,6 @@
+Ajouter et modifier des livres avec titre, auteur, emplacement et notes
+Rechercher dans tous les champs de texte
+Gérer séparément plusieurs exemplaires du même livre
+Protéger les modifications non enregistrées par une confirmation
+Conserver la collection localement sur l’ordinateur
+Choisir parmi six langues pour l’interface

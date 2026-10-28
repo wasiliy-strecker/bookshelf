@@ -1,0 +1,6 @@
+Adicionar e editar livros com título, autor, local e anotações
+Buscar em todos os campos de texto
+Registrar separadamente diferentes exemplares do mesmo livro
+Proteger alterações não salvas com uma confirmação
+Manter a coleção salva localmente no computador
+Escolher entre seis idiomas para a interface

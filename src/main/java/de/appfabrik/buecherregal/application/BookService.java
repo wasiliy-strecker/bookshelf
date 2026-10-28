@@ -30,8 +30,12 @@ public final class BookService {
   }
 
   public static List<Book> search(List<Book> books, String query) {
+    return search(books, query, Locale.GERMAN);
+  }
+
+  public static List<Book> search(List<Book> books, String query, Locale locale) {
     String needle = normalize(query == null ? "" : query.strip());
-    Collator collator = Collator.getInstance(Locale.GERMAN);
+    Collator collator = Collator.getInstance(locale);
     collator.setStrength(Collator.SECONDARY);
     return books.stream()
         .filter(book -> matches(book, needle))

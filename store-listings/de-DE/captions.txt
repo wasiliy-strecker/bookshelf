@@ -1,0 +1,4 @@
+Lokale Büchersammlung mit Titeln, Autoren und Aufbewahrungsorten
+Ein Buch bearbeiten und persönliche Notizen festhalten
+Ein Buch über Titel, Autor, Aufbewahrungsort oder Notiz finden
+Die bevorzugte Sprache der Oberfläche auswählen

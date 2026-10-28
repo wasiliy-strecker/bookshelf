@@ -7,7 +7,7 @@ public record BookDraft(String title, String author, String location, String not
     if (title
         .codePoints()
         .noneMatch(c -> !Character.isWhitespace(c) && !Character.isSpaceChar(c))) {
-      throw new IllegalArgumentException("Bitte gib einen Buchtitel ein.");
+      throw new IllegalArgumentException("A book title is required.");
     }
     author = author == null ? "" : author.strip();
     location = location == null ? "" : location.strip();

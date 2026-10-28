@@ -1,0 +1,5 @@
+Un posto per ogni libro. BücherRegal raccoglie titoli, autori, posizioni e note personali in un’app desktop chiara e semplice.
+
+Aggiungi un libro con il solo titolo e completa i dettagli quando vuoi. La ricerca comprende tutti e quattro i campi di testo per ritrovare impressioni di lettura, dediche e lo scaffale giusto.
+
+La raccolta viene salvata localmente sul computer. Non servono un account o un servizio cloud. Puoi scegliere tra tedesco, inglese, spagnolo, francese, italiano e portoghese brasiliano.

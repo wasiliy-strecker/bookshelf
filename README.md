@@ -7,7 +7,7 @@ Die Sammlung bleibt lokal auf deinem Computer und ist nach dem Neustart erhalten
 ![BücherRegal mit synthetischen Beispieldaten](docs/screenshots/buecherregal.png)
 
 BücherRegal ist Stufe 1 des Java-Hobby-Portfolios. Die Reihe führt über GarnBox
-(Foto), StrickProjekt (Status) und NähPlan (Checkliste) bis zur Reservestufe
+(Foto), StrickProjekt (Status) und NähPlan (Checkliste) bis zur fünften Stufe
 KostümPlan (PDF-Export). Diese weiteren Apps bleiben eigenständige Projekte.
 
 ## Starten
@@ -55,6 +55,24 @@ Verwerfen abgefragt. Nach einem Speicherfehler bleiben deine Eingaben erhalten.
 | Enter im Notizfeld | Neue Zeile |
 | Entf in der Tabelle | Ausgewähltes Buch nach Bestätigung löschen |
 
+## Sprachen
+
+Die Oberfläche unterstützt Deutsch, Englisch, Spanisch, Französisch,
+Italienisch und brasilianisches Portugiesisch. Beim ersten Start folgt sie
+für diese Sprachen der Systemsprache. Für andere Systemsprachen wird Englisch
+verwendet. Regionale Varianten wie de-AT und pt-PT werden der vorhandenen
+deutschen beziehungsweise brasilianisch-portugiesischen Übersetzung zugeordnet.
+
+Über „Sprache“ wählst du eine feste Sprache oder wieder „Automatisch“.
+Die Auswahl wird nach dem nächsten App-Start übernommen. Die App startet nicht
+selbständig neu. Die Sammlung und offene Buchentwürfe bleiben erhalten.
+Der Markenname BücherRegal bleibt in allen Sprachen gleich.
+
+Die Einstellung liegt in `language.txt` neben der Datenbank. Ein ungültiger
+Sprachwert fällt auf Englisch zurück. Bei einem Lesefehler nutzt die App die
+Systemsprache mit einem sichtbaren Hinweis. Speichern erfolgt atomar.
+Ein fehlgeschlagener Schreibvorgang lässt die Auswahl im Dialog stehen.
+
 ## Daten und Tests
 
 Die Datei `buecherregal.db` liegt unter:
@@ -83,6 +101,22 @@ Ein abweichender Testpfad verändert nicht den Standardspeicherort.
 `verify` führt Compiler-Lint mit Warnungen als Fehlern, Maven Enforcer,
 JUnit-Tests, Formatprüfung und SpotBugs aus. Die Tests verwenden temporäre
 SQLite-Dateien. Es werden keine privaten Sammlungen geöffnet.
+
+## Vorschau-Assets für den Microsoft Store
+
+[Internationalisierung und Vorschau-Erzeugung](docs/internationalization.md)
+beschreibt reproduzierbare Aufnahmen der echten Linux-Oberfläche in einem
+isolierten virtuellen Bildschirm. Pro Sprache entstehen vier Bilder mit
+synthetischen Büchern, insgesamt 24 Bilder in 1920 × 1080 Pixeln.
+
+Die Klartexte in `store-listings/` sind direkt kopierbar. Jede Sprache hat eine
+Beschreibung, Kurzbeschreibung, Funktionsliste und vier Bildunterschriften.
+Das eigene [App-Icon](assets/branding/icon.svg) liegt außerdem als PNG und
+Windows-ICO vor. Das Store-Icon hat 300 × 300 Pixel.
+
+Diese Lieferung ist eine Linux-Vorschau. Windows-Paketierung, native Abnahme,
+endgültige Windows-Store-Bilder und Einreichung bleiben separate Schritte.
+Generierte Lieferungen liegen unter dem ignorierten Verzeichnis `build/`.
 
 ## Architektur und Auslieferung
 

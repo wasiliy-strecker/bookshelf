@@ -1,5 +1,60 @@
 # Prüfbericht
 
+## Internationalisierung, 29. Oktober 2026
+
+BücherRegal 0.1.0 wurde als Pilot in de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR
+internationalisiert. Die nachfolgenden Abschnitte zum 25. Oktober dokumentieren
+den früheren Entwicklungsstand. Für diese Erweiterung gelten die folgenden
+Prüfergebnisse.
+
+58 JUnit-Testfälle bestehen. Compiler-Lint mit Warnungen als Fehlern,
+Maven Enforcer, Spotless und SpotBugs bestehen ebenfalls. Hinzugekommen sind
+vollständige ResourceBundles mit kompatiblen Platzhaltern, alle Speicherfehler,
+regionale Zahlenformate und Pluralformen, Sprachauflösung und Rückfall,
+Apostrophe und Unicode sowie dauerhafte Spracheinstellungen mit Fehlerfällen.
+Beim Sprachwechsel wurde die bestehende Datenbank bytegenau unverändert geprüft.
+
+Je Sprache wurden drei neue JVM-Prozesse mit der produktiven BooksApplication
+auf einem isolierten Xvfb-Bildschirm ausgeführt. Alle 18 Prozesse bestanden.
+Der GUI-Helfer bedient die echten Fenster über JavaFX Robot mit Maus und Tastatur.
+
+| Prüfung | Ergebnis |
+| --- | --- |
+| Alle sechs gespeicherten Sprachen bei japanischer Systemsprache | Richtige Oberfläche beim echten Prozessstart |
+| Übersicht, Bearbeiten, Suche, Sprachwahl | 24 originale PNG-Aufnahmen in 1920 × 1080 erstellt |
+| Leerer Titel | Passender übersetzter Feldhinweis |
+| Akzente, Apostrophe, Unicode und 30-zeilige Notiz | Vollständig eingegeben und gespeichert |
+| Escape bei geändertem Entwurf | Weiterbearbeiten als sichere Vorauswahl, Entwurf bleibt erhalten |
+| Exklusive SQLite-Sperre beim Speichern | Übersetzter Fehler, Entwurf bleibt vollständig erhalten |
+| Sperre lösen und erneut speichern | Genau ein neues Buch gespeichert |
+| Kleine Hauptfenster und Eingabedialoge | Aktionen bleiben im Fenster, Beschriftungen passen |
+| Löschen abbrechen | Datensatz bleibt bestehen |
+| Einstellungsziel durch Verzeichnis blockiert | Fehler wird übersetzt angezeigt, Auswahl bleibt erhalten |
+| Ziel freigeben und Sprache erneut speichern | Speicherung und Neustarthinweis erfolgreich |
+| Neuer Prozess mit geänderter Sprache | Neue Sprache und erhaltene Unicode-Buchdaten bestätigt |
+
+Alle 24 Vorschau-Aufnahmen wurden visuell anhand der Sprachübersichten geprüft.
+Zusätzlich wurden die ursprünglichen großen Aufnahmen für Übersicht, Editor,
+Sprachwahl und einen kleinen Fehlerdialog angesehen. Die Bilder enthalten nur
+synthetische Bücher. Ein Markenname auf Deutsch ist beabsichtigt.
+
+Die unabhängige Linux-App-Image-Abnahme wurde mit dem paketierten Launcher,
+entferntem JAVA_HOME, eigenen temporären Daten und separatem Xvfb durchgeführt.
+Französische Oberfläche und Pflichtfeldhinweis, Unicode-Eingabe, mehrzeilige
+Notiz, Speichern und englischer Prozessneustart mit bytegleich erhaltener
+Datenbank wurden geprüft. Die Prozessbibliotheken bestätigen die eingebettete
+JVM und JavaFX. Die finale Laufzeit enthält zusätzlich `jdk.localedata` für
+regionale Formatierung und Sortierung.
+
+Befehle und reproduzierbare GUI-Schritte stehen in
+[internationalization.md](internationalization.md). Die Lieferdatei enthält
+GUI-Protokolle, Screenshots, Paketprüfnachweise und Herkunftsmanifest.
+Die Bildlieferung ist ausdrücklich eine Linux-Vorschau. Windows-Paketierung,
+native Windows-Abnahme und endgültige Windows-Store-Aufnahmen bleiben offen.
+Es wurde weder gepusht noch eine Store-Einreichung ausgeführt.
+
+## Ursprüngliche Basisprüfung
+
 Stand: 25. Oktober 2026, BücherRegal 0.1.0.
 
 ## Ausgeführte automatische Prüfungen

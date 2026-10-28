@@ -1,0 +1,5 @@
+Gib jedem Buch einen Platz. BücherRegal hält Titel, Autoren, Aufbewahrungsorte und persönliche Notizen in einer übersichtlichen Desktop-App zusammen.
+
+Lege ein Buch zunächst nur mit seinem Titel an und ergänze die Angaben später. Die Suche durchsucht alle vier Textfelder. So findest du Leseeindrücke, Geschenknotizen oder den richtigen Regalplatz schnell wieder.
+
+Deine Sammlung wird lokal auf deinem Computer gespeichert. Ein Konto oder Cloud-Dienst ist nicht erforderlich. Als App-Sprache stehen Deutsch, Englisch, Spanisch, Französisch, Italienisch und brasilianisches Portugiesisch zur Wahl.

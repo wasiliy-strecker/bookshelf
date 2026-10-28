@@ -34,7 +34,7 @@ public final class SqliteBookRepository implements BookRepository {
     try {
       Path parent = database.getParent();
       if (parent == null) {
-        throw new StorageException("Der Datenbankpfad muss auf eine Datei zeigen.");
+        throw new StorageException(StorageException.Code.PATH);
       }
       Files.createDirectories(parent);
       try (Connection connection = connect()) {
@@ -46,8 +46,7 @@ public final class SqliteBookRepository implements BookRepository {
             version = result.getInt(1);
           }
           if (version > 1) {
-            throw new StorageException(
-                "Diese Sammlung wurde mit einer neueren App-Version erstellt. Bitte aktualisiere BücherRegal.");
+            throw new StorageException(StorageException.Code.NEWER_SCHEMA);
           }
           if (version == 0) {
             statement.executeUpdate(
@@ -69,9 +68,7 @@ public final class SqliteBookRepository implements BookRepository {
         }
       }
     } catch (IOException | SQLException exception) {
-      throw new StorageException(
-          "Die Sammlung konnte nicht geöffnet werden. Bitte prüfe Zugriffsrechte und freien Speicherplatz und versuche es erneut.",
-          exception);
+      throw new StorageException(StorageException.Code.OPEN, exception);
     }
   }
 
@@ -106,8 +103,7 @@ public final class SqliteBookRepository implements BookRepository {
       bind(statement, draft);
       try (ResultSet result = statement.executeQuery()) {
         if (!result.next()) {
-          throw new StorageException(
-              "Das Buch konnte nicht angelegt werden. Bitte versuche es erneut.");
+          throw new StorageException(StorageException.Code.CREATE);
         }
         return draft.withId(result.getLong(1));
       }
@@ -152,14 +148,11 @@ public final class SqliteBookRepository implements BookRepository {
 
   private static void requireExisting(int affected) {
     if (affected != 1) {
-      throw new StorageException(
-          "Dieses Buch ist nicht mehr vorhanden. Bitte lade die Sammlung neu.");
+      throw new StorageException(StorageException.Code.MISSING);
     }
   }
 
   private static StorageException failure(SQLException exception) {
-    return new StorageException(
-        "Die Datenbank konnte den Vorgang nicht abschließen. Bitte schließe weitere BücherRegal-Fenster und prüfe Zugriffsrechte und freien Speicherplatz. Deine Eingaben bleiben erhalten.",
-        exception);
+    return new StorageException(StorageException.Code.OPERATION, exception);
   }
 }
