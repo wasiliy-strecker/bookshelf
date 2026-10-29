@@ -1,5 +1,19 @@
 # Prüfbericht
 
+## Auswahlrahmen entfernt, 29. Oktober 2026
+
+Der zusätzliche grüne Rahmen der fokussierten Tabellenzeile ist transparent.
+Die grüne Auswahlfläche bleibt erhalten. Der echte deutsche GUI-Ablauf mit
+angeklickter Zeile, Editor, Suche und Sprachwahl besteht auf einem eigenen
+Xvfb-Bildschirm. Die neue Übersicht wurde visuell auf den rahmenlosen linken
+Rand geprüft. Nachweise liegen unter `target/selection-border-capture`.
+
+`./mvnw verify` besteht mit 58 Tests, Compiler-Lint, Enforcer, Spotless und
+SpotBugs. Das aktualisierte App-JAR unterscheidet sich inhaltlich ausschließlich
+in `books.css` vom vorherigen Paket. Der Launcher wurde mit derselben manuellen
+Testsammlung neu geöffnet. Die Datenbank blieb dabei bytegenau unverändert.
+Die frühere internationale Lieferung bleibt ihrem damaligen Quellcommit zugeordnet.
+
 ## Internationalisierung, 29. Oktober 2026
 
 BücherRegal 0.1.0 wurde als Pilot in de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR

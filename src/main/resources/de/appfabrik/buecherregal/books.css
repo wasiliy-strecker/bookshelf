@@ -43,5 +43,5 @@
 .table-row-cell:odd { -fx-background-color: #fbfcf9; }
 .table-cell { -fx-padding: 12px 10px; -fx-border-color: transparent; -fx-text-fill: #253c34; }
 .table-row-cell:selected { -fx-background-color: #e2eddf; }
-.table-row-cell:filled:focused { -fx-background-insets: 0; -fx-border-color: #73987b; }
+.table-row-cell:filled:focused { -fx-background-insets: 0; -fx-border-color: transparent; }
 .table-view .placeholder .label { -fx-text-alignment: CENTER; }
