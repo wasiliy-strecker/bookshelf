@@ -4,3 +4,4 @@ Registrar por separado distintos ejemplares del mismo libro
 Proteger los cambios sin guardar mediante una confirmación
 Guardar la colección localmente en el ordenador
 Elegir entre seis idiomas para la interfaz
+Exportar e importar toda la colección como JSON

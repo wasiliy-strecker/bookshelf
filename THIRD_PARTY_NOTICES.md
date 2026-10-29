@@ -1,5 +1,12 @@
 # Verwendete Komponenten
 
+JSON-Import und -Export verwenden Gson 2.13.2 und dessen transitive Abhängigkeit
+Error Prone Annotations 2.41.0, beide unter Apache License 2.0.
+Die unveränderten Lizenztexte liegen unter `third-party-licenses` und werden
+mit den übrigen Hinweisen in jedes App-Image übernommen.
+Quellen: [Gson](https://github.com/google/gson/tree/gson-parent-2.13.2)
+und [Error Prone](https://github.com/google/error-prone/tree/v2.41.0).
+
 BücherRegal verwendet OpenJFX unter GPLv2 mit Classpath Exception und SQLite
 JDBC von Xerial unter Apache License 2.0 und BSD-2-Clause. SQLite selbst ist
 Public Domain. Die eingebettete Java-Laufzeit unterliegt den Lizenzbedingungen

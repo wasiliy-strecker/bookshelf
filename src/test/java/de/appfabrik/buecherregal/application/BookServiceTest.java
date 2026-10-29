@@ -87,6 +87,11 @@ class BookServiceTest {
 
   private static final class FailingRepository implements BookRepository {
     @Override
+    public ImportResult importBooks(List<BookDraft> books) {
+      throw new StorageException(StorageException.Code.OPERATION);
+    }
+
+    @Override
     public void initialize() {
       throw new StorageException(StorageException.Code.OPERATION);
     }

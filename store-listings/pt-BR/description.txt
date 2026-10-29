@@ -3,3 +3,5 @@ Um lugar para cada livro. BücherRegal reúne títulos, autores, locais de armaz
 Adicione um livro apenas com o título e complete os detalhes quando quiser. A busca funciona nos quatro campos de texto para encontrar impressões de leitura, dedicatórias e a prateleira certa.
 
 Sua coleção é salva localmente no computador. Você não precisa de conta nem de serviço de nuvem. A interface está disponível em alemão, inglês, espanhol, francês, italiano e português do Brasil.
+
+Exporte toda a sua coleção de livros como um arquivo JSON e importe-a novamente depois. Os livros existentes são mantidos. As cópias idênticas já presentes são ignoradas durante a importação.

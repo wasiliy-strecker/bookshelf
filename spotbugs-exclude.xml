@@ -7,4 +7,10 @@
     <Method name="&lt;init&gt;"/>
     <Bug pattern="EI_EXPOSE_REP2"/>
   </Match>
+  <!-- The transfer service shares the same repository and file ports by constructor injection. -->
+  <Match>
+    <Class name="de.appfabrik.buecherregal.application.CollectionTransfer"/>
+    <Method name="&lt;init&gt;"/>
+    <Bug pattern="EI_EXPOSE_REP2"/>
+  </Match>
 </FindBugsFilter>

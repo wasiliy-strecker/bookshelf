@@ -4,3 +4,4 @@ Verschiedene Exemplare desselben Buches unabhängig erfassen
 Ungespeicherte Änderungen durch eine Rückfrage schützen
 Die Sammlung lokal auf dem Computer speichern
 Aus sechs Oberflächensprachen wählen
+Die gesamte Sammlung als JSON exportieren und importieren

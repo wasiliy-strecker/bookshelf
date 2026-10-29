@@ -18,8 +18,8 @@ flowchart LR
 | Bereich | Verantwortung |
 | --- | --- |
 | `domain` | `Book` mit stabiler ID und `BookDraft` mit Pflichtfeldprüfung |
-| `application` | `BookService`, Speichervertrag `BookRepository`, Speicherfehler |
-| `persistence` | Betriebssystemspezifischer Datenpfad, Schema und JDBC-Anweisungen |
+| `application` | `BookService`, `CollectionTransfer`, Speicher- und Dateiverträge, Fehlercodes |
+| `persistence` | Datenpfad, SQLite, atomarer Import und versionierte JSON-Dateien |
 | `ui` | Hauptfenster, Eingabedialog, Sprachwahl, Hintergrundaufgaben und Rückmeldungen |
 | `i18n` | Unterstützte Sprachen und unveränderliche ResourceBundles pro App-Start |
 
@@ -71,12 +71,42 @@ gesamten Ablauf im Bewerbungsgespräch nachvollziehen zu können.
 
 Gleichzeitige Bearbeitung derselben Sammlung aus mehreren App-Instanzen ist
 kein unterstützter Arbeitsablauf. Es gibt keine Synchronisation zwischen deren
-bereits geladenen Listen. Bei Problemen weitere Fenster schließen und neu laden.
+bereits geladenen Listen. Bei Problemen weitere Fenster schließen und die App neu öffnen.
 
 JUnit prüft Fachregeln und echte SQLite-Dateien. Der GUI-Prüfbericht ergänzt
 Dialogbedienung, Abbruchschutz und die Nutzung der eingebetteten Laufzeit.
-SpotBugs hat genau eine begründete Ausnahme für die absichtlich injizierte
-Repository-Referenz. Sie ist auf diesen Konstruktor beschränkt.
+SpotBugs-Ausnahmen für absichtlich injizierte Speicher- und Dateiverträge sind
+auf die Konstruktoren von `BookService` und `CollectionTransfer` beschränkt.
+
+## JSON-Export und Import
+
+`CollectionTransfer` verbindet `BookRepository` und den Port `CollectionFile`.
+`JsonCollectionFile` verwendet die Streaming-API von Gson 2.13.2 im strikten
+Modus. Der Formatbezeichner ist `bookshelf.collection`, die Version ist 1.
+Jeder Eintrag enthält exakt `title`, `author`, `location` und `note` als Text.
+Ungültiges UTF-8, nicht unterstützte Versionen, falsche Feldtypen, doppelte
+Schlüssel und unvollständige Dokumente werden abgelehnt. Byte- und Buchlimits
+verhindern unbegrenzte Dateien. IDs und Spracheinstellungen werden nicht exportiert.
+
+Der Export liest die gesamte gespeicherte Sammlung im Hintergrund. Er schreibt
+zunächst eine temporäre Nachbardatei. Erst nach vollständigem Schreiben wird
+ein neues Ziel ohne Überschreiben per Hardlink veröffentlicht oder ein bestätigtes
+bestehendes Ziel atomar ersetzt. Eine fehlende Dateisystemunterstützung führt
+zum Fehler ohne unsicheren Fallback. Dateityp und Zielidentität werden nach der
+Bestätigung erneut geprüft. Eine externe Änderung im kurzen Zeitraum zwischen
+letzter Prüfung und atomarem Ersatz kann nicht vollständig ausgeschlossen werden.
+App-Daten und deren Dateiverweise sind keine erlaubten Exportziele.
+
+Der Import liest und validiert zunächst die gesamte Datei. Nach der Bestätigung
+werden vorhandene Exemplare innerhalb einer SQLite-Transaktion gezählt.
+Je vollständigem Textdatensatz ergänzt der Import nur die in der Datei zusätzlich
+enthaltenen Exemplare. Die IDs vorhandener Bücher bleiben erhalten. Jeder
+Schreibfehler rollt auch frühere Einfügungen desselben Imports zurück. Erst nach
+dem Commit aktualisiert die Oberfläche die Liste und leert die Suche.
+Native Dateidialoge laufen auf dem JavaFX-Thread, Datei- und Datenbankarbeit auf
+dem vorhandenen Worker. Während der Übernahme verhindert die UI weitere Aktionen.
+
+Gson-Referenz: [striktes JSON](https://google.github.io/gson/Troubleshooting.html#malformed-json-not-rejected).
 
 ## Internationalisierung
 

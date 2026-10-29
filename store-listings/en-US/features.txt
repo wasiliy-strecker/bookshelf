@@ -4,3 +4,4 @@ Keep independent entries for different copies of the same book
 Protect unsaved changes with a confirmation
 Store your collection locally on your computer
 Choose from six interface languages
+Export and import the entire collection as JSON

@@ -1,5 +1,54 @@
 # Prüfbericht
 
+## JSON-Export und Import, 29. Oktober 2026
+
+„Neu laden“ wurde durch „Exportieren“ und „Importieren“ ersetzt. Beide Aktionen,
+Bestätigungen und Fehlerhinweise sind in allen sechs Sprachen vorhanden.
+Exportiert wird die gesamte gespeicherte Sammlung einschließlich aller vier
+Textfelder. Der Import ergänzt fehlende Exemplare in einer Transaktion und
+erhält bestehende IDs. Erneutes Importieren derselben Datei erzeugt keine
+weiteren identischen Exemplare. Bestehende unterschiedliche Notizen bleiben erhalten.
+
+88 JUnit-Testfälle bestehen ohne Fehler oder ausgelassene Fälle. Compiler-Lint,
+Enforcer, Spotless und SpotBugs bestehen. Die neuen Fälle prüfen Unicode und
+mehrzeilige Notizen, vollständige Wiederherstellung, leere Sammlungen,
+unabhängige identische Exemplare, wiederholten Import, späten SQL-Fehler mit
+Rollback, echte SQLite-Sperren, ungültige JSON-Typen, doppelte Schlüssel,
+beschädigtes UTF-8, unbekannte Versionen, Größenlimits und geschützte Dateiziele.
+Bestehende Exporte bleiben bei Fehlern erhalten. Temporäre Dateien werden entfernt.
+
+18 echte GUI-Prozesse bestehen mit 336 Prüfbedingungen. Die 24 erneuerten
+Aufnahmen wurden in allen sechs Sprachen visuell geprüft. Kleine Hauptfenster,
+Editoren, Suche, Sprachwahl und Neustart bleiben bedienbar. Der zusätzliche
+deutsche Import-/Export-Ablauf besteht mit 30 Prüfbedingungen. Er bedient native
+Dateidialoge, exportiert trotz leerem Suchergebnis alle Bücher und prüft Abbruch,
+ungültige Dateien, sichere Importbestätigung, Duplikate, erhaltene IDs und eine
+SQLite-Sperre mit erfolgreichem Wiederholungsversuch. Python hat den erzeugten
+Export unabhängig als JSON gelesen und alle Felder geprüft.
+
+Das neue App-Image enthält Gson, Error Prone Annotations und deren Lizenztexte.
+Der eigenständige Launcher wurde auf einem eigenen Xvfb-Display ohne JAVA_HOME
+und mit PATH=/usr/bin:/bin geprüft. Zwei synthetische Bücher wurden über den
+nativen Dialog exportiert, die JSON-Datei unabhängig gelesen und anschließend
+eine Datei mit einem zusätzlichen Buch importiert. Die beiden vorhandenen
+Datensätze blieben vollständig erhalten. Das aktualisierte Paket wurde auch auf
+dem Nutzerdesktop mit derselben Testsammlung neu geöffnet. Die Datenbank war
+vor und nach diesem Neustart bytegenau identisch.
+
+Aktuelle Nachweise in ignorierten Verzeichnissen:
+
+```text
+target/collection-transfer-verify-v2.log
+target/collection-transfer-all-languages
+target/collection-transfer-native
+target/collection-transfer-packaged
+target/collection-transfer-user-restart.json
+```
+
+Frühere Lieferordner bleiben unverändert ihrem damaligen Quellcommit zugeordnet.
+Die folgenden Abschnitte dokumentieren die vorherigen Abnahmen. Native Windows-
+Dateidialoge und Dateisystemoperationen bleiben Teil der Windows-Abnahme.
+
 ## Auswahlrahmen entfernt, 29. Oktober 2026
 
 Der zusätzliche grüne Rahmen der fokussierten Tabellenzeile ist transparent.

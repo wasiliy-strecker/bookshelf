@@ -1,9 +1,11 @@
 package de.appfabrik.buecherregal.ui;
 
 import de.appfabrik.buecherregal.application.BookService;
+import de.appfabrik.buecherregal.application.CollectionTransfer;
 import de.appfabrik.buecherregal.i18n.AppLanguage;
 import de.appfabrik.buecherregal.i18n.Messages;
 import de.appfabrik.buecherregal.persistence.AppDataDirectory;
+import de.appfabrik.buecherregal.persistence.JsonCollectionFile;
 import de.appfabrik.buecherregal.persistence.LanguagePreferences;
 import de.appfabrik.buecherregal.persistence.SqliteBookRepository;
 import java.io.IOException;
@@ -61,9 +63,12 @@ public final class BooksApplication extends Application {
       javafx.application.Platform.exit();
       return;
     }
-    BookService service =
-        new BookService(new SqliteBookRepository(directory.resolve("buecherregal.db")));
-    new MainWindow(stage, service, tasks, messages, preferences, choice, languageReadFailed).show();
+    var repository = new SqliteBookRepository(directory.resolve("buecherregal.db"));
+    BookService service = new BookService(repository);
+    var transfer = new CollectionTransfer(repository, new JsonCollectionFile(directory));
+    new MainWindow(
+            stage, service, transfer, tasks, messages, preferences, choice, languageReadFailed)
+        .show();
   }
 
   @Override

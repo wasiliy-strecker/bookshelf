@@ -3,6 +3,7 @@ package de.appfabrik.buecherregal.i18n;
 import static org.junit.jupiter.api.Assertions.*;
 
 import de.appfabrik.buecherregal.application.StorageException;
+import de.appfabrik.buecherregal.application.TransferException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
@@ -40,8 +41,11 @@ class MessagesTest {
           expected.getFormatsByArgumentIndex().length,
           actual.getFormatsByArgumentIndex().length,
           key);
-      String output =
-          new Messages(language).text(key, key.startsWith("count.") ? 2 : "Élise's {book}", 42);
+      boolean numeric =
+          key.startsWith("count.")
+              || Set.of("transfer.confirmDetail", "transfer.imported", "transfer.exported")
+                  .contains(key);
+      String output = new Messages(language).text(key, numeric ? 2 : "Élise's {book}", 42);
       // Count patterns require numbers rather than the synthetic title.
       if (!key.startsWith("count.")) {
         assertFalse(output.contains("{0}"), key);
@@ -55,6 +59,9 @@ class MessagesTest {
     var messages = new Messages(language);
     for (var code : StorageException.Code.values()) {
       assertTrue(messages.text("storage." + code.name()).length() > 20);
+    }
+    for (var code : TransferException.Code.values()) {
+      assertTrue(messages.text("transfer.error." + code.name()).length() > 20);
     }
   }
 

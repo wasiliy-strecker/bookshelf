@@ -46,7 +46,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--locales', nargs='+', choices=LOCALES, default=LOCALES)
-    parser.add_argument('--mode', choices=('all', 'capture', 'verify'), default='all')
+    parser.add_argument('--mode', choices=('all', 'capture', 'verify', 'transfer'), default='all')
     args = parser.parse_args()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
@@ -86,7 +86,7 @@ def main():
                     print(f'{locale}: {mode} passed', flush=True)
                     return result
                 for locale in args.locales:
-                    for mode in ('capture', 'verify'):
+                    for mode in (('transfer',) if args.mode == 'transfer' else ('capture', 'verify')):
                         if args.mode not in ('all', mode):
                             continue
                         data = Path(work) / locale / mode

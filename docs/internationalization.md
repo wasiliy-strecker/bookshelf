@@ -6,6 +6,8 @@ BücherRegal unterstützt de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR.
 Der fachliche Umfang bleibt Stufe 1. Es gibt keine Fotos, Projektstatus,
 Checklisten oder PDF-Ausgabe. Der Markenname, die technischen Kennungen,
 Datenpfade und SQLite-Daten bleiben erhalten.
+Auf Nutzerauftrag vom 29. Oktober 2026 kommen JSON-Export und -Import hinzu.
+Beide Aktionen und ihre Rückmeldungen sind in allen sechs Sprachen verfügbar.
 
 Die Sprachwahl wird beim nächsten App-Start angewandt. Alle eigenen sichtbaren
 Meldungen und Text-Kontextmenüs verwenden dieselbe Sprache. Die englische
@@ -33,6 +35,18 @@ python3 scripts/store_assets/run_gui.py --output target/gui-international
 unter `$HOME/.local/jdk-21`. Mit `--locales fr-FR` lässt sich eine Sprache gezielt
 prüfen. `--mode capture` oder `--mode verify` begrenzen einen Entwicklungsdurchlauf.
 Eine endgültige Lieferung verlangt `all` und alle sechs Sprachen.
+
+Der zusätzliche Import-/Export-Ablauf bedient native Dateidialoge und benötigt
+`xdotool` und `xsel`:
+
+```bash
+python3 scripts/store_assets/run_gui.py --output target/gui-transfer \
+  --locales de-DE --mode transfer
+```
+
+Er prüft Export trotz Suchfilter, Abbrechen, ungültige Dateien, sichere
+Importbestätigung, erhaltene IDs, Unicode, identische Exemplare, wiederholte
+Importe und eine reale SQLite-Sperre mit erfolgreichem Wiederholungsversuch.
 
 Der Helfer startet einen eigenen Xvfb-Server mit 1920 × 1080 Pixeln, deaktiviert
 TCP und beendet ausschließlich den selbst gestarteten Prozess. Jede Sprache

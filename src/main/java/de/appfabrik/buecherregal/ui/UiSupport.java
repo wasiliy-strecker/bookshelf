@@ -1,6 +1,7 @@
 package de.appfabrik.buecherregal.ui;
 
 import de.appfabrik.buecherregal.application.StorageException;
+import de.appfabrik.buecherregal.application.TransferException;
 import de.appfabrik.buecherregal.i18n.Messages;
 import java.util.Objects;
 import javafx.scene.Scene;
@@ -27,6 +28,9 @@ final class UiSupport {
   }
 
   static String message(Throwable failure, Messages messages) {
+    if (failure instanceof TransferException transfer) {
+      return messages.text("transfer.error." + transfer.code().name());
+    }
     return failure instanceof StorageException
         ? messages.text("storage." + ((StorageException) failure).code().name())
         : messages.text("error.generic");

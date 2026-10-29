@@ -1,6 +1,7 @@
 package de.appfabrik.buecherregal.ui;
 
 import de.appfabrik.buecherregal.application.BookService;
+import de.appfabrik.buecherregal.application.CollectionTransfer;
 import de.appfabrik.buecherregal.domain.Book;
 import de.appfabrik.buecherregal.i18n.Messages;
 import de.appfabrik.buecherregal.persistence.LanguagePreferences;
@@ -45,7 +46,8 @@ final class MainWindow {
   private final Button add = new Button();
   private final Button edit = new Button();
   private final Button delete = new Button();
-  private final Button reload = new Button();
+  private final Button export = new Button();
+  private final Button importBooks = new Button();
   private final List<Book> books = new ArrayList<>();
   private boolean busy;
   private boolean ready;
@@ -55,6 +57,7 @@ final class MainWindow {
   MainWindow(
       Stage stage,
       BookService service,
+      CollectionTransfer transfer,
       AsyncTasks tasks,
       Messages messages,
       LanguagePreferences preferences,
@@ -67,7 +70,8 @@ final class MainWindow {
     add.setText("+  " + messages.text("book.add"));
     edit.setText(messages.text("action.edit"));
     delete.setText(messages.text("action.delete"));
-    reload.setText(messages.text("action.reload"));
+    export.setText(messages.text("action.export"));
+    importBooks.setText(messages.text("action.import"));
     language.setText(messages.text("language.title"));
     language.setId("language-settings");
     language.setOnAction(
@@ -104,7 +108,8 @@ final class MainWindow {
     count.setId("book-count");
     edit.setId("edit-book");
     delete.setId("delete-book");
-    reload.setId("reload-books");
+    export.setId("export-books");
+    importBooks.setId("import-books");
     search.setId("search-books");
     search.setPromptText(messages.text("search.prompt"));
     search.setAccessibleText(messages.text("search.accessible"));
@@ -185,10 +190,26 @@ final class MainWindow {
     status.setMaxWidth(Double.MAX_VALUE);
     status.setMinWidth(0);
     HBox.setHgrow(status, Priority.ALWAYS);
-    reload.setOnAction(event -> load());
-
-    reload.setMinWidth(Region.USE_PREF_SIZE);
-    HBox footer = new HBox(16, status, language, reload);
+    var transfers =
+        new CollectionActions(
+            stage,
+            transfer,
+            tasks,
+            messages,
+            this::setBusy,
+            this::showStatus,
+            result -> {
+              books.clear();
+              books.addAll(result.books());
+              search.clear();
+              refresh(null);
+            });
+    export.setOnAction(event -> transfers.exportCollection());
+    importBooks.setOnAction(event -> transfers.importCollection());
+    export.setMinWidth(Region.USE_PREF_SIZE);
+    importBooks.setMinWidth(Region.USE_PREF_SIZE);
+    language.setMinWidth(Region.USE_PREF_SIZE);
+    HBox footer = new HBox(12, status, language, export, importBooks);
     footer.setAlignment(Pos.CENTER_LEFT);
     VBox root =
         new VBox(18, header, searchBar, table, actions, new VBox(6, noteHeading, note), footer);
@@ -368,13 +389,14 @@ final class MainWindow {
   private void setBusy(boolean value) {
     busy = value;
     table.setDisable(value);
-    reload.setDisable(value);
     language.setDisable(value);
     updateButtons();
   }
 
   private void updateButtons() {
     add.setDisable(busy || !ready || loadFailed);
+    export.setDisable(busy || !ready || loadFailed);
+    importBooks.setDisable(busy || !ready || loadFailed);
     boolean unavailable = busy || loadFailed || table.getSelectionModel().getSelectedItem() == null;
     edit.setDisable(unavailable);
     delete.setDisable(unavailable);

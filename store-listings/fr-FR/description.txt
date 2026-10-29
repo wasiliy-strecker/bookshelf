@@ -3,3 +3,5 @@ Une place pour chaque livre. BücherRegal rassemble titres, auteurs, emplacement
 Ajoutez un livre avec son titre uniquement, puis complétez les détails à votre rythme. La recherche couvre les quatre champs de texte pour retrouver vos impressions de lecture, une dédicace ou la bonne étagère.
 
 Votre collection reste enregistrée localement sur votre ordinateur. Aucun compte ni service cloud n’est nécessaire. L’interface est disponible en allemand, anglais, espagnol, français, italien et portugais du Brésil.
+
+Exportez toute votre collection de livres dans un fichier JSON et importez-la ultérieurement. Les livres existants sont conservés. Les exemplaires identiques déjà présents sont ignorés lors de l’import.

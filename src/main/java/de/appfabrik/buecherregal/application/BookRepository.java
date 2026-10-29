@@ -15,4 +15,6 @@ public interface BookRepository {
   Book update(long id, BookDraft draft);
 
   void delete(long id);
+
+  ImportResult importBooks(List<BookDraft> drafts);
 }

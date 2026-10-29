@@ -1,7 +1,9 @@
 package de.appfabrik.buecherregal.persistence;
 
 import de.appfabrik.buecherregal.application.BookRepository;
+import de.appfabrik.buecherregal.application.ImportResult;
 import de.appfabrik.buecherregal.application.StorageException;
+import de.appfabrik.buecherregal.application.TransferException;
 import de.appfabrik.buecherregal.domain.Book;
 import de.appfabrik.buecherregal.domain.BookDraft;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.sqlite.SQLiteConfig;
 
@@ -74,10 +77,18 @@ public final class SqliteBookRepository implements BookRepository {
 
   @Override
   public List<Book> findAll() {
-    try (Connection connection = connect();
-        var statement = connection.createStatement();
+    try (Connection connection = connect()) {
+      return readBooks(connection);
+    } catch (SQLException exception) {
+      throw failure(exception);
+    }
+  }
+
+  private static List<Book> readBooks(Connection connection) throws SQLException {
+    try (var statement = connection.createStatement();
         var result =
-            statement.executeQuery("SELECT id, title, author, location, note FROM books")) {
+            statement.executeQuery(
+                "SELECT id, title, author, location, note FROM books ORDER BY id")) {
       List<Book> books = new ArrayList<>();
       while (result.next()) {
         books.add(
@@ -89,8 +100,45 @@ public final class SqliteBookRepository implements BookRepository {
                 result.getString("note")));
       }
       return List.copyOf(books);
+    }
+  }
+
+  @Override
+  public ImportResult importBooks(List<BookDraft> drafts) {
+    List<BookDraft> input = List.copyOf(drafts);
+    try (Connection connection = connect()) {
+      connection.setAutoCommit(false);
+      try {
+        var available = new HashMap<BookDraft, Integer>();
+        for (Book book : readBooks(connection)) {
+          available.merge(book.draft(), 1, Integer::sum);
+        }
+        int added = 0;
+        int skipped = 0;
+        try (var statement =
+            connection.prepareStatement(
+                "INSERT INTO books (title, author, location, note) VALUES (?, ?, ?, ?)")) {
+          for (BookDraft draft : input) {
+            int copies = available.getOrDefault(draft, 0);
+            if (copies > 0) {
+              available.put(draft, copies - 1);
+              skipped++;
+            } else {
+              bind(statement, draft);
+              statement.executeUpdate();
+              added++;
+            }
+          }
+        }
+        var result = new ImportResult(added, skipped, readBooks(connection));
+        connection.commit();
+        return result;
+      } catch (SQLException | RuntimeException exception) {
+        connection.rollback();
+        throw exception;
+      }
     } catch (SQLException exception) {
-      throw failure(exception);
+      throw new TransferException(TransferException.Code.IMPORT, exception);
     }
   }
 

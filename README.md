@@ -55,6 +55,27 @@ Verwerfen abgefragt. Nach einem Speicherfehler bleiben deine Eingaben erhalten.
 | Enter im Notizfeld | Neue Zeile |
 | Entf in der Tabelle | Ausgewähltes Buch nach Bestätigung löschen |
 
+## Sammlung exportieren und importieren
+
+„Exportieren“ speichert die gesamte gespeicherte Sammlung als JSON-Datei.
+Titel, Autor, Aufbewahrungsort und vollständige Notizen sind enthalten.
+Eine aktive Suche schränkt den Export nicht ein. Vor dem Ersetzen einer
+vorhandenen Exportdatei wird eine Bestätigung angezeigt.
+
+„Importieren“ öffnet eine solche Datei und fragt vor der Übernahme nach.
+Vorhandene Bücher bleiben erhalten. Identische Exemplare werden mit ihrer
+Anzahl verglichen. Ein wiederholter Import derselben Datei fügt deshalb keine
+weiteren Kopien hinzu. Unterschiedliche Notizen ergeben unterschiedliche Einträge.
+Nach dem Import zeigt die App alle Bücher und meldet die Anzahl der hinzugefügten
+und bereits vorhandenen Exemplare.
+
+Die Datei wird vollständig geprüft, bevor Bücher übernommen werden. Bei einem
+Fehler wird der gesamte Import zurückgenommen. Eine Datei darf höchstens
+10.000 Bücher und 10 MiB enthalten. Die Datei funktioniert unabhängig von der
+gewählten App-Sprache. Die persönliche Sprachwahl ist nicht Teil der Sammlung.
+Die Schaltfläche „Neu laden“ entfällt. Nach Änderungen aktualisiert sich die
+Liste weiterhin automatisch.
+
 ## Sprachen
 
 Die Oberfläche unterstützt Deutsch, Englisch, Spanisch, Französisch,

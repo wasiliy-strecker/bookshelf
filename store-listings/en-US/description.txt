@@ -3,3 +3,5 @@ Give every book a place. BücherRegal keeps titles, authors, storage locations a
 Add a book with just its title, fill in the details whenever you like and find it again by searching across all four fields. Keep reading impressions, gift notes or shelf locations close at hand.
 
 Your collection is stored locally on your computer. No account or cloud service is needed. Choose German, English, Spanish, French, Italian or Brazilian Portuguese as your app language.
+
+Export your entire book collection as a JSON file and import it again later. Existing books are kept. Identical copies already present are skipped during import.

@@ -3,6 +3,7 @@ package de.appfabrik.buecherregal.ui;
 import de.appfabrik.buecherregal.domain.BookDraft;
 import de.appfabrik.buecherregal.i18n.AppLanguage;
 import de.appfabrik.buecherregal.i18n.Messages;
+import de.appfabrik.buecherregal.persistence.JsonCollectionFile;
 import de.appfabrik.buecherregal.persistence.LanguagePreferences;
 import de.appfabrik.buecherregal.persistence.SqliteBookRepository;
 import java.awt.image.BufferedImage;
@@ -94,6 +95,8 @@ public final class GuiJourney {
                     "saved language applied at startup");
                 if (mode.equals("capture")) {
                   captureJourney(output, messages, demo);
+                } else if (mode.equals("transfer")) {
+                  transferJourney(data, output, messages);
                 } else if (mode.equals("verify")) {
                   verifyJourney(data, output, messages);
                 } else if (mode.equals("restart")) {
@@ -178,6 +181,170 @@ public final class GuiJourney {
     check(
         fx(() -> ((Label) find("book-count")).getText()).equals(messages.count(5, 5, false)),
         "localized collection count");
+  }
+
+  private static void transferJourney(Path data, Path output, Messages messages) throws Exception {
+    check(fx(() -> find("reload-books") == null), "reload button removed");
+    check(
+        fx(() -> find("export-books") != null && find("import-books") != null),
+        "both collection actions visible");
+    Path database = data.resolve("buecherregal.db");
+    byte[] initialDatabase = Files.readAllBytes(database);
+    var repository = new SqliteBookRepository(database);
+    var original = repository.findAll();
+    var files = new JsonCollectionFile(data);
+    click("export-books");
+    nativeFile(messages.text("transfer.exportTitle"), null, true);
+    waitStatus(messages.text("transfer.cancelled"));
+    click("import-books");
+    nativeFile(messages.text("transfer.importTitle"), null, false);
+    waitStatus(messages.text("transfer.cancelled"));
+    check(
+        java.util.Arrays.equals(initialDatabase, Files.readAllBytes(database)),
+        "native cancellations preserve database");
+
+    enter("search-books", "no matching book for transfer check");
+    waitFor(() -> ((TableView<?>) find("books-table")).getItems().isEmpty());
+    Path exported = output.resolve("Sammlung für Ömer.json");
+    click("export-books");
+    nativeFile(messages.text("transfer.exportTitle"), exported, true);
+    waitStatus(messages.text("transfer.exported", 5));
+    check(
+        files.read(exported).equals(original.stream().map(book -> book.draft()).toList()),
+        "native export contains all five books despite empty search result");
+    check(
+        java.util.Arrays.equals(initialDatabase, Files.readAllBytes(database)),
+        "export preserves database bytes");
+
+    Path broken = output.resolve("broken.json");
+    Files.writeString(broken, "{}");
+    click("import-books");
+    nativeFile(messages.text("transfer.importTitle"), broken, false);
+    waitStatus(messages.text("transfer.error.FORMAT"));
+    check(
+        java.util.Arrays.equals(initialDatabase, Files.readAllBytes(database)),
+        "invalid import makes no changes");
+
+    Path incoming = output.resolve("incoming.json");
+    var drafts = new ArrayList<>(original.stream().map(book -> book.draft()).toList());
+    drafts.add(original.getFirst().draft());
+    drafts.add(new BookDraft("Import café – 日本語 📚", "Élise", "Étagère 2", "First\nSecond line"));
+    files.write(drafts, files.inspect(incoming), false);
+    click("import-books");
+    nativeFile(messages.text("transfer.importTitle"), incoming, false);
+    waitFor(() -> confirmationButton(messages.text("action.import")) != null);
+    key(KeyCode.ENTER);
+    waitStatus(messages.text("transfer.cancelled"));
+    check(
+        java.util.Arrays.equals(initialDatabase, Files.readAllBytes(database)),
+        "import confirmation defaults to cancellation");
+
+    importAndConfirm(incoming, messages);
+    waitStatus(messages.text("transfer.imported", 2, 5));
+    check(
+        fx(() -> ((TextInputControl) find("search-books")).getText()).isEmpty(),
+        "successful import clears search");
+    var restored = repository.findAll();
+    check(
+        restored.size() == 7 && restored.containsAll(original),
+        "import preserves existing identities and adds missing copies");
+    check(
+        restored.getLast().draft().equals(drafts.getLast()),
+        "Unicode and multiline note imported exactly");
+    importAndConfirm(incoming, messages);
+    waitStatus(messages.text("transfer.imported", 0, 7));
+    check(repository.findAll().equals(restored), "repeated import does not duplicate books");
+
+    try (var connection = DriverManager.getConnection("jdbc:sqlite:" + database);
+        var statement = connection.createStatement()) {
+      statement.execute("BEGIN EXCLUSIVE");
+      importAndConfirm(incoming, messages);
+      waitStatus(messages.text("transfer.error.IMPORT"));
+      statement.execute("ROLLBACK");
+    }
+    check(repository.findAll().equals(restored), "failed import preserves collection");
+    importAndConfirm(incoming, messages);
+    waitStatus(messages.text("transfer.imported", 0, 7));
+    check(repository.findAll().equals(restored), "import can be retried after storage failure");
+    check(
+        fx(() -> !find("export-books").isDisabled() && !find("import-books").isDisabled()),
+        "buttons enabled after failure and retry");
+    fx(
+        () -> {
+          Stage main = (Stage) find("add-book").getScene().getWindow();
+          main.setWidth(760);
+          main.setHeight(620);
+          return null;
+        });
+    pause();
+    checkButtonsFit();
+    screenshot(output.resolve("transfer-complete.png"));
+  }
+
+  private static void importAndConfirm(Path path, Messages messages) throws Exception {
+    click("import-books");
+    nativeFile(messages.text("transfer.importTitle"), path, false);
+    waitFor(() -> confirmationButton(messages.text("action.import")) != null);
+    fx(
+        () -> {
+          mouse(confirmationButton(messages.text("action.import")));
+          return null;
+        });
+    pause();
+  }
+
+  private static void waitStatus(String expected) throws Exception {
+    waitFor(() -> ((Label) find("status-message")).getText().equals(expected));
+  }
+
+  private static void nativeFile(String title, Path path, boolean save) throws Exception {
+    long deadline = System.nanoTime() + Duration.ofSeconds(10).toNanos();
+    String window = null;
+    while (System.nanoTime() < deadline) {
+      Process search =
+          new ProcessBuilder("xdotool", "search", "--onlyvisible", "--name", "^" + title + "$")
+              .start();
+      String found =
+          new String(search.getInputStream().readAllBytes(), StandardCharsets.UTF_8).strip();
+      if (search.waitFor() == 0 && !found.isBlank()) {
+        window = found.lines().findFirst().orElseThrow();
+        break;
+      }
+      Thread.sleep(80);
+    }
+    if (window == null) {
+      throw new AssertionError("Native file chooser missing: " + title);
+    }
+    command("xdotool", "windowfocus", window);
+    if (path == null) {
+      command("xdotool", "key", "Escape");
+      return;
+    }
+    String filename = path.toAbsolutePath().toString();
+    if (save) {
+      filename = filename.substring(0, filename.length() - ".json".length());
+    }
+    Process clipboard = new ProcessBuilder("xsel", "--clipboard", "--input").start();
+    try (var input = clipboard.getOutputStream()) {
+      input.write(filename.getBytes(StandardCharsets.UTF_8));
+    }
+    if (clipboard.waitFor() != 0) {
+      throw new AssertionError("Native clipboard failed");
+    }
+    command("xdotool", "key", "--clearmodifiers", "ctrl+l");
+    Thread.sleep(120);
+    command("xdotool", "key", "--clearmodifiers", "ctrl+v");
+    Thread.sleep(120);
+    command("xdotool", "key", "Return");
+    Thread.sleep(300);
+  }
+
+  private static void command(String... arguments) throws Exception {
+    Process process = new ProcessBuilder(arguments).redirectErrorStream(true).start();
+    String output = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+    if (process.waitFor() != 0) {
+      throw new AssertionError(output);
+    }
   }
 
   private static void verifyJourney(Path data, Path output, Messages messages) throws Exception {
@@ -312,7 +479,8 @@ public final class GuiJourney {
                     "button fits: " + button.getText());
                 Bounds bounds = button.localToScene(button.getBoundsInLocal());
                 check(
-                    bounds.getMaxY() <= window.getScene().getHeight() + 1,
+                    bounds.getMaxY() <= window.getScene().getHeight() + 1
+                        && bounds.getMaxX() <= window.getScene().getWidth() + 1,
                     "button is within window");
               }
             }

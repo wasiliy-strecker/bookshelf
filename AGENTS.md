@@ -9,6 +9,10 @@ Ein Maven-Modul mit Java 21, JavaFX und SQLite. Die Pakete `domain`,
 `application`, `persistence` und `ui` trennen Modell, Anwendungslogik,
 Datenzugriff und Oberfläche. Keine Runtime-Abhängigkeit auf andere Apps.
 Fotos, Status, Checklisten und PDF-Export gehören zu den späteren Apps.
+Auf ausdrücklichen Nutzerauftrag vom 29. Oktober 2026 ersetzt ein JSON-Export
+und -Import der Büchersammlung die Schaltfläche „Neu laden“. Der Import ergänzt
+fehlende Exemplare atomar, erhält bestehende IDs und löscht keine Bücher.
+Diese Erweiterung gilt ausschließlich für BücherRegal.
 
 ## Befehle
 
