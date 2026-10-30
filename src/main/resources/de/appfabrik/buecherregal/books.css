@@ -12,7 +12,7 @@
 .field-label { -fx-font-weight: bold; }
 .muted { -fx-text-fill: #65736a; }
 .error-text { -fx-text-fill: #9b352c; }
-.button {
+.button, .menu-button {
   -fx-background-radius: 7px;
   -fx-padding: 10px 17px;
   -fx-cursor: hand;
@@ -20,6 +20,8 @@
   -fx-text-fill: #294535;
 }
 .button:hover { -fx-background-color: #dce3da; }
+.menu-button:hover { -fx-background-color: #dce3da; }
+.menu-button:focused { -fx-border-color: #38664f; -fx-border-radius: 7px; -fx-border-width: 2px; -fx-padding: 8px 15px; }
 .button:focused { -fx-border-color: #38664f; -fx-border-radius: 7px; -fx-border-width: 2px; -fx-padding: 8px 15px; }
 .button.primary { -fx-background-color: #38664f; -fx-text-fill: white; -fx-font-weight: bold; }
 .button.primary:hover { -fx-background-color: #294e3b; }

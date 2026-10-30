@@ -5,3 +5,4 @@ Proteggi le modifiche non salvate con una conferma
 Conserva la raccolta localmente sul computer
 Scegli tra sei lingue per l’interfaccia
 Esportare e importare tutta la raccolta in formato JSON
+Leggere l’informativa sulla privacy offline nell’app

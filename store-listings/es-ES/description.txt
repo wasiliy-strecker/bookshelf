@@ -5,3 +5,5 @@ Añade un libro solo con su título y completa los detalles cuando quieras. Busc
 Tu colección se guarda localmente en tu ordenador. No necesitas una cuenta ni un servicio en la nube. Elige entre alemán, inglés, español, francés, italiano y portugués de Brasil.
 
 Exporta toda tu colección de libros como archivo JSON e impórtala más adelante. Los libros existentes se conservan. Se omiten los ejemplares idénticos que ya estén presentes.
+
+Un archivo admite hasta 10.000 libros y 10 MiB. Para unidades USB FAT32/exFAT, exporta primero a una carpeta local adecuada y copia después el archivo terminado a la unidad. La exportación directa segura necesita funciones que FAT32 y exFAT no admiten.

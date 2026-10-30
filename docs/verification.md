@@ -1,5 +1,85 @@
 # Prüfbericht
 
+## Lokale Store-Vorbereitung und Datenschutz, 30. Oktober 2026
+
+Urteil für einen Microsoft-Store-Release: **noch nicht bereit**. Die lokale
+Vorbereitung ist geprüft. Ein aktuelles Windows-Paket, Installation, Update,
+MSIX-Identität, Zertifizierung und endgültige Windows-Aufnahmen sind nicht belegt.
+
+Unter „Info“ ist die vollständige Datenschutzerklärung offline in allen sechs
+Sprachen erreichbar. Dialog und Store-Textexport verwenden dieselben Ressourcen.
+Der Dialog ist schreibgeschützt, scrollbar und kopierbar. Escape und „Schließen“
+führen zur unveränderten Sammlung zurück. Die Texte beschreiben lokale Speicherung,
+JSON-Dateien, unabhängige Sicherungen, Löschung und freiwillige Supportkontakte.
+
+| Tatsächlich ausgeführte Prüfung | Ergebnis |
+| --- | --- |
+| `./mvnw verify` auf Linux x64 mit Temurin 21.0.13+9 | 91 Tests, keine Fehler, keine ausgelassenen Fälle. Compiler-Lint, Enforcer, Spotless und SpotBugs bestanden |
+| 18 echte GUI-Prozesse in sechs Sprachen | 504 Prüfbedingungen bestanden, einschließlich Datenschutz, kleinen Fenstern, Sprachwechsel und Neustart |
+| Deutscher JSON-Ablauf mit nativen Linux-Dateidialogen | 32 Prüfbedingungen bestanden, einschließlich Abbruch, ungültiger Datei, Duplikaten, erhaltenen IDs und SQLite-Sperre |
+| Linux-App-Image neu gebaut und sichtbar gestartet | 19 Paketprüfungen bestanden. Mitgelieferte JVM aus Prozessbibliotheken belegt, `JAVA_HOME` entfernt, `PATH=/usr/bin:/bin` |
+| Paketierte Oberfläche | Unicode-Buch mit mehrzeiliger Notiz gespeichert. Deutsche und englische Datenschutzerklärung vollständig kopiert und mit Store-Textexport verglichen. Escape, Schließen und Neustart bestanden |
+| Datenhaltung im Paket | Datenbank bei Datenschutzanzeige und Sprachneustart bytegenau unverändert. Spracheinstellung bei Datenschutzanzeige bytegenau unverändert |
+| Paketinhalt | Aktuelles App-JAR, sechs Datenschutzressourcen, JavaFX und `jdk.localedata`, Laufzeitabhängigkeiten, Lizenztexte, Bedienungsanleitung und originale JDK-Herkunftsdatei geprüft |
+| Bildvorschau | 24 echte Linux-Aufnahmen in 1920 × 1080 erneuert und visuell kontrolliert. Zusätzlich Datenschutzdialoge in normaler und kleiner Größe geprüft |
+| Store-Texte und Icons | Textlängen aller sechs Sprachen innerhalb der dokumentierten Grenzen. Kurztexte passen in 270 Zeichen. Store-PNG mit 300 × 300 Pixeln und ICO mit sechs Größen von 16 bis 256 Pixeln geprüft |
+| Datenschutztextexport | Sechs UTF-8-Dateien aus denselben Ressourcen erzeugt. Schutz vor Überschreiben eines vorhandenen Ausgabeordners durch JUnit geprüft |
+
+Die app-lokale Temurin-Installation wurde aus dem offiziellen Archiv mit der
+veröffentlichten SHA-256-Prüfsumme geprüft:
+
+```text
+OpenJDK21U-jdk_x64_linux_hotspot_21.0.13_9.tar.gz
+d7f5d5cf865a2902b70ff549b97586a7d3f234e016f041ab447ea740c7d66d1c
+```
+
+Andere Java-Installationen wurden nicht ersetzt. Die Maven-Regeln und beide
+GitHub-Workflows sind auf dieselbe Version und Buildnummer festgelegt. Die
+geänderten Workflows wurden nicht gestartet. Der ältere belegte CI-Lauf mit
+33 Tests ist in [packaging.md](packaging.md) eingeordnet.
+
+Die Textlängen wurden gegen die aktuelle
+[Microsoft-Anleitung für MSIX-Store-Einträge](https://learn.microsoft.com/en-us/windows/apps/publish/publish-your-app/msix/add-and-edit-store-listing-info)
+geprüft. Das Kurztextfeld erlaubt 1.000 Zeichen, manche Ansichten zeigen
+zunächst 270. Die gewählten kürzeren Texte bleiben vollständig sichtbar.
+
+Der Hardlink-Schutztest hängt nicht mehr von POSIX-Dateiattributen ab. Er wird
+damit auch auf Windows ausgeführt, sobald dort die aktuelle Suite läuft.
+Fehlende Rechte zum Erzeugen symbolischer Links werden gesondert als
+ausgelassener Test ausgewiesen. Unter Linux bestanden beide Linktests.
+Der sichere JSON-Export wurde nicht abgeschwächt. FAT32 und exFAT bleiben als
+direkte Exportziele ungeeignet. Die übersetzten Fehler- und Store-Texte sowie
+die Anleitung erklären den Weg über einen lokalen Export mit anschließendem Kopieren.
+
+Aktuelle Nachweise in ignorierten Verzeichnissen:
+
+```text
+target/store-preparation-verify-final.log
+target/store-preparation-package.log
+target/store-preparation-all-languages
+target/store-preparation-transfer
+target/store-preparation-packaged-v2
+target/store-preparation-privacy
+target/store-preparation-visual-review
+```
+
+Der erste separate Pakettest verwendete eine unvollständige Tastensequenz zum
+Öffnen des Menüs. Mit Öffnen per Leertaste, anschließend Pfeil abwärts und Enter
+bestand der vollständige Ablauf. Dafür war keine App-Änderung erforderlich.
+Alle Oberflächenprüfungen verwendeten eigene Xvfb-Prozesse und ausschließlich
+ausdrücklich markierte synthetische Daten. Nutzerfenster wurden nicht bedient.
+
+Die neue Vorschau wird als Ordner unter `build/releases/international/`
+ausgegeben. Ihr Manifest ordnet die Aufnahmeprüfsummen dem sauberen lokalen
+Quellcommit zu. Sie enthält Store-Texte, 24 Bilder, Branding, Datenschutztexte
+und Nachweise. Es wird kein ZIP erzeugt. Frühere Lieferungen bleiben erhalten.
+
+Nur vorbereitet sind der explizite Windows-ICO-Pfad und die aktualisierte
+PowerShell-Paketierung. MSIX für den Store und eine kostenlose GitHub-EXE sind
+als getrennte Vertriebswege dokumentiert. Die MSIX-Paketierung selbst fehlt noch.
+Die nächsten Release-Schritte stehen priorisiert in [packaging.md](packaging.md).
+Es erfolgten kein Push, Workflow-Start, Upload oder Veröffentlichung.
+
 ## JSON-Export und Import, 29. Oktober 2026
 
 „Neu laden“ wurde durch „Exportieren“ und „Importieren“ ersetzt. Beide Aktionen,

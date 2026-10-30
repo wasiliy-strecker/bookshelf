@@ -29,6 +29,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "Abhängigkeiten konnten nicht zusammengestellt werden." }
     Copy-Item "target\buecherregal-$Version.jar" $InputDirectory
     Copy-Item THIRD_PARTY_NOTICES.md "$InputDirectory\legal"
+    Copy-Item README.md "$InputDirectory\legal\USER_GUIDE.md"
+    Copy-Item "$env:JAVA_HOME\release" "$InputDirectory\legal\BUILD_JAVA_RELEASE.txt"
     Copy-Item "third-party-licenses\*" "$InputDirectory\legal" -Recurse
     Get-ChildItem $InputDirectory -Filter "javafx-*.jar" | ForEach-Object {
         if ($_.Name -match '-win\.jar$') { Move-Item $_.FullName $Modules }
@@ -36,6 +38,7 @@ try {
     }
     $Common = @(
         "--name", "BuecherRegal", "--app-version", $Version,
+        "--icon", (Join-Path $Root "assets\branding\icon.ico"),
         "--vendor", "Wasiliy Strecker", "--description", "BücherRegal - deine lokale Büchersammlung",
         "--input", $InputDirectory, "--main-jar", "buecherregal-$Version.jar",
         "--main-class", "de.appfabrik.buecherregal.Launcher",

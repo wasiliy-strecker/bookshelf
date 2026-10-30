@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import de.appfabrik.buecherregal.application.TransferException;
 import de.appfabrik.buecherregal.domain.BookDraft;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -153,19 +154,32 @@ class JsonCollectionFileTest {
   }
 
   @Test
-  void rejectsDatabaseTargetsMissingParentsDirectoriesAndFileLinks() throws Exception {
+  void rejectsDatabaseTargetsMissingParentsAndDirectories() throws Exception {
     assertThrows(
         TransferException.class, () -> files.inspect(directory.resolve("buecherregal.db")));
     assertThrows(
         TransferException.class, () -> files.inspect(directory.resolve("missing/file.json")));
     Files.createDirectory(directory.resolve("folder.json"));
     assertThrows(TransferException.class, () -> files.inspect(directory.resolve("folder.json")));
-    assumeTrue(Files.getFileStore(directory).supportsFileAttributeView("posix"));
+  }
+
+  @Test
+  void rejectsHardLinksToDatabaseWithoutRequiringPosixAttributes() throws Exception {
     Path database = Files.writeString(directory.resolve("buecherregal.db"), "protected");
-    Files.createSymbolicLink(directory.resolve("link.json"), database);
     Files.createLink(directory.resolve("hardlink.json"), database);
-    assertThrows(TransferException.class, () -> files.inspect(directory.resolve("link.json")));
     assertThrows(TransferException.class, () -> files.inspect(directory.resolve("hardlink.json")));
+    assertEquals("protected", Files.readString(database));
+  }
+
+  @Test
+  void rejectsSymbolicLinksWhenTheTestAccountCanCreateThem() throws Exception {
+    Path database = Files.writeString(directory.resolve("buecherregal.db"), "protected");
+    try {
+      Files.createSymbolicLink(directory.resolve("link.json"), database);
+    } catch (IOException | UnsupportedOperationException | SecurityException exception) {
+      assumeTrue(false, "Symbolic links unavailable for this test account: " + exception);
+    }
+    assertThrows(TransferException.class, () -> files.inspect(directory.resolve("link.json")));
     assertEquals("protected", Files.readString(database));
   }
 }

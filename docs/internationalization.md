@@ -16,7 +16,7 @@ synthetische Beispieldaten liegen je Sprache im Projekt.
 
 ## Voraussetzungen
 
-Vollständiges JDK 21, Python 3 und ein ausführbarer Linux-Xvfb-Server.
+Eclipse Temurin JDK 21.0.13+9, Python 3 und ein ausführbarer Linux-Xvfb-Server.
 Der Server kann im PATH liegen oder durch BOOKSHELF_XVFB auf eine lokal
 entpackte ausführbare Datei zeigen. Notwendige Systembibliotheken müssen
 vorhanden sein. Die Aufnahmen benötigen keinen Zugriff auf DISPLAY=:0.
@@ -31,8 +31,8 @@ ImageMagick wird nur für das erneute Ableiten der Icons aus der SVG benötigt.
 python3 scripts/store_assets/run_gui.py --output target/gui-international
 ```
 
-`JAVA_HOME` und `PATH` müssen auf JDK 21 zeigen. Das Skript sucht ersatzweise
-unter `$HOME/.local/jdk-21`. Mit `--locales fr-FR` lässt sich eine Sprache gezielt
+`JAVA_HOME` und `PATH` müssen auf Temurin 21.0.13+9 zeigen. Das Skript sucht ersatzweise
+unter `$HOME/.local/share/buecherregal/jdk-21.0.13+9`. Mit `--locales fr-FR` lässt sich eine Sprache gezielt
 prüfen. `--mode capture` oder `--mode verify` begrenzen einen Entwicklungsdurchlauf.
 Eine endgültige Lieferung verlangt `all` und alle sechs Sprachen.
 
@@ -88,11 +88,14 @@ python3 scripts/store_assets/assemble.py target/gui-international \
   build/releases/international/buecherregal-linux-preview-YYYYMMDD-HHMM
 ```
 
-Der Zielordner und eine gleichnamige ZIP-Datei müssen neu sein. Die Verpackung
+Der Zielordner muss neu sein. Es wird ausschließlich ein Ordner erzeugt. Die Verpackung
 prüft Quellhashes, sauberen Git-Stand, alle 18 erfolgreichen GUI-Prozesse,
 Bildanzahl, PNG-Format und Abmessungen. Sie liefert sechs Text- und Bildpakete,
 Branding, Prüfnachweise, einen Herkunftsnachweis mit dem tatsächlichen lokalen
-Commit und Dateiprüfsummen. Die ZIP-Integrität wird kontrolliert.
+Commit und Dateiprüfsummen. Zusätzlich enthält `Privacy` die sechs Datenschutztexte aus der produktiven App.
+Der Dialog wird je Sprache auch bei kleiner Fenstergröße, mit Tastaturkopie,
+Scrollen, Escape und Schließen geprüft. Sammlung und Spracheinstellung bleiben
+dabei bytegenau unverändert. Diese zusätzlichen Bilder liegen in `Verification`.
 
 ## Branding
 
@@ -100,8 +103,8 @@ Die eigene SVG zeigt drei Bücher im Regal. Die Formen sind originale Vektoren
 und enthalten weder Stockbilder noch fremde Schriftarten. Die App verwendet
 das 256-Pixel-PNG als Fenstericon. Die Linux-App-Image-Paketierung nutzt dasselbe
 Icon. Die 1024-Pixel-Quelle, das 300-Pixel-Store-Icon und die Windows-ICO-Datei
-liegen unter `assets/branding`. Einbetten des ICO in das Windows-Paket folgt
-mit der Windows-Paketierung.
+liegen unter `assets/branding`. Das PowerShell-Skript übergibt das ICO ausdrücklich an jpackage.
+Die tatsächliche Darstellung in einem Windows-Paket ist noch nicht geprüft.
 
 ```bash
 bash scripts/generate_icons.sh

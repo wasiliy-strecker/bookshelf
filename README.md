@@ -12,14 +12,20 @@ KostümPlan (PDF-Export). Diese weiteren Apps bleiben eigenständige Projekte.
 
 ## Starten
 
-Für die Entwicklung brauchst du ein **vollständiges JDK 21**, beispielsweise
-Eclipse Temurin. `JAVA_HOME` muss auf dieses JDK zeigen. Maven wird über den
+Für die Entwicklung brauchst du ein **vollständiges Eclipse Temurin JDK 21.0.13+9**. `JAVA_HOME` muss auf dieses JDK zeigen. Maven wird über den
 beiliegenden Wrapper bezogen. Beim ersten Build ist Internet für die
 Abhängigkeiten erforderlich. Die App selbst arbeitet offline.
+
+Die Build-Version ist app-lokal festgelegt. Maven lehnt eine abweichende
+JDK-Version oder Distribution ab. Das JDK liegt auf diesem Entwicklungsrechner
+unter `$HOME/.local/share/buecherregal/jdk-21.0.13+9`. Andere Apps verwenden
+weiterhin ihre bisherigen Java-Installationen.
 
 Linux und macOS, aus dem Projektverzeichnis:
 
 ```bash
+export JAVA_HOME="$HOME/.local/share/buecherregal/jdk-21.0.13+9"
+export PATH="$JAVA_HOME/bin:$PATH"
 ./mvnw javafx:run
 ```
 
@@ -31,7 +37,7 @@ Windows PowerShell:
 
 Unter Linux gibt es außerdem `./scripts/run.sh`. Der Helfer verwendet bei
 fehlendem `JAVA_HOME` ein vorhandenes vollständiges JDK unter
-`$HOME/.local/jdk-21`. Er installiert nichts und ändert keine globale Einstellung.
+`$HOME/.local/share/buecherregal/jdk-21.0.13+9`. Er installiert nichts und ändert keine globale Einstellung.
 
 Das lokal erzeugte App-Image startet ohne separat installiertes Java:
 
@@ -75,6 +81,42 @@ Fehler wird der gesamte Import zurückgenommen. Eine Datei darf höchstens
 gewählten App-Sprache. Die persönliche Sprachwahl ist nicht Teil der Sammlung.
 Die Schaltfläche „Neu laden“ entfällt. Nach Änderungen aktualisiert sich die
 Liste weiterhin automatisch.
+
+Neue Exportdateien benötigen Hardlinks, das bestätigte Ersetzen benötigt einen
+atomaren Dateiaustausch. FAT32 und exFAT unterstützen den sicheren direkten
+Export nicht. Exportiere zuerst in einen geeigneten lokalen Ordner, unter
+Windows etwa auf NTFS. Kopiere danach die fertige JSON-Datei auf den USB-Datenträger.
+Auch ein Netzwerk- oder Cloud-Dateisystem kann diese Funktionen einschränken.
+Vorhandene Exporte werden bei einem Fehler nicht durch unvollständige Dateien ersetzt.
+
+## Datenschutz in der App
+
+Unter „Info“ → „Datenschutzerklärung für BücherRegal“ ist die vollständige
+Erklärung in der gewählten App-Sprache enthalten. Der Dialog funktioniert
+offline. Du kannst scrollen, mit Strg+A und Strg+C beziehungsweise Cmd+A und
+Cmd+C den Text kopieren und mit Escape oder „Schließen“ zurückkehren.
+Die Erklärung beschreibt die lokale Speicherung, unverschlüsselte JSON-Dateien,
+eigene Sicherungskopien und freiwillige Supportanfragen. Sie sendet keine Daten
+und verändert weder Sammlung noch Spracheinstellung.
+
+Die identischen Texte für die Store-Einreichung lassen sich in einen neuen
+Ordner exportieren, dessen übergeordnetes Verzeichnis bereits existiert:
+
+```bash
+./scripts/export_privacy.sh target/privacy-texts
+```
+
+Windows nach `mvnw.cmd test-compile`:
+
+```powershell
+& "$env:JAVA_HOME\bin\java.exe" -cp 'target/classes;target/test-classes' `
+  de.appfabrik.buecherregal.i18n.PrivacyTextExport target/privacy-texts
+```
+
+Es entstehen sechs UTF-8-Textdateien aus denselben Ressourcen wie der App-Dialog.
+Ein vorhandener Zielordner wird nicht überschrieben. Der Text muss zusätzlich
+im Partner Center hinterlegt werden. Eine erfolgte Einreichung wird damit
+nicht behauptet. Details stehen in [packaging.md](docs/packaging.md).
 
 ## Sprachen
 
@@ -141,16 +183,19 @@ Generierte Lieferungen liegen unter dem ignorierten Verzeichnis `build/`.
 
 ## Architektur und Auslieferung
 
-Java 21, JavaFX 21.0.11 und SQLite JDBC 3.53.4.0 in einem Maven-Modul.
+Temurin 21.0.13+9, JavaFX 21.0.11 und SQLite JDBC 3.53.4.0 in einem Maven-Modul.
 Die [Architekturerklärung](docs/architecture.md) erläutert den Ablauf
 „Buch speichern“ und die dabei sichtbaren Java-Kenntnisse.
 
 Die [Paketierungsanleitung](docs/packaging.md) beschreibt App-Images mit
-eingebetteter Laufzeit, Windows-EXE und macOS-DMG. Die vorbereiteten
+eingebetteter Laufzeit, Windows-EXE und macOS-DMG. Für den Microsoft Store ist MSIX vorgesehen,
+für den kostenlosen GitHub-Download eine EXE aus demselben Anwendungscode.
+Die MSIX-Paketierung und die Freigabe beider Windows-Pakete folgen separat. Die vorbereiteten
 GitHub-Workflows veröffentlichen keine Releases.
 
 Der [Prüfbericht](docs/verification.md) trennt ausgeführte Prüfungen von offenen
-Plattformtests. Aktuell ist die Linux-Ausführung geprüft. Windows, macOS und
-Store-Abnahmen sind noch offen. Ein Installer ist keine geprüfte Store-Version.
+Plattformtests. Der aktuelle App-Stand ist unter Linux geprüft. Ein älterer CI-Lauf
+prüfte 33 Tests auf Windows und macOS. Native Abnahmen des aktuellen Stands
+und Store-Abnahmen bleiben offen. Ein Installer ist keine geprüfte Store-Version.
 
 Hinweise zu Fremdkomponenten stehen in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

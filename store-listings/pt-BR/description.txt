@@ -5,3 +5,5 @@ Adicione um livro apenas com o título e complete os detalhes quando quiser. A b
 Sua coleção é salva localmente no computador. Você não precisa de conta nem de serviço de nuvem. A interface está disponível em alemão, inglês, espanhol, francês, italiano e português do Brasil.
 
 Exporte toda a sua coleção de livros como um arquivo JSON e importe-a novamente depois. Os livros existentes são mantidos. As cópias idênticas já presentes são ignoradas durante a importação.
+
+Um arquivo pode conter até 10.000 livros e 10 MiB. Para unidades USB FAT32/exFAT, exporte primeiro para uma pasta local adequada e depois copie o arquivo completo para a unidade. A exportação direta segura exige recursos que FAT32 e exFAT não oferecem.

@@ -5,3 +5,5 @@ Aggiungi un libro con il solo titolo e completa i dettagli quando vuoi. La ricer
 La raccolta viene salvata localmente sul computer. Non servono un account o un servizio cloud. Puoi scegliere tra tedesco, inglese, spagnolo, francese, italiano e portoghese brasiliano.
 
 Esporta tutta la raccolta di libri in un file JSON e importala di nuovo in seguito. I libri esistenti vengono conservati. Le copie identiche già presenti vengono ignorate durante l’importazione.
+
+Un file può contenere al massimo 10.000 libri e 10 MiB. Per unità USB FAT32/exFAT, esporta prima in una cartella locale adatta e poi copia il file completo sull’unità. L’esportazione diretta sicura richiede funzioni non supportate da FAT32 ed exFAT.

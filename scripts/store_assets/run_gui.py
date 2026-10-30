@@ -17,8 +17,8 @@ LOCALES = ('de-DE', 'en-US', 'es-ES', 'fr-FR', 'it-IT', 'pt-BR')
 
 
 def source_hashes():
-    files = [ROOT / 'pom.xml', ROOT / 'mvnw']
-    for folder in ('src', 'assets', 'scripts', '.mvn'):
+    files = [ROOT / 'pom.xml', ROOT / 'mvnw', ROOT / 'THIRD_PARTY_NOTICES.md']
+    for folder in ('src', 'assets', 'scripts', '.mvn', 'store-listings', 'third-party-licenses'):
         files.extend(path for path in (ROOT / folder).rglob('*')
                      if path.is_file() and '__pycache__' not in path.parts)
     return {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest()
@@ -26,7 +26,7 @@ def source_hashes():
 
 
 def java_command():
-    java_home = Path(os.environ.get('JAVA_HOME', str(Path.home() / '.local/jdk-21')))
+    java_home = Path(os.environ.get('JAVA_HOME', str(Path.home() / '.local/share/buecherregal/jdk-21.0.13+9')))
     java = java_home / 'bin/java'
     if not java.is_file():
         raise RuntimeError('Set JAVA_HOME to a full JDK 21')
@@ -113,6 +113,8 @@ def main():
                 'source_worktree_dirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip()),
                 'source_files_sha256': hashes, 'locales': args.locales, 'mode': args.mode,
                 'created_utc': datetime.now(timezone.utc).isoformat(),
+                'java_runtime': subprocess.check_output([command[0], '-version'],
+                                                        stderr=subprocess.STDOUT, text=True).strip(),
                 'host': platform.platform(),
                 'capture_method': 'JavaFX Robot screen capture of production BooksApplication, with real mouse and keyboard events',
             }

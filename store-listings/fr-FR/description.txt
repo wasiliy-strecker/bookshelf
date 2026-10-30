@@ -5,3 +5,5 @@ Ajoutez un livre avec son titre uniquement, puis complétez les détails à votr
 Votre collection reste enregistrée localement sur votre ordinateur. Aucun compte ni service cloud n’est nécessaire. L’interface est disponible en allemand, anglais, espagnol, français, italien et portugais du Brésil.
 
 Exportez toute votre collection de livres dans un fichier JSON et importez-la ultérieurement. Les livres existants sont conservés. Les exemplaires identiques déjà présents sont ignorés lors de l’import.
+
+Un fichier peut contenir au maximum 10 000 livres et 10 MiB. Pour un support USB FAT32/exFAT, exportez d’abord vers un dossier local adapté, puis copiez le fichier terminé sur le support. L’export direct sécurisé nécessite des fonctions absentes de FAT32 et exFAT.

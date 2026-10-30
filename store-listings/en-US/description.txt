@@ -5,3 +5,5 @@ Add a book with just its title, fill in the details whenever you like and find i
 Your collection is stored locally on your computer. No account or cloud service is needed. Choose German, English, Spanish, French, Italian or Brazilian Portuguese as your app language.
 
 Export your entire book collection as a JSON file and import it again later. Existing books are kept. Identical copies already present are skipped during import.
+
+A file can contain up to 10,000 books and 10 MiB. For FAT32/exFAT USB drives, export to a suitable local folder first, then copy the completed file to the drive. Safe direct export requires file system features that FAT32 and exFAT do not support.

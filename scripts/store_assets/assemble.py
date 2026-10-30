@@ -3,11 +3,11 @@
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
 import struct
 import subprocess
-import zipfile
 
 from run_gui import LOCALES, ROOT, source_hashes
 
@@ -28,8 +28,7 @@ def main():
         raise RuntimeError('All six capture and verification journeys are required')
     if subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip():
         raise RuntimeError('Commit the verified app source before recording delivery provenance')
-    archive = destination.with_name(destination.name + '.zip')
-    if destination.exists() or archive.exists():
+    if destination.exists():
         raise RuntimeError('An existing delivery must not be overwritten')
     for locale in LOCALES:
         for phase in ('capture', 'verify', 'verify/restart'):
@@ -51,6 +50,12 @@ def main():
     shutil.copy2(ROOT / 'store-listings/default-language.txt', destination / 'Store/default-language.txt')
     shutil.copytree(ROOT / 'assets/branding', destination / 'Branding')
     shutil.copytree(captures, destination / 'Verification')
+    java_home = Path(os.environ.get('JAVA_HOME', str(
+        Path.home() / '.local/share/buecherregal/jdk-21.0.13+9')))
+    subprocess.run([str(java_home / 'bin/java'), '-cp',
+                    os.pathsep.join([str(ROOT / 'target/classes'), str(ROOT / 'target/test-classes')]),
+                    'de.appfabrik.buecherregal.i18n.PrivacyTextExport', str(destination / 'Privacy')],
+                   cwd=ROOT, check=True)
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     manifest['verified_source_commit'] = commit
     manifest['source_commit_confirmed_by_file_hashes'] = True
@@ -64,6 +69,7 @@ def main():
         'Die Aufnahmen sind eine Vorschau und keine Windows-Store-Abnahme.\n\n'
         'Store enthält je Sprache vier Bilder und direkt kopierbare Textdateien.\n'
         'Branding enthält SVG, PNG und Windows-ICO.\n'
+        'Privacy enthält dieselben Datenschutztexte wie der Offline-Dialog.\n'
         'Verification enthält die GUI-Prüfungen und Herkunftsnachweise.\n'
         f'Geprüfter lokaler Quellcommit: {commit}\n\n'
         'Offen: Windows-Paketierung, native Windows-Abnahme, endgültige\n'
@@ -73,15 +79,7 @@ def main():
         if path.is_file():
             checksums.append(hashlib.sha256(path.read_bytes()).hexdigest() + '  ' + str(path.relative_to(destination)))
     (destination / 'SHA256SUMS.txt').write_text('\n'.join(checksums) + '\n')
-    with zipfile.ZipFile(archive, 'x', zipfile.ZIP_DEFLATED) as output:
-        for path in sorted(destination.rglob('*')):
-            if path.is_file():
-                output.write(path, path.relative_to(destination.parent))
-    with zipfile.ZipFile(archive) as output:
-        if output.testzip() is not None:
-            raise RuntimeError('ZIP integrity check failed')
     print(destination)
-    print(archive)
     print('Verified delivery: six languages, 24 screenshots, source commit ' + commit[:7])
 
 

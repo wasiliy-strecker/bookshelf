@@ -3,6 +3,7 @@ package de.appfabrik.buecherregal.ui;
 import de.appfabrik.buecherregal.domain.BookDraft;
 import de.appfabrik.buecherregal.i18n.AppLanguage;
 import de.appfabrik.buecherregal.i18n.Messages;
+import de.appfabrik.buecherregal.i18n.PrivacyNotice;
 import de.appfabrik.buecherregal.persistence.JsonCollectionFile;
 import de.appfabrik.buecherregal.persistence.LanguagePreferences;
 import de.appfabrik.buecherregal.persistence.SqliteBookRepository;
@@ -25,7 +26,9 @@ import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.input.Clipboard;
@@ -358,6 +361,7 @@ public final class GuiJourney {
     pause();
     checkButtonsFit();
     screenshot(output.resolve("minimum-main.png"));
+    privacyJourney(data, output, messages);
     click("add-book");
     waitFor(() -> find("save-book") != null);
     click("save-book");
@@ -465,6 +469,69 @@ public final class GuiJourney {
     Files.writeString(output.resolve("restart-locale.txt"), next + "\n");
   }
 
+  private static void privacyJourney(Path data, Path output, Messages messages) throws Exception {
+    byte[] database = Files.readAllBytes(data.resolve("buecherregal.db"));
+    byte[] preference = Files.readAllBytes(data.resolve("language.txt"));
+    click("app-info");
+    key(KeyCode.DOWN);
+    key(KeyCode.ENTER);
+    waitFor(() -> find("privacy-text") != null);
+    String expected = PrivacyNotice.text(messages);
+    check(
+        fx(() -> ((TextArea) find("privacy-text")).getText()).equals(expected),
+        "complete offline privacy text in selected language");
+    check(!fx(() -> ((TextArea) find("privacy-text")).isEditable()), "privacy text is read-only");
+    fx(
+        () -> {
+          Stage dialog = (Stage) find("privacy-text").getScene().getWindow();
+          dialog.setWidth(440);
+          dialog.setHeight(380);
+          return null;
+        });
+    pause();
+    checkButtonsFit();
+    click("privacy-text");
+    fx(
+        () -> {
+          Robot robot = new Robot();
+          robot.keyPress(KeyCode.CONTROL);
+          robot.keyType(KeyCode.A);
+          robot.keyType(KeyCode.C);
+          robot.keyRelease(KeyCode.CONTROL);
+          return null;
+        });
+    pause();
+    check(
+        fx(() -> Clipboard.getSystemClipboard().getString()).equals(expected),
+        "entire privacy policy copied with keyboard");
+    fx(
+        () -> {
+          Robot robot = new Robot();
+          robot.keyPress(KeyCode.CONTROL);
+          robot.keyType(KeyCode.END);
+          robot.keyRelease(KeyCode.CONTROL);
+          return null;
+        });
+    pause();
+    check(fx(() -> ((TextArea) find("privacy-text")).getScrollTop()) > 0, "long policy scrolls");
+    screenshot(output.resolve("privacy-small.png"));
+    key(KeyCode.ESCAPE);
+    waitFor(() -> find("privacy-text") == null);
+    click("app-info");
+    key(KeyCode.DOWN);
+    key(KeyCode.ENTER);
+    waitFor(() -> find("privacy-close") != null);
+    screenshot(output.resolve("privacy.png"));
+    click("privacy-close");
+    waitFor(() -> find("privacy-text") == null);
+    check(
+        java.util.Arrays.equals(database, Files.readAllBytes(data.resolve("buecherregal.db"))),
+        "privacy dialog preserves database byte-for-byte");
+    check(
+        java.util.Arrays.equals(preference, Files.readAllBytes(data.resolve("language.txt"))),
+        "privacy dialog preserves language preference byte-for-byte");
+  }
+
   private static void checkButtonsFit() throws Exception {
     fx(
         () -> {
@@ -482,6 +549,16 @@ public final class GuiJourney {
                     bounds.getMaxY() <= window.getScene().getHeight() + 1
                         && bounds.getMaxX() <= window.getScene().getWidth() + 1,
                     "button is within window");
+              }
+            }
+            for (Node node : window.getScene().getRoot().lookupAll(".menu-button")) {
+              if (node instanceof MenuButton button && button.isVisible()) {
+                Bounds bounds = button.localToScene(button.getBoundsInLocal());
+                check(button.getWidth() + 1 >= button.prefWidth(-1), "info menu label fits");
+                check(
+                    bounds.getMaxX() <= window.getScene().getWidth() + 1
+                        && bounds.getMaxY() <= window.getScene().getHeight() + 1,
+                    "info menu is within window");
               }
             }
           }

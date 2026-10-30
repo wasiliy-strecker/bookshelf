@@ -16,7 +16,7 @@ Diese Erweiterung gilt ausschließlich für BücherRegal.
 
 ## Befehle
 
-Alle Befehle aus diesem App-Verzeichnis mit vollständigem JDK 21 ausführen.
+Alle Befehle aus diesem App-Verzeichnis mit Eclipse Temurin JDK 21.0.13+9 ausführen.
 
 ```bash
 ./mvnw spotless:apply
@@ -27,7 +27,7 @@ Alle Befehle aus diesem App-Verzeichnis mit vollständigem JDK 21 ausführen.
 ```
 
 `scripts/run.sh` und `scripts/package.sh` finden auch ein vorhandenes JDK unter
-`$HOME/.local/jdk-21`, wenn `JAVA_HOME` nicht gesetzt ist. Für direkte Maven-
+`$HOME/.local/share/buecherregal/jdk-21.0.13+9`, wenn `JAVA_HOME` nicht gesetzt ist. Für direkte Maven-
 Befehle `JAVA_HOME` und `PATH` entsprechend setzen.
 
 Für Windows den Wrapper `mvnw.cmd` verwenden. Die native Paketierung wird mit
@@ -66,6 +66,11 @@ Die Datenverzeichnisse müssen ausdrücklich als synthetisch markiert sein.
 Vor Aufnahmen `test-compile` und den Test-Classpath aktualisieren. Nach finalen
 Quelländerungen Aufnahmen neu erstellen, damit die Prüfsummen übereinstimmen.
 Die Anleitung steht in `docs/internationalization.md`.
+
+Der Datenschutzdialog und die exportierten Store-Datenschutztexte verwenden
+dieselben ResourceBundles. Die Vorschau-Lieferung ist ein Ordner ohne ZIP.
+Microsoft Store: MSIX. Kostenloser GitHub-Download: EXE. Beide Wege verwenden
+denselben Anwendungscode. Native Windows-Paketierung und Abnahme bleiben separat.
 
 Lieferpakete sind Linux-Vorschauen. Keine Windows-Abnahme daraus ableiten.
 `assemble.py` verlangt den sauberen lokalen Commit des geprüften Quellstands.

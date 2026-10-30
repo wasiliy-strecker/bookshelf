@@ -14,6 +14,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -209,7 +211,12 @@ final class MainWindow {
     export.setMinWidth(Region.USE_PREF_SIZE);
     importBooks.setMinWidth(Region.USE_PREF_SIZE);
     language.setMinWidth(Region.USE_PREF_SIZE);
-    HBox footer = new HBox(12, status, language, export, importBooks);
+    MenuItem privacy = new MenuItem(messages.text("privacy.title"));
+    privacy.setOnAction(event -> new PrivacyDialog(stage, messages).show());
+    MenuButton info = new MenuButton(messages.text("info.title"), null, privacy);
+    info.setId("app-info");
+    info.setMinWidth(Region.USE_PREF_SIZE);
+    HBox footer = new HBox(12, status, info, language, export, importBooks);
     footer.setAlignment(Pos.CENTER_LEFT);
     VBox root =
         new VBox(18, header, searchBar, table, actions, new VBox(6, noteHeading, note), footer);

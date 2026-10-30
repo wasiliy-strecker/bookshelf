@@ -5,3 +5,5 @@ Lege ein Buch zunächst nur mit seinem Titel an und ergänze die Angaben später
 Deine Sammlung wird lokal auf deinem Computer gespeichert. Ein Konto oder Cloud-Dienst ist nicht erforderlich. Als App-Sprache stehen Deutsch, Englisch, Spanisch, Französisch, Italienisch und brasilianisches Portugiesisch zur Wahl.
 
 Exportiere deine gesamte Büchersammlung als JSON-Datei und importiere sie später wieder. Vorhandene Bücher bleiben erhalten. Bereits vorhandene identische Exemplare werden beim Import übersprungen.
+
+Eine Datei kann höchstens 10.000 Bücher und 10 MiB enthalten. Für FAT32-/exFAT-USB-Laufwerke exportiere zuerst in einen geeigneten lokalen Ordner und kopiere anschließend die fertige Datei auf das Laufwerk. Der sichere direkte Export benötigt Dateisystemfunktionen, die FAT32 und exFAT nicht unterstützen.
