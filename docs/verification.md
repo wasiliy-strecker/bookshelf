@@ -1,5 +1,26 @@
 # Prüfbericht
 
+## Datenschutzdialog vergrößert, 31. Oktober 2026
+
+Der Datenschutzdialog behält die zuletzt gewählte Größenkonfiguration:
+bevorzugter Inhalt 780 × 660, Mindestfenster 560 × 420. Die tatsächliche
+Darstellung hängt zusätzlich vom Fensterrahmen und Fenstermanager ab.
+Auf Nutzerwunsch bestimmt wieder das System die anfängliche Position.
+Es gibt keine eigene Zentrierung und keine programmatischen X-/Y-Vorgaben.
+
+`./mvnw verify` besteht mit 91 Tests ohne Fehler oder ausgelassene Fälle,
+einschließlich Compiler-Lint, Enforcer, Spotless und SpotBugs. Die deutsche
+GUI-Prüfung mit Datenschutzanzeige, Kopieren, Scrollen, Escape, Schließen und
+Sprachneustart besteht. Nachweise liegen unter `target/privacy-size-final-gui`.
+Der Buildnachweis liegt in `target/privacy-size-final-verify.log`.
+
+Das neue App-JAR unterscheidet sich vom vorherigen geprüften Paket ausschließlich
+in `PrivacyDialog.class`. Es wurde im vorhandenen Linux-App-Image ersetzt und
+der Launcher mit derselben Testsammlung sichtbar neu geöffnet. Datenbank und
+Spracheinstellung blieben bytegenau unverändert. Der Nachweis liegt unter
+`target/privacy-size-desktop-final.json`. Die bisherigen Vorschau-Lieferungen
+bleiben ihrem früheren Quellcommit zugeordnet.
+
 ## Lokale Store-Vorbereitung und Datenschutz, 30. Oktober 2026
 
 Urteil für einen Microsoft-Store-Release: **noch nicht bereit**. Die lokale

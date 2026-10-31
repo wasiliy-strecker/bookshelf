@@ -36,12 +36,14 @@ final class PrivacyDialog {
     actions.setAlignment(Pos.CENTER_RIGHT);
     VBox root = new VBox(16, text, actions);
     root.setPadding(new Insets(24));
+    root.setPrefSize(780, 660);
     VBox.setVgrow(text, Priority.ALWAYS);
-    Scene scene = new Scene(root, 700, 620);
+    Scene scene = new Scene(root);
     UiSupport.style(scene);
     stage.setScene(scene);
-    stage.setMinWidth(420);
-    stage.setMinHeight(360);
+    stage.setMinWidth(560);
+    stage.setMinHeight(420);
+    stage.setOnShown(event -> stage.sizeToScene());
   }
 
   void show() {
