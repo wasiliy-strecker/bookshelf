@@ -1,0 +1,1 @@
+Primera versión de BücherRegal. Organiza tus libros con autores, ubicaciones y notas, busca en tu colección y transfiérela mediante la importación y exportación JSON. Incluye seis idiomas de interfaz y una política de privacidad disponible sin conexión.

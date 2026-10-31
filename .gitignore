@@ -10,3 +10,6 @@ target/
 .env
 build/
 __pycache__/
+packaging/windows/store.local.json
+*.pfx
+*.p12

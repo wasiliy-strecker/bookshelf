@@ -51,6 +51,14 @@ Die zusätzlichen nativen Komponenten des endgültigen Windows-Pakets sind
 erst am tatsächlich gebauten Windows-Artefakt abschließend zu inventarisieren.
 Die Linux-Prüfung ist keine Lizenz- oder Signaturabnahme eines Windows-Pakets.
 
+Die lokale Store-Vorbereitung vom 31. Oktober 2026 bezieht die vollständigen
+Temurin- und OpenJFX-Quellarchive sowie die referenzierten Temurin-Buildskripte
+und Windows-Buildmetadaten. Feste URLs und SHA-256 stehen in
+`packaging/runtime-sources.json`. `scripts/prepare_store_release.py` übernimmt
+sie in `RuntimeSources` der internen Übergabe. Sie sind noch nicht öffentlich
+bereitgestellt. Der Abgleich mit den endgültigen Windows-Binärdateien bleibt
+weiterhin erforderlich. Details: `packaging/runtime-sources-readme.txt`.
+
 Maven, Spotless, SpotBugs und JUnit sind Entwicklungswerkzeuge und werden nicht
 in das App-Image aufgenommen. Dieses Dokument vergibt keine Lizenz für den
 eigenen BücherRegal-Quellcode.

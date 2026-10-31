@@ -1,0 +1,11 @@
+BücherRegal is an offline desktop application for a personal book collection. No account, subscription, external hardware or credentials are required.
+
+The runFullTrust capability is required to run the bundled JavaFX desktop application and its SQLite JDBC native library. The package includes its Java runtime. Users do not need to install Java separately. The application stores the collection locally and supports user-initiated JSON import and export through native file dialogs. It does not require administrator privileges for normal operation.
+
+Suggested review flow: add a book with a title, author, storage location and note. Edit it, search for it, export the collection as JSON, restart the app and import the file. Importing the same collection again should not create additional identical copies. Existing books are retained.
+
+The Language button offers German, English, Spanish, French, Italian and Brazilian Portuguese. The Info menu includes the complete offline privacy policy in the selected language.
+
+Collection transfer accepts up to 10,000 books and files up to 10 MiB. For FAT32 or exFAT drives, export to a local NTFS folder first and then copy the completed JSON file to the removable drive.
+
+These are review instructions, not a record of completed certification tests.

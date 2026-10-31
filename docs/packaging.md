@@ -105,12 +105,21 @@ Am 30. Oktober 2026 wurden zwei Vertriebswege aus demselben App-Code festgelegt:
 | Microsoft Store | MSIX | Microsoft signiert die Store-Lieferung und stellt Store-Updates bereit |
 | Kostenloser GitHub-Download | EXE | Eigene Signierung und Updateversorgung sind vor öffentlicher Freigabe zu klären und zu prüfen |
 
-Die MSIX-Paketierung ist noch nicht implementiert. Produktregistrierung,
+Die MSIX-Paketierung ist seit 31. Oktober 2026 als Windows-Helfer implementiert,
+aber noch nicht ausgeführt. Die [MSIX-Anleitung](microsoft-store-release.md)
+enthält die Konfiguration, Paketierung und manuelle Abnahme. Produktregistrierung,
 reservierter Name, echte Package Identity und Publisher aus Partner Center
-werden im Windows-Releaseauftrag benötigt. Keine Beispielkennung als
-Produktionsidentität verwenden. Die App-Version bleibt vorerst `0.1.0`.
+fehlen noch. Keine Beispielkennung als Produktionsidentität verwenden.
+Die App-Version bleibt vorerst `0.1.0`.
 Die vierteilige MSIX-Paketversion muss die Store-Regeln erfüllen. Die Java-
 Paketkennung und Installer-Upgrade-ID ersetzen keine Partner-Center-Identität.
+
+`scripts/package_msix.ps1` baut ohne Tests und ohne Launcher-Start ein neues
+Windows-App-Image und verpackt es mit MakeAppx. Die Beispielkonfiguration enthält
+bewusst leere Store-Identitäten. Die vorgeschlagene MSIX-Version ist `1.0.0.0`.
+Store-Upload, lokale Testsignierung und Installation werden nicht ausgeführt.
+Der bestehende Windows-Pakethelfer unterstützt dafür `-SkipLauncherCheck`.
+Im normalen EXE-/App-Image-Aufruf bleibt die bisherige Launcher-Prüfung aktiv.
 
 Die vorhandene EXE-Vorbereitung bleibt für GitHub erhalten. Ein kostenloser
 Download legt keine neue Open-Source-Lizenz für den eigenen Code fest.

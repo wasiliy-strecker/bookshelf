@@ -72,6 +72,14 @@ dieselben ResourceBundles. Die Vorschau-Lieferung ist ein Ordner ohne ZIP.
 Microsoft Store: MSIX. Kostenloser GitHub-Download: EXE. Beide Wege verwenden
 denselben Anwendungscode. Native Windows-Paketierung und Abnahme bleiben separat.
 
+`scripts/package_msix.ps1` baut auf Windows ein unsigniertes MSIX ohne Tests
+oder Launcher-Start. Echte Werte aus Partner Center in der ignorierten Datei
+`packaging/windows/store.local.json` sind erforderlich. Es wird nichts installiert
+oder hochgeladen. Anleitung: `docs/microsoft-store-release.md`.
+`scripts/prepare_store_release.py` erstellt eine interne Übergabe aus dem
+committeten Stand ohne Tests. Sie ist keine geprüfte Vorschau von `assemble.py`
+und keine Store-Freigabe. Unversionierte persönliche Dateien bleiben außen vor.
+
 Lieferpakete sind Linux-Vorschauen. Keine Windows-Abnahme daraus ableiten.
 `assemble.py` verlangt den sauberen lokalen Commit des geprüften Quellstands.
 Generierte Lieferungen gehören unter `build/` und nicht in Git. Roadmap unter

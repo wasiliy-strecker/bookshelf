@@ -1,5 +1,39 @@
 # Prüfbericht
 
+## MSIX-Vorbereitung nur für BücherRegal, 31. Oktober 2026
+
+Urteil bleibt **noch nicht bereit**. Der Nutzer hat noch keine App im Partner
+Center angelegt. Die drei echten Produktidentitätswerte fehlen. Auf diesem
+Ubuntu-PC wurde kein Windows-MSIX gebaut, signiert oder installiert.
+
+Neu vorbereitet sind ein Windows-MSIX-Helfer, Manifest und Paketlogos,
+Konfigurationsvorlage ohne erfundene Identität, Erstveröffentlichungstexte in
+sechs Sprachen sowie Support- und Zertifizierungshinweise. Der Helfer baut ein
+neues App-Image mit eingebettetem Java, setzt die echte Identität ein und nutzt
+die reguläre MakeAppx-Paketvalidierung. Er startet weder App noch Tests. Seine
+Windows-Ausführung ist offen. Die bestehende EXE-Paketierung bleibt separat.
+
+Lokal tatsächlich ausgeführt: Paketlogos aus dem vorhandenen Motiv erzeugt.
+Vollständige Temurin-/OpenJFX-Quellarchive, Temurin-Buildskripte und Herkunfts-
+metadaten heruntergeladen und ihre SHA-256 für die Lieferung festgehalten.
+Temurins Quellarchiv wurde mit der veröffentlichten SHA-256 abgeglichen.
+Keine Windows-Binärdateien dadurch abgenommen. Die öffentliche Bereitstellung
+der Quellen und die endgültige Windows-Lizenzinventur bleiben offen.
+
+`scripts/prepare_store_release.py` erstellt eine interne Ordnerübergabe aus dem
+committeten Quellstand. Sie enthält Store-Texte, Datenschutztexte aus den
+Produktionsressourcen, Icons, Laufzeitquellen und die manuelle Anleitung.
+Sie ist keine geprüfte Vorschau von `assemble.py`. Ihre Metadaten nennen
+`storeReady: false`, `testsExecuted: false` und offene Windows-Abnahme.
+Unversionierte persönliche JSON-Exporte werden nicht übernommen.
+
+Auf Nutzerwunsch keine Tests, kein `verify`, keine GUI-Automation und kein
+WACK-Lauf. Manuelle Schritte und benötigte Nachweise stehen in
+[microsoft-store-release.md](microsoft-store-release.md). Insbesondere sind
+Installation ohne vorhandenes Java, Offline-Betrieb, sechs Sprachen, JSON,
+Datenpfad und Datenbestand nach einem MSIX-Update sowie finale Windows-Bilder
+noch abzunehmen. Historische Prüfungen weiter unten gelten nur für ihren Stand.
+
 ## App-Icons auf den drei Desktop-Plattformen, 31. Oktober 2026
 
 Vorhandene Motive in zusätzliche Fenstergrößen, Windows-ICO und macOS-ICNS

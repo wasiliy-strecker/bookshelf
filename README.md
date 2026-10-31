@@ -194,15 +194,29 @@ Die [Architekturerklärung](docs/architecture.md) erläutert den Ablauf
 Die [Paketierungsanleitung](docs/packaging.md) beschreibt App-Images mit
 eingebetteter Laufzeit, Windows-EXE und macOS-DMG. Für den Microsoft Store ist MSIX vorgesehen,
 für den kostenlosen GitHub-Download eine EXE aus demselben Anwendungscode.
-Die MSIX-Paketierung und die Freigabe beider Windows-Pakete folgen separat. Die vorbereiteten
-GitHub-Workflows veröffentlichen keine Releases.
+Der [MSIX-Helfer und die Windows-Abnahme](docs/microsoft-store-release.md) sind
+vorbereitet. Echte Store-Identität, Windows-Ausführung und Freigabe stehen noch aus.
+Die vorbereiteten GitHub-Workflows veröffentlichen keine Releases.
 
 Der [Prüfbericht](docs/verification.md) trennt ausgeführte Prüfungen von offenen
-Plattformtests. Der aktuelle App-Stand ist unter Linux geprüft. Ein älterer CI-Lauf
+Plattformtests. Frühere Stände wurden unter Linux geprüft. Für die jüngsten
+Änderungen wurden auf Nutzerwunsch keine Tests ausgeführt. Ein älterer CI-Lauf
 prüfte 33 Tests auf Windows und macOS. Native Abnahmen des aktuellen Stands
 und Store-Abnahmen bleiben offen. Ein Installer ist keine geprüfte Store-Version.
 
 Hinweise zu Fremdkomponenten stehen in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+Eine interne Übergabe ohne Testausführung entsteht aus einem lokal committeten Stand:
+
+```bash
+python3 scripts/prepare_store_release.py build/releases/store-preparation/neuer-ordner
+```
+
+Der Ordner enthält Quellen, Store-Texte, Datenschutz, Icons, Laufzeitquellen und
+die manuelle Anleitung. Er enthält kein fertiges MSIX und keine als final
+ausgewiesenen Screenshots. Persönliche unversionierte Exportdateien werden
+nicht übernommen. Vorhandene Ausgaben werden nicht ersetzt. Kein ZIP, Upload
+oder Release. Python 3.11 oder neuer und das festgelegte JDK sind erforderlich.
 
 ## App-Icon und Ubuntu-Anwendungsmenü
 

@@ -1,6 +1,7 @@
 ﻿param(
     [ValidateSet("app-image", "exe")]
-    [string]$PackageType = "app-image"
+    [string]$PackageType = "app-image",
+    [switch]$SkipLauncherCheck
 )
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $PSScriptRoot
@@ -11,7 +12,7 @@ if (-not $env:JAVA_HOME -or -not (Test-Path "$env:JAVA_HOME\bin\javac.exe") -or
 $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
 Push-Location $Root
 try {
-    & .\mvnw.cmd --batch-mode --no-transfer-progress package -DskipTests
+    & .\mvnw.cmd --batch-mode --no-transfer-progress package "-Dmaven.test.skip=true"
     if ($LASTEXITCODE -ne 0) { throw "Maven-Build fehlgeschlagen." }
     [xml]$Pom = Get-Content pom.xml -Raw
     $Version = [string]$Pom.project.version
@@ -52,8 +53,10 @@ try {
     $AppImage = Join-Path $ImageDestination "BuecherRegal"
     $Launcher = Join-Path $AppImage "BuecherRegal.exe"
     # GUI launchers on Windows do not reliably expose stdout. Wait for the process.
-    $Check = Start-Process -FilePath $Launcher -ArgumentList "--version" -Wait -PassThru
-    if ($Check.ExitCode -ne 0) { throw "Paketierter Launcher ist fehlgeschlagen." }
+    if (-not $SkipLauncherCheck) {
+        $Check = Start-Process -FilePath $Launcher -ArgumentList "--version" -Wait -PassThru
+        if ($Check.ExitCode -ne 0) { throw "Paketierter Launcher ist fehlgeschlagen." }
+    }
     if ($PackageType -eq "exe") {
         $Staging = Join-Path $Root "target\installer-staging"
         if (Test-Path $Staging) { Remove-Item $Staging -Recurse -Force }
@@ -68,7 +71,8 @@ try {
         Move-Item "$Staging\BuecherRegal-$Version.exe" $Output
         Write-Host "EXE erstellt, native Abnahme separat durchführen: $Output"
     }
-    Write-Host "App-Image erstellt und Launcher gestartet: $AppImage"
+    Write-Host "App-Image erstellt: $AppImage"
+    if ($SkipLauncherCheck) { Write-Host "Launcher nicht gestartet. Keine Tests ausgefuehrt." }
     Write-Host "GUI-Abnahme mit synthetischen Daten separat durchführen."
 } finally {
     Pop-Location
