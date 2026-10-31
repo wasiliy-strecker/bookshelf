@@ -59,6 +59,7 @@ try {
         if (Test-Path $Staging) { Remove-Item $Staging -Recurse -Force }
         & "$env:JAVA_HOME\bin\jpackage.exe" --type exe --name BuecherRegal `
             --app-image $AppImage --app-version $Version --vendor "Wasiliy Strecker" `
+            --icon "$Root\assets\branding\icon.ico" `
             --dest $Staging --win-per-user-install --win-menu --win-shortcut `
             --win-menu-group "BücherRegal" --win-upgrade-uuid "7fead685-1ab1-4ea8-8ff5-d91ea6df663f"
         if ($LASTEXITCODE -ne 0) { throw "EXE-Paket fehlgeschlagen. Für JDK 21 wird WiX 3 benötigt." }

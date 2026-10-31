@@ -1,5 +1,31 @@
 # Prüfbericht
 
+## App-Icons auf den drei Desktop-Plattformen, 31. Oktober 2026
+
+Vorhandene Motive in zusätzliche Fenstergrößen, Windows-ICO und macOS-ICNS
+überführt. Fenster und Startfehler verwenden die App-Icons. Linux erhält einen
+benutzerspezifischen Anwendungseintrag mit passender JavaFX-Fensterklasse und
+Icons. Windows- und macOS-Pakethelfer verknüpfen die jeweiligen Icon-Dateien
+explizit mit Launcher/Bundle und Installer.
+
+Tatsächlich ausgeführt: Icon-Erzeugung mit Pillow, Formatter und Java-Paketbau
+mit `-Dmaven.test.skip=true`. Protokoll: `target/desktop-icons-build.log`.
+Vorhandene Linux-App-Images mit App-JAR, Icons, Desktop-Installer und Anleitung
+aktualisiert. Die Linux-Desktop-Registrierung wurde für das aktuelle Benutzerkonto
+ausgeführt. Keine vollständigen nativen Installer neu gebaut.
+
+BücherRegal wurde auf Desktop 2 neu geöffnet. Sein Anwendungseintrag öffnet
+weiterhin `target/collection-transfer-packaged/synthetic-data`. Datenbank und
+Spracheinstellung beim Neustart bytegenau unverändert. Vor der Änderung war die
+Fensterklasse vorhanden, ein passender Desktop-Eintrag jedoch nicht.
+
+Auf Nutzerwunsch keine Tests, kein `verify` und keine automatisierten GUI-Prüfungen.
+Manuelle Abnahme: App über die Ubuntu-Anwendungsübersicht starten, eigenes Icon
+im Dock und beim Fensterwechsel ansehen, Dialoge öffnen und nach einem Neustart
+die Zuordnung kontrollieren. Windows separat in Explorer, Startmenü und Taskleiste
+prüfen, macOS separat im Finder, Dock und App-Umschalter. Native Windows-/macOS-
+Pakete und Signierungen wurden hier nicht erzeugt oder geprüft.
+
 ## Exportname mit Uhrzeit, 31. Oktober 2026
 
 Der native Speicherdialog schlägt jetzt einen Namen mit lokalem Datum und
