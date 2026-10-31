@@ -27,6 +27,7 @@
 .button.primary:hover { -fx-background-color: #294e3b; }
 .button.primary:focused { -fx-border-color: #b2ceb7; }
 .button.danger { -fx-text-fill: #963e32; -fx-background-color: #f2e7e1; }
+.button.danger:focused { -fx-border-color: #963e32; -fx-focus-color: #963e32; -fx-faint-focus-color: #963e3225; }
 .text-field, .text-area {
   -fx-background-color: white;
   -fx-background-radius: 6px;

@@ -1,5 +1,26 @@
 # Prüfbericht
 
+## Roter Löschfokus und Übernahme in die Java-Reihe, 31. Oktober 2026
+
+Destruktive Schaltflächen verwenden bei Fokus einen roten Rahmen. Bearbeiten
+und andere Aktionen behalten ihre App-Farbe. Doppelte, identische
+`action.close`-Einträge wurden aus den sechs Sprachkatalogen entfernt.
+Datenschutzdialog, UI-Verbesserungen und lokale Paketvorbereitung wurden in
+GarnBox, StrickProjekt, NähPlan und KostümPlan jeweils app-lokal übernommen.
+Die Erklärungen berücksichtigen deren eigene Foto- und Projektfunktionen.
+JSON-Import/-Export bleibt in diesem Übernahmeschritt auf BücherRegal begrenzt.
+
+Formatter und Paketbau mit `-Dmaven.test.skip=true` bestanden. Keine Tests,
+kein `verify` und kein GUI-Prüflauf, entsprechend dem fortgeltenden Nutzerwunsch.
+Die App wurde mit derselben Testsammlung auf Desktop 2 neu geöffnet.
+Datenbank und Spracheinstellung blieben dabei bytegenau unverändert.
+Manuell noch abzunehmen: Eintrag auswählen, „Löschen“ mit Tab fokussieren und
+roten Rahmen kontrollieren. „Bearbeiten“ behält seinen grünen Fokusrahmen.
+Die aktuellen sechs Datenschutztexte liegen unter `build/releases/privacy/2026-10-31`.
+Buildprotokoll: `target/portfolio-privacy-build.log`. Eine bereits vorhandene
+JSON-Exportdatei des Nutzers im Projektverzeichnis bleibt unberührt und außerhalb
+des Commits.
+
 ## Sichtbares Versetzen beim Öffnen vermeiden, 31. Oktober 2026
 
 Der Nutzer bestätigt die Zentrierung, sieht aber die Bewegung von der anfänglichen
