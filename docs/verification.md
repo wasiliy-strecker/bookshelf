@@ -1,5 +1,18 @@
 # Prüfbericht
 
+## Erneute Dialogpositionierung zur Nutzerprüfung, 31. Oktober 2026
+
+Die Größe bleibt erhalten. Die Zentrierung wartet nach dem Öffnen und nach
+Größenänderungen jeweils 150 ms, damit native Größenkorrekturen berücksichtigt
+werden. Sie verwendet die dann gemeldete Fenstergröße und begrenzt die Position
+auf den sichtbaren Bildschirmbereich.
+
+Auf ausdrücklichen Nutzerwunsch wurden keine Tests, kein GUI-Prüflauf und kein
+`verify` ausgeführt. Formatter und Paketbau mit `-Dmaven.test.skip=true` liefen
+erfolgreich. Die visuelle Abnahme übernimmt der Nutzer in der geöffneten App.
+Buildprotokoll: `target/privacy-position-manual-build.log`.
+Die folgenden Prüfungen beziehen sich auf die jeweiligen früheren Stände.
+
 ## Datenschutzdialog vergrößert, 31. Oktober 2026
 
 Der Datenschutzdialog behält die zuletzt gewählte Größenkonfiguration:
