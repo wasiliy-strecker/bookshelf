@@ -4,8 +4,8 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.appfabrik</groupId>
   <artifactId>buecherregal</artifactId>
-  <version>0.1.0</version>
-  <name>BücherRegal</name>
+  <version>1.0</version>
+  <name>Bookshelf by Appfabrik</name>
   <description>Eine kleine lokale Büchersammlung mit JavaFX und SQLite.</description>
   <properties>
     <maven.compiler.release>21</maven.compiler.release>

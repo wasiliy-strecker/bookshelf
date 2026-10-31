@@ -42,6 +42,8 @@ import javax.imageio.ImageIO;
 
 /** Drives the production application with actual mouse/keyboard events on an isolated display. */
 public final class GuiJourney {
+  private static final int WIDTH = Integer.getInteger("bookshelf.captureWidth", 1920);
+  private static final int HEIGHT = Integer.getInteger("bookshelf.captureHeight", 1080);
   private static final List<String> checks = new ArrayList<>();
   private static String failure;
 
@@ -98,6 +100,8 @@ public final class GuiJourney {
                     "saved language applied at startup");
                 if (mode.equals("capture")) {
                   captureJourney(output, messages, demo);
+                } else if (mode.equals("store")) {
+                  storeJourney(data, output, messages, demo);
                 } else if (mode.equals("transfer")) {
                   transferJourney(data, output, messages);
                 } else if (mode.equals("verify")) {
@@ -158,8 +162,8 @@ public final class GuiJourney {
           Stage main = (Stage) find("add-book").getScene().getWindow();
           main.setX(0);
           main.setY(0);
-          main.setWidth(1920);
-          main.setHeight(1080);
+          main.setWidth(WIDTH);
+          main.setHeight(HEIGHT);
           return null;
         });
     pause();
@@ -180,10 +184,32 @@ public final class GuiJourney {
     screenshot(output.resolve("04-language.png"));
     key(KeyCode.ESCAPE);
     click("language-cancel");
-    check(true, "four real 1920x1080 screen captures");
+    check(true, "four real screen captures at " + WIDTH + "x" + HEIGHT);
     check(
         fx(() -> ((Label) find("book-count")).getText()).equals(messages.count(5, 5, false)),
         "localized collection count");
+  }
+
+  private static void storeJourney(Path data, Path output, Messages messages, Properties demo)
+      throws Exception {
+    captureJourney(output, messages, demo);
+    Files.delete(output.resolve("04-language.png"));
+    Platform.runLater(
+        () ->
+            SandboxExportDialog.filename(
+                find("add-book").getScene().getWindow(),
+                messages,
+                data,
+                "bookshelf-sammlung.json"));
+    waitFor(() -> find("export-filename") != null);
+    enter("export-filename", "../outside");
+    check(fx(() -> find("export-filename-confirm").isDisabled()), "folder grant cannot be escaped");
+    enter("export-filename", "bookshelf-sammlung.json");
+    check(!fx(() -> find("export-filename-confirm").isDisabled()), "valid export name enabled");
+    screenshot(output.resolve("04-json-export.png"));
+    key(KeyCode.ESCAPE);
+    waitFor(() -> find("export-filename") == null);
+    checkButtonsFit();
   }
 
   private static void transferJourney(Path data, Path output, Messages messages) throws Exception {
@@ -548,7 +574,7 @@ public final class GuiJourney {
                 check(
                     bounds.getMaxY() <= window.getScene().getHeight() + 1
                         && bounds.getMaxX() <= window.getScene().getWidth() + 1,
-                    "button is within window");
+                    "button is within window: " + button.getText());
               }
             }
             for (Node node : window.getScene().getRoot().lookupAll(".menu-button")) {
@@ -658,13 +684,14 @@ public final class GuiJourney {
     BufferedImage image =
         fx(
             () -> {
-              var capture = new Robot().getScreenCapture(null, 0, 0, 1920, 1080, false);
-              int[] pixels = new int[1920 * 1080];
+              var capture = new Robot().getScreenCapture(null, 0, 0, WIDTH, HEIGHT, false);
+              int[] pixels = new int[WIDTH * HEIGHT];
               capture
                   .getPixelReader()
-                  .getPixels(0, 0, 1920, 1080, PixelFormat.getIntArgbInstance(), pixels, 0, 1920);
-              BufferedImage result = new BufferedImage(1920, 1080, BufferedImage.TYPE_INT_RGB);
-              result.setRGB(0, 0, 1920, 1080, pixels, 0, 1920);
+                  .getPixels(
+                      0, 0, WIDTH, HEIGHT, PixelFormat.getIntArgbInstance(), pixels, 0, WIDTH);
+              BufferedImage result = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+              result.setRGB(0, 0, WIDTH, HEIGHT, pixels, 0, WIDTH);
               return result;
             });
     if (!ImageIO.write(image, "png", file.toFile())) {

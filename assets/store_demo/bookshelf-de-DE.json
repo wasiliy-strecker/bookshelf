@@ -1,0 +1,36 @@
+{
+  "format": "bookshelf.collection",
+  "version": 1,
+  "books": [
+    {
+      "title": "Ein kleines Gartenjahr",
+      "author": "Mara Linden",
+      "location": "Wohnzimmer · Regal 2",
+      "note": "Ideen für unseren Balkongarten.\nEin Geschenk von Clara mit handschriftlicher Widmung."
+    },
+    {
+      "title": "Wege entlang der Küste",
+      "author": "Noah Vale",
+      "location": "Arbeitszimmer · Reiseregal",
+      "note": "Ideen für den nächsten Wanderurlaub.\nDie Küstenroute beginnt auf Seite 42."
+    },
+    {
+      "title": "Das kleine Küchennotizbuch",
+      "author": "Elisa Rowan",
+      "location": "Küche · oberes Regal",
+      "note": "Lieblingsrezepte für ruhige Abende.\nAls Nächstes die Zitronensuppe ausprobieren."
+    },
+    {
+      "title": "Ein Fenster zu den Sternen",
+      "author": "Leo Finch",
+      "location": "Schlafzimmer · Nachttisch",
+      "note": "Ein Einstieg in den Nachthimmel.\nDas Kapitel über Sternbilder noch einmal lesen."
+    },
+    {
+      "title": "Briefe für Regentage",
+      "author": "Alma Brooks",
+      "location": "Wohnzimmer · Regal 1",
+      "note": "Kurze erfundene Briefe für einen langsamen Nachmittag.\nIm letzten Frühling an eine Freundin verliehen."
+    }
+  ]
+}

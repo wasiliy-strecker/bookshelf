@@ -46,20 +46,25 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--locales', nargs='+', choices=LOCALES, default=LOCALES)
-    parser.add_argument('--mode', choices=('all', 'capture', 'verify', 'transfer'), default='all')
+    parser.add_argument('--mode', choices=('all', 'capture', 'verify', 'transfer', 'store'), default='all')
+    parser.add_argument('--width', type=int, default=1920)
+    parser.add_argument('--height', type=int, default=1080)
     args = parser.parse_args()
+    if not (1280 <= args.width <= 2880 and 800 <= args.height <= 1800):
+        parser.error('Use a viewport between 1280x800 and 2880x1800')
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     xvfb = os.environ.get('BOOKSHELF_XVFB') or shutil.which('Xvfb')
     if not xvfb:
         raise RuntimeError('Install Xvfb or set BOOKSHELF_XVFB to a local Xvfb executable')
     command = java_command()
+    command[1:1] = [f'-Dbookshelf.captureWidth={args.width}', f'-Dbookshelf.captureHeight={args.height}']
     hashes = source_hashes()
     read_fd, write_fd = os.pipe()
     try:
         with (output / 'xvfb.log').open('w') as server_log:
             server = subprocess.Popen([xvfb, '-displayfd', str(write_fd), '-screen', '0',
-                                       '1920x1080x24', '-nolisten', 'tcp', '-ac'],
+                                       f'{args.width}x{args.height}x24', '-nolisten', 'tcp', '-ac'],
                                       pass_fds=(write_fd,), stdout=server_log, stderr=server_log)
         os.close(write_fd)
         write_fd = None
@@ -86,7 +91,7 @@ def main():
                     print(f'{locale}: {mode} passed', flush=True)
                     return result
                 for locale in args.locales:
-                    for mode in (('transfer',) if args.mode == 'transfer' else ('capture', 'verify')):
+                    for mode in ((args.mode,) if args.mode in ('transfer', 'store') else ('capture', 'verify')):
                         if args.mode not in ('all', mode):
                             continue
                         data = Path(work) / locale / mode
@@ -107,7 +112,7 @@ def main():
             if source_hashes() != hashes:
                 raise RuntimeError('Source files changed during capture. Rerun with a stable source tree.')
             manifest = {
-                'platform': 'Linux', 'preview_only': True, 'viewport': [1920, 1080],
+                'platform': 'Linux', 'preview_only': True, 'viewport': [args.width, args.height],
                 'renderer': 'JavaFX software pipeline on isolated Xvfb',
                 'source_base_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
                 'source_worktree_dirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip()),

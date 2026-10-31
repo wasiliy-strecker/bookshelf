@@ -1,12 +1,12 @@
-# BücherRegal
+# Bookshelf by Appfabrik
 
 Eine kleine Desktop-App für deine eigene Büchersammlung. Erfasse Titel, Autor,
 Aufbewahrungsort und eine Notiz. Finde Bücher über alle vier Felder wieder.
 Die Sammlung bleibt lokal auf deinem Computer und ist nach dem Neustart erhalten.
 
-![BücherRegal mit synthetischen Beispieldaten](docs/screenshots/buecherregal.png)
+![Bookshelf by Appfabrik mit synthetischen Beispieldaten](docs/screenshots/buecherregal.png)
 
-BücherRegal ist Stufe 1 des Java-Hobby-Portfolios. Die Reihe führt über GarnBox
+Bookshelf by Appfabrik ist Stufe 1 des Java-Hobby-Portfolios. Die Reihe führt über GarnBox
 (Foto), StrickProjekt (Status) und NähPlan (Checkliste) bis zur fünften Stufe
 KostümPlan (PDF-Export). Diese weiteren Apps bleiben eigenständige Projekte.
 
@@ -42,7 +42,7 @@ fehlendem `JAVA_HOME` ein vorhandenes vollständiges JDK unter
 Das lokal erzeugte App-Image startet ohne separat installiertes Java:
 
 ```bash
-./target/app-image/BuecherRegal/bin/BuecherRegal
+'./target/app-image/Bookshelf by Appfabrik/bin/Bookshelf by Appfabrik'
 ```
 
 ## Bedienung
@@ -95,7 +95,7 @@ Vorhandene Exporte werden bei einem Fehler nicht durch unvollständige Dateien e
 
 ## Datenschutz in der App
 
-Unter „Info“ → „Datenschutzerklärung für BücherRegal“ ist die vollständige
+Unter „Info“ → „Datenschutzerklärung für Bookshelf by Appfabrik“ ist die vollständige
 Erklärung in der gewählten App-Sprache enthalten. Der Dialog funktioniert
 offline. Du kannst scrollen, mit Strg+A und Strg+C beziehungsweise Cmd+A und
 Cmd+C den Text kopieren und mit Escape oder „Schließen“ zurückkehren.
@@ -133,7 +133,7 @@ deutschen beziehungsweise brasilianisch-portugiesischen Übersetzung zugeordnet.
 Über „Sprache“ wählst du eine feste Sprache oder wieder „Automatisch“.
 Die Auswahl wird nach dem nächsten App-Start übernommen. Die App startet nicht
 selbständig neu. Die Sammlung und offene Buchentwürfe bleiben erhalten.
-Der Markenname BücherRegal bleibt in allen Sprachen gleich.
+Der Markenname Bookshelf by Appfabrik bleibt in allen Sprachen gleich.
 
 Die Einstellung liegt in `language.txt` neben der Datenbank. Ein ungültiger
 Sprachwert fällt auf Englisch zurück. Bei einem Lesefehler nutzt die App die
@@ -157,8 +157,10 @@ Für isolierte Tests kann ein eigenes Verzeichnis angegeben werden:
 ./mvnw javafx:run '-Djavafx.args=--data-dir=/tmp/buecherregal-test'
 ```
 
-Der paketierte Launcher akzeptiert direkt `--data-dir=/absoluter/testpfad`.
+Der normale paketierte Launcher akzeptiert direkt `--data-dir=/absoluter/testpfad`.
 Ein abweichender Testpfad verändert nicht den Standardspeicherort.
+Der Mac-App-Store-Build verwendet stattdessen ausschließlich seinen App-Sandbox-
+Container unter `~/Library/Containers/de.appfabrik.buecherregal/Data/Library/Application Support/BuecherRegal`.
 
 ```bash
 ./mvnw spotless:apply
@@ -200,11 +202,36 @@ Die vorbereiteten GitHub-Workflows veröffentlichen keine Releases.
 
 Der [Prüfbericht](docs/verification.md) trennt ausgeführte Prüfungen von offenen
 Plattformtests. Frühere Stände wurden unter Linux geprüft. Für die jüngsten
-Änderungen wurden auf Nutzerwunsch keine Tests ausgeführt. Ein älterer CI-Lauf
+Änderungen vor dieser Mac-Vorbereitung wurden auf Nutzerwunsch keine Tests ausgeführt. Ein älterer CI-Lauf
 prüfte 33 Tests auf Windows und macOS. Native Abnahmen des aktuellen Stands
 und Store-Abnahmen bleiben offen. Ein Installer ist keine geprüfte Store-Version.
 
 Hinweise zu Fremdkomponenten stehen in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Erste Veröffentlichung im Mac App Store
+
+Produktname **Bookshelf by Appfabrik**, Version **1.0**, Build **1**.
+Die erste Store-Beschreibung ist deutsch. Die Store-Vorbereitung enthält
+deutsche Feldtexte, Datenschutz, synthetische Beispieldaten und Bildentwürfe.
+Die [Feldanleitung](docs/mac-app-store-fields.md) beschreibt, was sich jetzt
+in App Store Connect speichern lässt. Die [Mac-Anleitung](docs/mac-app-store-release.md)
+führt durch Bau, native Abnahme, Signierung und die spätere manuelle Einreichung.
+
+`scripts/macos_release.py` bereitet geprüfte Eingaben für Apple Silicon und
+Intel vor. Auf macOS baut es ein gemeinsames App-Bundle mit getrennten
+Laufzeiten. Native Mac-Ausführung, Sandbox-Zugriffe, Signierung und Store-Abnahme
+sind hier noch nicht bestätigt. Linux-Bilder bleiben ausdrücklich Entwürfe.
+Im Store-Build wählt der JSON-Export zuerst einen Ordner und danach den
+Dateinamen, damit auch atomare Schreibvorgänge innerhalb der Ordnerfreigabe liegen.
+
+```bash
+python3 scripts/test_macos_release.py
+python3 scripts/macos_release.py prepare --output build/mac-inputs-1.0-1
+```
+
+Die lokale Java-Verifikation und die isolierten Oberflächentests sind erneut
+Bestandteil dieser Vorbereitung. Ihre konkreten Ergebnisse stehen im
+Prüfbericht der jeweiligen Übergabe. Es wird nichts automatisch hochgeladen.
 
 Eine interne Übergabe ohne Testausführung entsteht aus einem lokal committeten Stand:
 
@@ -227,7 +254,7 @@ Anwendungseintrag demselben Icon zu.
 Nach dem Linux-App-Image-Bau aus diesem App-Verzeichnis registrieren:
 
 ```bash
-python3 target/app-image/BuecherRegal/install_desktop.py
+python3 'target/app-image/Bookshelf by Appfabrik/install_desktop.py'
 ```
 
 Danach lässt sich die App über ihren Namen in der Ubuntu-Anwendungsübersicht

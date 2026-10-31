@@ -1,6 +1,7 @@
 package de.appfabrik.buecherregal.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -21,6 +22,18 @@ class AppDataDirectoryTest {
     assertEquals(
         home.resolve("AppData/Local/BuecherRegal"),
         AppDataDirectory.resolve("Windows 11", home, Map.of()));
+  }
+
+  @Test
+  void storeRequiresAnExplicitNativeContainerInsteadOfFallingBackToExistingData() {
+    Path container =
+        home.resolve(
+            "Library/Containers/de.appfabrik.buecherregal/Data/Library/Application Support/BuecherRegal");
+    assertEquals(container, AppDataDirectory.sandboxDirectory(container.toString()));
+    assertThrows(IllegalArgumentException.class, () -> AppDataDirectory.sandboxDirectory(null));
+    assertThrows(IllegalArgumentException.class, () -> AppDataDirectory.sandboxDirectory(""));
+    assertThrows(
+        IllegalArgumentException.class, () -> AppDataDirectory.sandboxDirectory("relative"));
   }
 
   @Test

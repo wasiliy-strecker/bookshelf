@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -120,12 +121,15 @@ final class BookEditor {
             validation,
             field(messages.text("field.author"), author),
             field(messages.text("field.location"), location),
-            field(messages.text("field.note"), note),
-            error,
-            actions);
-    VBox.setVgrow(form.getChildren().get(6), Priority.ALWAYS);
-    form.setPadding(new Insets(26));
-    Scene scene = new Scene(form, 550, 650);
+            field(messages.text("field.note"), note));
+    ScrollPane scroll = new ScrollPane(form);
+    scroll.setFitToWidth(true);
+    scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    scroll.setMinHeight(0);
+    VBox.setVgrow(scroll, Priority.ALWAYS);
+    VBox root = new VBox(14, scroll, error, actions);
+    root.setPadding(new Insets(26));
+    Scene scene = new Scene(root, 550, 650);
     UiSupport.style(scene);
     scene
         .getAccelerators()

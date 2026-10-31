@@ -23,9 +23,9 @@
     <TargetDeviceFamily Name="Windows.Desktop" MinVersion="" MaxVersionTested="" />
   </Dependencies>
   <Applications>
-    <Application Id="BuecherRegal" Executable="App\BuecherRegal.exe"
+    <Application Id="BuecherRegal" Executable="App\Bookshelf by Appfabrik.exe"
                  uap10:RuntimeBehavior="packagedClassicApp" uap10:TrustLevel="mediumIL">
-      <uap:VisualElements DisplayName="" Description="BücherRegal"
+      <uap:VisualElements DisplayName="" Description="Bookshelf by Appfabrik"
                          Square150x150Logo="Assets\Square150x150Logo.png"
                          Square44x44Logo="Assets\Square44x44Logo.png"
                          BackgroundColor="transparent" />

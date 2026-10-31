@@ -1,7 +1,7 @@
-# BücherRegal für den Microsoft Store vorbereiten
+# Bookshelf by Appfabrik für den Microsoft Store vorbereiten
 
 Stand: 31. Oktober 2026. **Noch nicht bereit.** Diese Anleitung betrifft nur
-BücherRegal. Der lokale MSIX-Helfer ist implementiert, aber noch nicht auf
+Bookshelf by Appfabrik. Der lokale MSIX-Helfer ist implementiert, aber noch nicht auf
 Windows ausgeführt. Der Nutzer hat noch keine App im Partner Center angelegt.
 Es gibt deshalb keine bestätigte Store-Identität und kein fertiges MSIX.
 In diesem Arbeitsschritt werden auf ausdrücklichen Nutzerwunsch keine Tests
@@ -23,7 +23,7 @@ bleiben Vorschauen. Finale Windows-Aufnahmen werden separat erstellt.
 
 ## 1. App im Partner Center anlegen
 
-Windows-App als MSIX/APPX anlegen und den Namen BücherRegal reservieren.
+Windows-App als MSIX/APPX anlegen und den Namen Bookshelf by Appfabrik reservieren.
 Aus der Produktidentität exakt übernehmen:
 
 | Partner Center | `store.local.json` |
@@ -39,7 +39,7 @@ Werte sind keine Zugangsdaten. Die lokale Konfiguration wird nicht committet.
 Ein syntaktisch gültiger Wert allein beweist keine Zuordnung im Partner Center.
 
 Die vorgeschlagene erste Paketversion ist `1.0.0.0`. Die App-Version im Maven-
-Projekt bleibt `0.1.0`. Beide stehen später in `build-info.json`. Microsoft
+Projekt ist `1.0`. Beide stehen später in `build-info.json`. Microsoft
 verlangt vier Zahlen von 0 bis 65535, die erste größer als 0 und die letzte 0.
 Für spätere Pakete die ersten drei Teile erhöhen, beispielsweise `1.0.1.0`.
 

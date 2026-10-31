@@ -10,8 +10,8 @@ import sys
 import tempfile
 
 APP_ID = "de.appfabrik.buecherregal"
-APP_NAME = "BücherRegal"
-LAUNCHER = "BuecherRegal"
+APP_NAME = "Bookshelf by Appfabrik"
+LAUNCHER = "Bookshelf by Appfabrik"
 WINDOW_CLASS = "de.appfabrik.buecherregal.ui.BooksApplication"
 MARKER = "X-AppFabrik-Managed=true"
 

@@ -63,7 +63,7 @@ def main():
     manifest['screenshots'] = 24
     (destination / 'manifest.json').write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + '\n')
     (destination / 'LIESMICH.txt').write_text(
-        'BücherRegal – Linux-Vorschau in sechs Sprachen\n\n'
+        'Bookshelf by Appfabrik – Linux-Vorschau in sechs Sprachen\n\n'
         '24 echte Bildschirmaufnahmen mit synthetischen Beispieldaten.\n'
         'Plattform: Linux, JavaFX, isolierter virtueller Xvfb-Bildschirm.\n'
         'Die Aufnahmen sind eine Vorschau und keine Windows-Store-Abnahme.\n\n'

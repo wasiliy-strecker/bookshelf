@@ -57,13 +57,13 @@ Kein Push, Upload oder Store-Release ohne ausdrücklichen Auftrag.
 Die erste Veröffentlichung erfolgt auf ausdrücklichen Nutzerauftrag vom
 31. Oktober 2026 auf Deutsch. Primärsprache im Store: Deutsch (de-DE).
 Beschreibung, Bildtexte und Versionshinweise für die erste Veröffentlichung
-sind deutsch. Der App- und Store-Name bleibt **Bookshelf**. Weitere Sprachen
+sind deutsch. Der App- und Store-Name bleibt **Bookshelf by Appfabrik**. Weitere Sprachen
 werden erst später auf Nutzerauftrag hinzugefügt. Bereits vorbereitete
 Übersetzungen sind keine Freigabe für eine mehrsprachige Erstveröffentlichung.
 
 Vorhandene Ressourcen: de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR. Alle eigenen
 sichtbaren Texte liegen in UTF-8-ResourceBundles. Auf ausdrücklichen Nutzerauftrag
-vom 31. Oktober 2026 heißen App und Store-Produkt in allen Sprachen **Bookshelf**,
+vom 31. Oktober 2026 heißen App und Store-Produkt in allen Sprachen **Bookshelf by Appfabrik**,
 passend zum englischen GitHub-Repository `bookshelf`. Das gilt auch für deutsche
 Oberflächen, Launcher, Fenstertitel, Installer, Store-Einträge und Empfehlungen
 im Gespräch. Die bisherige Vorgabe, den Markennamen BücherRegal beizubehalten,
@@ -97,3 +97,8 @@ Lieferpakete sind Linux-Vorschauen. Keine Windows-Abnahme daraus ableiten.
 `assemble.py` verlangt den sauberen lokalen Commit des geprüften Quellstands.
 Generierte Lieferungen gehören unter `build/` und nicht in Git. Roadmap unter
 `/tmp/app-factory-cpp-roadmap.lock` frisch lesen und gezielt aktualisieren.
+
+Am 31. Oktober 2026 wurde der bereits reservierte Store-Name
+**Bookshelf by Appfabrik** ausdrücklich auch für die App gewählt.
+Die Mac-Erstveröffentlichung wird für Apple Silicon und Intel vorbereitet.
+Native Mac-Abnahme, Signierung und Upload erfolgen separat auf macOS.

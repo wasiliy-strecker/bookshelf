@@ -68,7 +68,7 @@ def main():
     output = arguments.output.resolve()
     output.mkdir(parents=True, exist_ok=False)
     status = {
-        "application": "BücherRegal",
+        "application": "Bookshelf by Appfabrik",
         "sourceCommit": revision,
         "createdUtc": datetime.now(timezone.utc).isoformat(),
         "preparationComplete": False,
@@ -116,9 +116,9 @@ def main():
         encoding="utf-8",
     )
     (output / "ZUERST-LESEN.txt").write_text(
-        "BücherRegal: lokale Vorbereitung für den Microsoft Store\n\n"
+        "Bookshelf by Appfabrik: lokale Vorbereitung für den Microsoft Store\n\n"
         "Status: noch nicht bereit. Keine Tests ausgeführt. Kein MSIX gebaut.\n"
-        "Nur BücherRegal wurde bearbeitet. Keine Veröffentlichung und kein Push.\n\n"
+        "Nur Bookshelf by Appfabrik wurde bearbeitet. Keine Veröffentlichung und kein Push.\n\n"
         "Als Nächstes die App im Partner Center anlegen und die drei Identitätswerte\n"
         "aus der Produktidentität nach Source/packaging/windows/store.local.json übernehmen.\n"
         "Dafür die beiliegende store.example.json kopieren. Keine Zugangsdaten weitergeben.\n\n"

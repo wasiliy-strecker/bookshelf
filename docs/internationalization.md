@@ -2,7 +2,7 @@
 
 ## Umfang
 
-BücherRegal unterstützt de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR.
+Bookshelf by Appfabrik unterstützt de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR.
 Der fachliche Umfang bleibt Stufe 1. Es gibt keine Fotos, Projektstatus,
 Checklisten oder PDF-Ausgabe. Der Markenname, die technischen Kennungen,
 Datenpfade und SQLite-Daten bleiben erhalten.

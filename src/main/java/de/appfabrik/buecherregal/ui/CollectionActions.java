@@ -52,13 +52,19 @@ final class CollectionActions {
       String timestamp =
           LocalDateTime.now()
               .format(DateTimeFormatter.ofPattern("uuuu-MM-dd_HH-mm-ss", Locale.ROOT));
-      chooser.setInitialFileName("buecherregal-" + timestamp + ".json");
-      File selected = chooser.showSaveDialog(owner);
-      if (selected == null) {
+      String suggested = "bookshelf-" + timestamp + ".json";
+      chooser.setInitialFileName(suggested);
+      Path path;
+      if (Boolean.getBoolean("bookshelf.macAppStore")) {
+        path = SandboxExportDialog.choose(owner, messages, suggested);
+      } else {
+        File selected = chooser.showSaveDialog(owner);
+        path = selected == null ? null : selected.toPath();
+      }
+      if (path == null) {
         finish("transfer.cancelled");
         return;
       }
-      Path path = selected.toPath();
       Path filename = Objects.requireNonNull(path.getFileName());
       if (!filename.toString().contains(".")) {
         path = path.resolveSibling(filename + ".json");

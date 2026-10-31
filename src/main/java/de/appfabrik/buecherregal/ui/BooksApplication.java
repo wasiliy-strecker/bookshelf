@@ -56,7 +56,7 @@ public final class BooksApplication extends Application {
               Alert.AlertType.ERROR,
               messages.text("start.error"),
               new ButtonType(messages.text("action.close")));
-      alert.setTitle("BücherRegal");
+      alert.setTitle("Bookshelf by Appfabrik");
       alert.setHeaderText(messages.text("start.title"));
       UiSupport.style(alert.getDialogPane().getScene());
       UiSupport.icon((Stage) alert.getDialogPane().getScene().getWindow());

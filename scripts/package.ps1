@@ -38,9 +38,9 @@ try {
         else { Remove-Item $_.FullName }
     }
     $Common = @(
-        "--name", "BuecherRegal", "--app-version", $Version,
+        "--name", "Bookshelf by Appfabrik", "--app-version", $Version,
         "--icon", (Join-Path $Root "assets\branding\icon.ico"),
-        "--vendor", "Wasiliy Strecker", "--description", "BücherRegal - deine lokale Büchersammlung",
+        "--vendor", "Wasiliy Strecker", "--description", "Bookshelf by Appfabrik - deine lokale Büchersammlung",
         "--input", $InputDirectory, "--main-jar", "buecherregal-$Version.jar",
         "--main-class", "de.appfabrik.buecherregal.Launcher",
         "--module-path", "$env:JAVA_HOME\jmods;$Modules",
@@ -50,8 +50,8 @@ try {
     )
     & "$env:JAVA_HOME\bin\jpackage.exe" @Common --type app-image --dest $ImageDestination
     if ($LASTEXITCODE -ne 0) { throw "App-Image konnte nicht gebaut werden." }
-    $AppImage = Join-Path $ImageDestination "BuecherRegal"
-    $Launcher = Join-Path $AppImage "BuecherRegal.exe"
+    $AppImage = Join-Path $ImageDestination "Bookshelf by Appfabrik"
+    $Launcher = Join-Path $AppImage "Bookshelf by Appfabrik.exe"
     # GUI launchers on Windows do not reliably expose stdout. Wait for the process.
     if (-not $SkipLauncherCheck) {
         $Check = Start-Process -FilePath $Launcher -ArgumentList "--version" -Wait -PassThru
@@ -60,15 +60,15 @@ try {
     if ($PackageType -eq "exe") {
         $Staging = Join-Path $Root "target\installer-staging"
         if (Test-Path $Staging) { Remove-Item $Staging -Recurse -Force }
-        & "$env:JAVA_HOME\bin\jpackage.exe" --type exe --name BuecherRegal `
+        & "$env:JAVA_HOME\bin\jpackage.exe" --type exe --name "Bookshelf by Appfabrik" `
             --app-image $AppImage --app-version $Version --vendor "Wasiliy Strecker" `
             --icon "$Root\assets\branding\icon.ico" `
             --dest $Staging --win-per-user-install --win-menu --win-shortcut `
-            --win-menu-group "BücherRegal" --win-upgrade-uuid "7fead685-1ab1-4ea8-8ff5-d91ea6df663f"
+            --win-menu-group "Bookshelf by Appfabrik" --win-upgrade-uuid "7fead685-1ab1-4ea8-8ff5-d91ea6df663f"
         if ($LASTEXITCODE -ne 0) { throw "EXE-Paket fehlgeschlagen. Für JDK 21 wird WiX 3 benötigt." }
         $Output = Join-Path $Distribution "buecherregal-$Version-windows-x64.exe"
         if (Test-Path $Output) { throw "Vorhandenes Paket wird nicht überschrieben: $Output" }
-        Move-Item "$Staging\BuecherRegal-$Version.exe" $Output
+        Move-Item "$Staging\Bookshelf by Appfabrik-$Version.exe" $Output
         Write-Host "EXE erstellt, native Abnahme separat durchführen: $Output"
     }
     Write-Host "App-Image erstellt: $AppImage"

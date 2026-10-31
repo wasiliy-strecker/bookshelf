@@ -7,7 +7,7 @@ mit den übrigen Hinweisen in jedes App-Image übernommen.
 Quellen: [Gson](https://github.com/google/gson/tree/gson-parent-2.13.2)
 und [Error Prone](https://github.com/google/error-prone/tree/v2.41.0).
 
-BücherRegal verwendet OpenJFX unter GPLv2 mit Classpath Exception und SQLite
+Bookshelf by Appfabrik verwendet OpenJFX unter GPLv2 mit Classpath Exception und SQLite
 JDBC von Xerial unter Apache License 2.0 und BSD-2-Clause. SQLite selbst ist
 Public Domain. Die eingebettete Java-Laufzeit unterliegt den Lizenzbedingungen
 der beim Bauen gewählten JDK-Distribution. Die aktuelle Build-Basis ist
@@ -17,8 +17,8 @@ unveränderte JDK-Datei `release` als `legal/BUILD_JAVA_RELEASE.txt`, sodass
 Herkunft, Architektur und vollständige Laufzeitversion nachvollziehbar bleiben.
 
 Die vollständigen Hinweise der Laufzeit bleiben im Verzeichnis `legal` des
-Runtime-Images erhalten. SQLite JDBC bleibt als unverändertes Archiv mit den
-mitgelieferten Lizenzdateien enthalten. Die OpenJFX-Lizenztexte werden aus
+Runtime-Images erhalten. Bei der bisherigen Desktop-Paketierung bleibt SQLite JDBC als unverändertes
+Archiv mit den mitgelieferten Lizenzdateien enthalten. Die OpenJFX-Lizenztexte werden aus
 `third-party-licenses` in das Paket übernommen. Diese Datei ergänzt diese Hinweise.
 
 ## Versionsbezogene Herkunft und Quellcode
@@ -34,7 +34,8 @@ mitgelieferten Lizenzdateien enthalten. Die OpenJFX-Lizenztexte werden aus
 Das JavaFX-Artefakt meldet die Laufzeitversion `21.0.11+4`. Die mitgelieferten
 Linux-Nativhinweise decken JPEG und Mesa ab. Die JDK-Lizenzhinweise bleiben
 im Runtime-Image erhalten. SQLite selbst ist [Public Domain](https://sqlite.org/copyright.html).
-Die Anwendung verändert die Fremdkomponenten nicht.
+Die Java- und nativen Binärdateien werden nicht funktional verändert.
+Der Mac-Store-Helfer ordnet die Archive wie nachfolgend beschrieben neu an.
 
 Die [GPLv2 mit Classpath Exception](https://openjdk.org/legal/gplv2+ce.html)
 enthält weiterhin Pflichten für die weitergegebenen Laufzeitkomponenten.
@@ -61,7 +62,7 @@ weiterhin erforderlich. Details: `packaging/runtime-sources-readme.txt`.
 
 Maven, Spotless, SpotBugs und JUnit sind Entwicklungswerkzeuge und werden nicht
 in das App-Image aufgenommen. Dieses Dokument vergibt keine Lizenz für den
-eigenen BücherRegal-Quellcode.
+eigenen Bookshelf by Appfabrik-Quellcode.
 
 ## Schrift der Benutzeroberfläche
 
@@ -77,3 +78,25 @@ Lizenz, fester Quellstand und SHA-256 stehen unter
 `third-party-licenses/noto-sans-cjk/`. Die Lizenz liegt außerdem bei den
 Schriftressourcen im App-JAR. Pakethelfer übernehmen die Hinweise nach
 `legal/noto-sans-cjk/`. Die Schrift wird nicht systemweit installiert.
+
+## Mac App Store: beide Architekturen
+
+Die Mac-Vorbereitung verwendet dieselben Temurin- und OpenJFX-Quellstände.
+Die ARM64- und Intel-Binärarchive, Herkunftsmetadaten und Prüfsummen sind unter
+`packaging/macos` festgehalten. Beide Temurin-Metadaten nennen dieselbe
+Buildskriptrevision `1cf43d7a3e77886bfea7d550a902e151a87d724d` wie die vorhandene
+Quelllieferung. Originalarchive bleiben als geprüfte Eingaben erhalten.
+
+Für die Signierung werden native JavaFX- und SQLite-Bibliotheken aus den JARs
+in architekturspezifische Bundle-Verzeichnisse übertragen. Die ausgelieferten
+JARs enthalten weiterhin die unveränderten Klassen und Lizenzdateien, jedoch
+keine eingebetteten nativen Bibliotheken. Die Bibliotheken werden separat mit
+der Identität des Entwicklers signiert. Diese geänderte Verpackung und alle
+Prüfsummen werden im Mac-Baubericht dokumentiert. Es wurden keine JavaFX- oder
+SQLite-Quellfunktionen verändert. `jlink` erzeugt zwei eingebettete Laufzeiten.
+Der kleine native Launcher ist eigener app-lokaler Code.
+
+Der Übergabeordner enthält die vollständigen vorhandenen Laufzeitquellarchive
+und zusätzlich die Mac-Buildmetadaten. Deren öffentliche Bereitstellung,
+die Lizenzinventur des tatsächlich gebauten Mac-Bundles und die App-Store-
+Einreichung bleiben vor der Veröffentlichung abzuschließen.

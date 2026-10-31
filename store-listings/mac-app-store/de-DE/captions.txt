@@ -1,0 +1,4 @@
+Deine Bücher an einem Platz
+Notizen und Regalplätze festhalten
+Das richtige Buch schnell finden
+Deine Sammlung als JSON sichern

@@ -1,0 +1,1 @@
+Bücher,Bibliothek,Büchersammlung,Autor,Regal,Notizen,Inventar,offline,Verwaltung

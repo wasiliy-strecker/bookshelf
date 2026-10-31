@@ -92,8 +92,10 @@ final class MainWindow {
     this.stage = stage;
     this.service = service;
     this.tasks = tasks;
-    Label heading = new Label("BücherRegal");
+    Label heading = new Label("Bookshelf by Appfabrik");
     heading.getStyleClass().add("app-heading");
+    heading.setWrapText(true);
+    heading.setMinWidth(0);
     Label subtitle = new Label(messages.text("app.subtitle"));
     subtitle.getStyleClass().add("muted");
     Region spacer = new Region();
@@ -237,7 +239,7 @@ final class MainWindow {
               search.requestFocus();
               search.selectAll();
             });
-    stage.setTitle("BücherRegal");
+    stage.setTitle("Bookshelf by Appfabrik");
     UiSupport.icon(stage);
     stage.setMinWidth(760);
     stage.setMinHeight(620);

@@ -13,3 +13,7 @@ __pycache__/
 packaging/windows/store.local.json
 *.pfx
 *.p12
+
+packaging/macos/*.local.json
+*.provisionprofile
+*.mobileprovision

@@ -26,7 +26,7 @@ Build-JDK. `legal/USER_GUIDE.md` enthält die Bedienungsanleitung mit Datenpfade
 
 ```bash
 ./scripts/package.sh app-image
-./target/app-image/BuecherRegal/bin/BuecherRegal
+'./target/app-image/Bookshelf by Appfabrik/bin/Bookshelf by Appfabrik'
 ```
 
 Linux dient hier als Entwicklungs- und Prüfplattform. Ein App-Image ist ein
@@ -40,11 +40,11 @@ wird WiX Toolset 3.14.1 benötigt, dessen `bin`-Verzeichnis im `PATH` liegt.
 ```powershell
 .\mvnw.cmd verify
 .\scripts\package.ps1 -PackageType app-image
-.\target\app-image\BuecherRegal\BuecherRegal.exe
+& '.\target\app-image\Bookshelf by Appfabrik\Bookshelf by Appfabrik.exe'
 .\scripts\package.ps1 -PackageType exe
 ```
 
-Die EXE liegt unter `target/dist/buecherregal-0.1.0-windows-x64.exe`.
+Die EXE liegt unter `target/dist/buecherregal-1.0-windows-x64.exe`.
 Die Installation ist pro Benutzer vorgesehen. Die feste Upgrade-ID ermöglicht
 spätere Installer-Updates mit derselben Produktidentität. Die Sammlung liegt
 außerhalb des Installationsverzeichnisses.
@@ -59,12 +59,12 @@ Auf der jeweiligen Mac-Architektur mit passendem Temurin-JDK 21.0.13+9 ausführe
 ```bash
 ./mvnw verify
 ./scripts/package.sh app-image
-open target/app-image/BuecherRegal.app
+open 'target/app-image/Bookshelf by Appfabrik.app'
 ./scripts/package.sh dmg
 ```
 
-Das Ergebnis heißt `target/dist/buecherregal-0.1.0-macos-x64.dmg` oder
-`target/dist/buecherregal-0.1.0-macos-arm64.dmg`.
+Das Ergebnis heißt `target/dist/buecherregal-1.0-macos-x64.dmg` oder
+`target/dist/buecherregal-1.0-macos-arm64.dmg`.
 Die Bundle-Kennung ist `de.appfabrik.buecherregal`.
 Die aktuellen Pakete haben keine Distributionssignatur und sind als lokale
 Testpakete vorbereitet. Plattform-Sicherheitsdialoge sind bei der späteren
@@ -110,7 +110,7 @@ aber noch nicht ausgeführt. Die [MSIX-Anleitung](microsoft-store-release.md)
 enthält die Konfiguration, Paketierung und manuelle Abnahme. Produktregistrierung,
 reservierter Name, echte Package Identity und Publisher aus Partner Center
 fehlen noch. Keine Beispielkennung als Produktionsidentität verwenden.
-Die App-Version bleibt vorerst `0.1.0`.
+Die App-Version für die erste Veröffentlichung ist `1.0`.
 Die vierteilige MSIX-Paketversion muss die Store-Regeln erfüllen. Die Java-
 Paketkennung und Installer-Upgrade-ID ersetzen keine Partner-Center-Identität.
 
@@ -250,3 +250,11 @@ Referenzen:
 - [Desktop Entry: Icon und StartupWMClass](https://specifications.freedesktop.org/desktop-entry/latest/recognized-keys.html)
 - [Desktop Entry: Maskierung von Exec-Argumenten](https://specifications.freedesktop.org/desktop-entry/latest/exec-variables.html)
 - [Apple: Hochauflösende App-Icons](https://developer.apple.com/library/archive/documentation/GraphicsAnimation/Conceptual/HighResolutionOSX/Optimizing/Optimizing.html)
+
+## Mac App Store ab Version 1.0
+
+Der DMG-Weg oben ist kein Mac-App-Store-Paket. Für die gemeinsame Ausgabe
+für Apple Silicon und Intel gilt die [Mac-Store-Anleitung](mac-app-store-release.md).
+Öffentlicher Name ist Bookshelf by Appfabrik. Der ältere DMG-Helfer verwendet
+wegen der Längenbegrenzung von `--mac-package-name` den kurzen Menünamen Bookshelf.
+Datenverzeichnisse und Bundle-ID bleiben unverändert.

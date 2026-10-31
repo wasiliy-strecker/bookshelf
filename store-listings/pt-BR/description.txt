@@ -1,4 +1,4 @@
-Um lugar para cada livro. BücherRegal reúne títulos, autores, locais de armazenamento e anotações pessoais em um aplicativo de desktop organizado.
+Um lugar para cada livro. Bookshelf by Appfabrik reúne títulos, autores, locais de armazenamento e anotações pessoais em um aplicativo de desktop organizado.
 
 Adicione um livro apenas com o título e complete os detalhes quando quiser. A busca funciona nos quatro campos de texto para encontrar impressões de leitura, dedicatórias e a prateleira certa.
 

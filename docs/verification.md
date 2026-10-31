@@ -1,5 +1,42 @@
 # Prüfbericht
 
+## Mac-App-Store-Vorbereitung, 31. Oktober 2026
+
+**Linux-Vorbereitung geprüft. Native Mac-Abnahme und Einreichung offen.**
+Produktname Bookshelf by Appfabrik, Version 1.0, Apple-Build 1, erste Store-Texte
+auf Deutsch. Die vorhandenen sechs UI-Sprachen bleiben erhalten.
+
+| Prüfung des aktuellen Quellstands | Ergebnis |
+| --- | --- |
+| `./mvnw spotless:apply verify` mit Temurin 21.0.13+9 | 94 Tests ohne Fehler oder ausgelassene Fälle. Compiler-Lint, Enforcer, Spotless und SpotBugs bestanden |
+| `python3 scripts/test_macos_release.py` | Fünf Tests bestanden. Architekturprüfung, fehlerhafte Archive und Trennung nativer SQLite-Bibliotheken geprüft |
+| Isolierte Xvfb-GUI, sechs Sprachen | Aufnahme, Mindestfenster, Speicherung bei Datenbanksperre, Datenschutz, Sprachwechsel und separater Neustart bestanden |
+| Deutscher JSON-Transfer | 32 GUI-Prüfungen bestanden |
+| Deutscher Store-Bildentwurf | 24 GUI-Prüfungen bestanden. Vier echte PNGs in 2560 × 1600, ausschließlich synthetische Bücher |
+| Manuelle Bildkontrolle | Sammlung, Bearbeitung, Suche und Exportdialog geprüft. Fehlermeldung und Speichern/Abbrechen im kleinen Editor sichtbar |
+| Mac-Eingaben | SHA-256 aller gelieferten Eingaben und Mach-O-Architekturen der gepinnten JDK-/JavaFX-Dateien geprüft |
+| Python- und Shell-Syntax, `git diff --check` | Bestanden |
+
+Der erste GUI-Durchlauf fand ein Platzproblem im kleinen Buchdialog bei langer
+Fehlermeldung. Das Formular ist jetzt scrollbar. Fehlermeldung und Aktionen
+liegen außerhalb der Scrollfläche. Anschließend wurden Java- und alle GUI-
+Prüfungen mit dem endgültigen Quellstand erneut erfolgreich ausgeführt.
+
+Die Nachweise liegen unter `target/mac-preparation-*.log` und in den Manifesten
+von `target/mac-preparation-gui-v2`, `target/mac-preparation-transfer-v2` und
+`target/mac-preparation-store-v2`. Die Übergabe übernimmt diese Nachweise.
+Persönliche JSON-Exporte werden weder gelesen noch übernommen. Der Nutzerdesktop
+und bereits laufende App-Instanzen bleiben unberührt. Kein Linux-App-Image
+installiert oder ersetzt. Deshalb wird keine neue Paket-GUI-Abnahme behauptet.
+
+Die Mac-Helfer sind unter Linux implementiert und ihre plattformunabhängigen
+Prüfungen ausgeführt. Cocoa-Kompilierung, signierte Ausführung, JIT, Sandbox-
+Freigaben, Bibliotheksladung auf beiden Architekturen, Transporter und App Review
+sind **nicht** ausgeführt. Der native Mac-Exportdialog benötigt weiterhin die
+praktische Abnahme. Linux-Aufnahmen sind keine finalen Mac-Screenshots.
+Anleitung: [Mac-Feldtexte](mac-app-store-fields.md) und
+[Mac-Bau und Abnahme](mac-app-store-release.md).
+
 ## MSIX-Vorbereitung nur für BücherRegal, 31. Oktober 2026
 
 Urteil bleibt **noch nicht bereit**. Der Nutzer hat noch keine App im Partner

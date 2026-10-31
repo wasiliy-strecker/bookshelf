@@ -44,9 +44,9 @@ for library in "$INPUT"/javafx-*.jar; do
     *) rm "$library" ;;
   esac
 done
-APP_NAME=BuecherRegal
+APP_NAME="Bookshelf by Appfabrik"
 common=(--name "$APP_NAME" --app-version "$VERSION" --vendor "Wasiliy Strecker"
-  --description "BücherRegal – deine lokale Büchersammlung"
+  --description "Bookshelf by Appfabrik – deine lokale Büchersammlung"
   --input "$INPUT" --main-jar "buecherregal-$VERSION.jar"
   --main-class de.appfabrik.buecherregal.Launcher
   --module-path "$JAVA_HOME/jmods:$MODULES"
@@ -57,7 +57,7 @@ if [[ "$(uname -s)" != Darwin ]]; then
   common+=(--icon "$ROOT/assets/branding/icon-256.png")
 fi
 if [[ "$(uname -s)" == Darwin ]]; then
-  common+=(--icon "$ROOT/assets/branding/icon.icns" --mac-package-identifier de.appfabrik.buecherregal --mac-package-name BücherRegal)
+  common+=(--icon "$ROOT/assets/branding/icon.icns" --mac-package-identifier de.appfabrik.buecherregal --mac-package-name "Bookshelf")
 fi
 "$JAVA_HOME/bin/jpackage" "${common[@]}" --type app-image --dest "$IMAGE_DEST"
 if [[ "$(uname -s)" == Darwin ]]; then
@@ -76,7 +76,7 @@ if [[ "$PLATFORM" == linux ]]; then
   cp "$ROOT/scripts/install_desktop.py" "$APP_IMAGE/"
 fi
 ACTUAL_VERSION=$("$LAUNCHER" --version)
-if [[ "$ACTUAL_VERSION" != "BücherRegal $VERSION" ]]; then
+if [[ "$ACTUAL_VERSION" != "Bookshelf by Appfabrik $VERSION" ]]; then
   printf 'Versionsprüfung des paketierten Launchers fehlgeschlagen.\n' >&2
   exit 1
 fi
