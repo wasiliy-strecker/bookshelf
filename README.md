@@ -68,6 +68,10 @@ Titel, Autor, Aufbewahrungsort und vollständige Notizen sind enthalten.
 Eine aktive Suche schränkt den Export nicht ein. Vor dem Ersetzen einer
 vorhandenen Exportdatei wird eine Bestätigung angezeigt.
 
+Der vorgeschlagene Dateiname enthält Datum und lokale Uhrzeit mit Sekunden,
+zum Beispiel `buecherregal-2026-10-31_09-25-00.json`. Du kannst den Namen im
+Speicherdialog ändern. Der Zeitstempel wird beim Öffnen des Dialogs bestimmt.
+
 „Importieren“ öffnet eine solche Datei und fragt vor der Übernahme nach.
 Vorhandene Bücher bleiben erhalten. Identische Exemplare werden mit ihrer
 Anzahl verglichen. Ein wiederholter Import derselben Datei fügt deshalb keine

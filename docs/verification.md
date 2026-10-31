@@ -1,5 +1,24 @@
 # Prüfbericht
 
+## Exportname mit Uhrzeit, 31. Oktober 2026
+
+Der native Speicherdialog schlägt jetzt einen Namen mit lokalem Datum und
+Uhrzeit einschließlich Sekunden vor, beispielsweise `buecherregal-2026-10-31_09-25-00.json`.
+Format: `uuuu-MM-dd_HH-mm-ss`, sprachunabhängig und ohne Doppelpunkte für Windows.
+Der Zeitstempel wird beim Öffnen des Dialogs ermittelt. Manuell gewählte Namen,
+Exportinhalt und bestehender Überschreibschutz bleiben erhalten. Zwei Aufrufe
+innerhalb derselben Sekunde können weiterhin denselben Vorschlag erzeugen.
+
+Formatter und Paketbau mit `-Dmaven.test.skip=true` erfolgreich.
+Buildprotokoll: `target/export-filename-build.log`. Vorhandenes Linux-App-Image
+mit aktuellem App-JAR und aktualisierter Anleitung versehen. Keine Tests,
+kein `verify` und keine automatischen GUI-Prüfungen ausgeführt.
+
+Manuelle Abnahme: Exportdialog öffnen, Datum sowie Stunden, Minuten und Sekunden
+im vorgeschlagenen Namen prüfen, abbrechen und nach einigen Sekunden erneut
+öffnen. Der Zeitanteil muss aktualisiert werden. Einen eigenen Namen weiterhin
+wählen können. Keine automatische Test- oder GUI-Ausführung auf Nutzerwunsch.
+
 ## CJK-Schriftdarstellung, 31. Oktober 2026
 
 Der gemeldete Beispieltitel „Bücher 日本語 📚“ ist in der synthetischen

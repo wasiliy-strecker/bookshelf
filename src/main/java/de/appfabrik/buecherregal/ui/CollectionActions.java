@@ -6,7 +6,9 @@ import de.appfabrik.buecherregal.application.ImportResult;
 import de.appfabrik.buecherregal.i18n.Messages;
 import java.io.File;
 import java.nio.file.Path;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -47,7 +49,10 @@ final class CollectionActions {
     }
     try {
       var chooser = chooser("transfer.exportTitle");
-      chooser.setInitialFileName("buecherregal-" + LocalDate.now() + ".json");
+      String timestamp =
+          LocalDateTime.now()
+              .format(DateTimeFormatter.ofPattern("uuuu-MM-dd_HH-mm-ss", Locale.ROOT));
+      chooser.setInitialFileName("buecherregal-" + timestamp + ".json");
       File selected = chooser.showSaveDialog(owner);
       if (selected == null) {
         finish("transfer.cancelled");
