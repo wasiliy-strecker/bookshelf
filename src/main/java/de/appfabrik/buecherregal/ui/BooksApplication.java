@@ -21,14 +21,14 @@ public final class BooksApplication extends Application {
   private Messages messages;
   private Path directory;
   private LanguagePreferences preferences;
-  private String choice = AppLanguage.AUTOMATIC;
+  private String choice = AppLanguage.ENGLISH.tag();
   private boolean languageReadFailed;
   private boolean invalidDirectory;
 
   @Override
   public void init() {
     Locale systemLocale = Locale.getDefault();
-    messages = new Messages(AppLanguage.detect(systemLocale));
+    messages = new Messages(AppLanguage.ENGLISH);
     try {
       String configured = getParameters().getNamed().get("data-dir");
       if (configured != null && configured.isBlank()) {

@@ -1,5 +1,36 @@
 # Prüfbericht
 
+## Englische App-Sprache und deutsche Release-Sprache, 31. Oktober 2026
+
+Bookshelf by Appfabrik startet ohne gespeicherte Sprachwahl auf Englisch,
+unabhängig von der Systemsprache. Vorhandene Sprachwahlen, einschließlich
+ausdrücklich ausgewähltem „Automatisch“, bleiben erhalten. Alle sechs
+Übersetzungen bleiben verfügbar. de-DE ist die primäre Store-Sprache für die
+erste Veröffentlichung. Sie bestimmt ausschließlich die Release-Texte.
+Die übergeordneten und app-lokalen AGENTS.md halten diese Trennung fest.
+
+Mit Temurin 21.0.13+9 bestanden `./mvnw --batch-mode --no-transfer-progress
+spotless:apply verify dependency:build-classpath
+-Dmdep.outputFile=target/gui-classpath.txt`, alle 94 Tests, Compiler-Lint,
+Enforcer, Spotless und SpotBugs. Der englische Erststart bei simulierter
+deutscher Systemsprache bestand drei GUI-Prüfbedingungen. Ein deutscher
+GUI-Ablauf mit anschließendem englischen Neustart bestand weitere 80
+Prüfbedingungen und bestätigt den Erhalt gespeicherter Sprachwahlen.
+
+Das vorhandene lokale Linux-App-Image enthält das geprüfte JAR der bereits
+bestehenden Version 1.0. Englischer Erststart mit deutscher JVM-Sprache auf
+eigenem Xvfb sichtbar geprüft. Für die abschließende Aufnahme wurde JavaFXs
+Softwarerenderer verwendet. Das Paket erzeugte seine synthetische Datenbank,
+ohne eine Spracheinstellung vorzuschreiben. Die Paket-JAR-Prüfsumme stimmt
+mit dem verifizierten Build überein. Bestehende Nutzerfenster, Datenpfade,
+Sammlungen und Sprachdateien wurden nicht geändert.
+
+Nachweise: `target/release-fixes-verify.log`, `target/release-fixes-startup`,
+`target/release-fixes-gui` und
+`target/release-fixes-packaged-startup-software`. Python-Syntax und
+`git diff --check` bestanden. Frühere Store-Übergaben bleiben bei ihrem
+damaligen Quellstand. Kein neuer Store-Bau, Push, Upload oder Release.
+
 ## Mac-App-Store-Vorbereitung, 31. Oktober 2026
 
 **Linux-Vorbereitung geprüft. Native Mac-Abnahme und Einreichung offen.**

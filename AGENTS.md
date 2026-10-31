@@ -57,9 +57,13 @@ Kein Push, Upload oder Store-Release ohne ausdrücklichen Auftrag.
 Die erste Veröffentlichung erfolgt auf ausdrücklichen Nutzerauftrag vom
 31. Oktober 2026 auf Deutsch. Primärsprache im Store: Deutsch (de-DE).
 Beschreibung, Bildtexte und Versionshinweise für die erste Veröffentlichung
-sind deutsch. Der App- und Store-Name bleibt **Bookshelf by Appfabrik**. Weitere Sprachen
+sind deutsch. Das betrifft die Release- und Store-Sprache. Die App startet ohne
+gespeicherte Sprachwahl auf Englisch, unabhängig von der Systemsprache.
+Vorhandene Sprachwahlen einschließlich ausdrücklich gewähltem „Automatisch“
+bleiben erhalten. Alle vorhandenen UI-Übersetzungen bleiben auswählbar.
+Der App- und Store-Name bleibt **Bookshelf by Appfabrik**. Weitere Store-Sprachen
 werden erst später auf Nutzerauftrag hinzugefügt. Bereits vorbereitete
-Übersetzungen sind keine Freigabe für eine mehrsprachige Erstveröffentlichung.
+Übersetzungen sind keine Freigabe für ein mehrsprachiges erstes Store-Angebot.
 
 Vorhandene Ressourcen: de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR. Alle eigenen
 sichtbaren Texte liegen in UTF-8-ResourceBundles. Auf ausdrücklichen Nutzerauftrag

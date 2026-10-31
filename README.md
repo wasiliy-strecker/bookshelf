@@ -125,19 +125,22 @@ nicht behauptet. Details stehen in [packaging.md](docs/packaging.md).
 ## Sprachen
 
 Die Oberfläche unterstützt Deutsch, Englisch, Spanisch, Französisch,
-Italienisch und brasilianisches Portugiesisch. Beim ersten Start folgt sie
-für diese Sprachen der Systemsprache. Für andere Systemsprachen wird Englisch
-verwendet. Regionale Varianten wie de-AT und pt-PT werden der vorhandenen
-deutschen beziehungsweise brasilianisch-portugiesischen Übersetzung zugeordnet.
+Italienisch und brasilianisches Portugiesisch. Ohne gespeicherte Sprachwahl
+startet sie auf Englisch, unabhängig von der Systemsprache. Vorhandene
+Sprachwahlen bleiben erhalten. Bei ausdrücklich gewähltem „Automatisch“
+werden regionale Varianten wie de-AT und pt-PT der vorhandenen deutschen
+beziehungsweise brasilianisch-portugiesischen Übersetzung zugeordnet.
+Die deutsche Erstveröffentlichung betrifft die Store-Beschreibung, Bildtexte
+und Release-Hinweise. Sie bestimmt nicht die App-Sprache.
 
-Über „Sprache“ wählst du eine feste Sprache oder wieder „Automatisch“.
+Über „Sprache“ wählst du eine feste Sprache oder „Automatisch“ nach Systemsprache.
 Die Auswahl wird nach dem nächsten App-Start übernommen. Die App startet nicht
 selbständig neu. Die Sammlung und offene Buchentwürfe bleiben erhalten.
 Der Markenname Bookshelf by Appfabrik bleibt in allen Sprachen gleich.
 
 Die Einstellung liegt in `language.txt` neben der Datenbank. Ein ungültiger
 Sprachwert fällt auf Englisch zurück. Bei einem Lesefehler nutzt die App die
-Systemsprache mit einem sichtbaren Hinweis. Speichern erfolgt atomar.
+englische Sprache mit einem sichtbaren Hinweis. Speichern erfolgt atomar.
 Ein fehlgeschlagener Schreibvorgang lässt die Auswahl im Dialog stehen.
 
 ## Daten und Tests

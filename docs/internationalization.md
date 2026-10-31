@@ -1,5 +1,10 @@
 # Internationalisierung und Linux-Vorschau
 
+Die App-Standardsprache ist Englisch, auch auf einem deutschen System.
+Gespeicherte Sprachwahlen bleiben erhalten. Die erste Store-Veröffentlichung
+verwendet de-DE für Beschreibungen, Bildtexte und Release-Hinweise. Diese
+Store-Sprache bestimmt nicht die App-Sprache.
+
 ## Umfang
 
 Bookshelf by Appfabrik unterstützt de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR.
@@ -15,6 +20,9 @@ Basis ist der Rückfall für nicht unterstützte Sprachen. Store-Texte und
 synthetische Beispieldaten liegen je Sprache im Projekt.
 
 ## Voraussetzungen
+
+`--mode startup --locales en-US` beim GUI-Helfer prüft den englischen Erststart
+ohne Sprachdatei auf einem simulierten deutschen System.
 
 Eclipse Temurin JDK 21.0.13+9, Python 3 und ein ausführbarer Linux-Xvfb-Server.
 Der Server kann im PATH liegen oder durch BOOKSHELF_XVFB auf eine lokal

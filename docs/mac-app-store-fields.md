@@ -2,6 +2,9 @@
 
 Produkt: **Bookshelf by Appfabrik**. Plattform: **macOS**.
 Erste Veröffentlichung: **Deutsch**, Version **1.0**, Apple-Buildnummer **1**.
+
+Deutsch bezeichnet hier die Store- und Release-Texte. Die App startet ohne
+gespeicherte Sprachwahl auf Englisch. Vorhandene UI-Sprachen bleiben auswählbar.
 Der lokale Ordnername und die technische Kennung bleiben unverändert.
 
 ## Aktuelle Versionsseite

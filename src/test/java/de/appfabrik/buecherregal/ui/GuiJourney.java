@@ -62,7 +62,8 @@ public final class GuiJourney {
           "An isolated, explicitly marked synthetic data directory is required");
     }
     Files.createDirectories(output);
-    AppLanguage language = AppLanguage.resolve(tag, Locale.US);
+    AppLanguage language =
+        mode.equals("startup") ? AppLanguage.ENGLISH : AppLanguage.resolve(tag, Locale.US);
     Messages messages = new Messages(language);
     Properties demo = new Properties();
     try (var reader =
@@ -84,10 +85,12 @@ public final class GuiJourney {
                 demo.getProperty("book." + i + ".location"),
                 demo.getProperty("book." + i + ".note")));
       }
-      new LanguagePreferences(data).save(tag);
+      if (!mode.equals("startup")) {
+        new LanguagePreferences(data).save(tag);
+      }
     }
     // A deliberately different system language proves the saved preference wins at real startup.
-    Locale.setDefault(Locale.JAPAN);
+    Locale.setDefault(mode.equals("startup") ? Locale.GERMANY : Locale.JAPAN);
     Thread driver =
         new Thread(
             () -> {
@@ -98,7 +101,15 @@ public final class GuiJourney {
                     fx(() -> ((Button) find("add-book")).getText())
                         .equals("+  " + messages.text("book.add")),
                     "saved language applied at startup");
-                if (mode.equals("capture")) {
+                if (mode.equals("startup")) {
+                  check(
+                      !Files.exists(data.resolve("language.txt")),
+                      "first start does not write a language choice");
+                  check(
+                      new LanguagePreferences(data).load().equals("en-US"),
+                      "first start uses English on a German system");
+                  screenshot(output.resolve("startup.png"));
+                } else if (mode.equals("capture")) {
                   captureJourney(output, messages, demo);
                 } else if (mode.equals("store")) {
                   storeJourney(data, output, messages, demo);
