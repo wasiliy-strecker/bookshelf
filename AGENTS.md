@@ -54,7 +54,14 @@ Kein Push, Upload oder Store-Release ohne ausdrücklichen Auftrag.
 
 ## Internationalisierung und Vorschau
 
-Sechs Sprachen: de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR. Alle eigenen
+Die erste Veröffentlichung erfolgt auf ausdrücklichen Nutzerauftrag vom
+31. Oktober 2026 auf Deutsch. Primärsprache im Store: Deutsch (de-DE).
+Beschreibung, Bildtexte und Versionshinweise für die erste Veröffentlichung
+sind deutsch. Der App- und Store-Name bleibt **Bookshelf**. Weitere Sprachen
+werden erst später auf Nutzerauftrag hinzugefügt. Bereits vorbereitete
+Übersetzungen sind keine Freigabe für eine mehrsprachige Erstveröffentlichung.
+
+Vorhandene Ressourcen: de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR. Alle eigenen
 sichtbaren Texte liegen in UTF-8-ResourceBundles. Auf ausdrücklichen Nutzerauftrag
 vom 31. Oktober 2026 heißen App und Store-Produkt in allen Sprachen **Bookshelf**,
 passend zum englischen GitHub-Repository `bookshelf`. Das gilt auch für deutsche
