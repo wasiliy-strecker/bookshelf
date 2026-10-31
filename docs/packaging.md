@@ -196,3 +196,13 @@ installiertes JDK zur Verfügung. Diese Einstellung gilt für beide vorbereitete
 Paketierungsskripte. Die Änderung wurde hier mit dem Linux-App-Image geprüft.
 Ein Windows- oder macOS-Paket wurde in diesem Internationalisierungsschritt
 nicht gebaut oder nativ abgenommen.
+
+## Mitgelieferte UI-Schrift, 31. Oktober 2026
+
+Das App-JAR enthält Noto Sans CJK JP 2.004 als Regular und Bold einschließlich
+OFL-Lizenz. Die Oberfläche lädt diese Dateien vor der ersten Anwendung des
+Stylesheets. Die beiden Schriften belegen zusammen rund 32 MiB unkomprimiert.
+Es gibt keinen Schrift-Download zur Laufzeit und keine Systeminstallation.
+Herkunft und Prüfsummen stehen in `third-party-licenses/noto-sans-cjk/NOTICE.md`.
+Die Pakethelfer kopieren diesen Ordner in das Legal-Verzeichnis.
+Native Darstellung unter Windows und macOS ist weiterhin separat abzunehmen.
