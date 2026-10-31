@@ -1,4 +1,4 @@
-# BücherRegal
+# Bookshelf
 
 Eigenständige Java-Desktop-App, Stufe 1 des bestätigten Hobby-Portfolios.
 Die übergeordneten Workspace-Regeln gelten ergänzend.
@@ -12,7 +12,7 @@ Fotos, Status, Checklisten und PDF-Export gehören zu den späteren Apps.
 Auf ausdrücklichen Nutzerauftrag vom 29. Oktober 2026 ersetzt ein JSON-Export
 und -Import der Büchersammlung die Schaltfläche „Neu laden“. Der Import ergänzt
 fehlende Exemplare atomar, erhält bestehende IDs und löscht keine Bücher.
-Diese Erweiterung gilt ausschließlich für BücherRegal.
+Diese Erweiterung gilt ausschließlich für Bookshelf.
 
 ## Befehle
 
@@ -55,8 +55,14 @@ Kein Push, Upload oder Store-Release ohne ausdrücklichen Auftrag.
 ## Internationalisierung und Vorschau
 
 Sechs Sprachen: de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR. Alle eigenen
-sichtbaren Texte liegen in UTF-8-ResourceBundles. Der Markenname bleibt
-BücherRegal. Keine übersetzten Speicherfehler im Repository erzeugen.
+sichtbaren Texte liegen in UTF-8-ResourceBundles. Auf ausdrücklichen Nutzerauftrag
+vom 31. Oktober 2026 heißen App und Store-Produkt in allen Sprachen **Bookshelf**,
+passend zum englischen GitHub-Repository `bookshelf`. Das gilt auch für deutsche
+Oberflächen, Launcher, Fenstertitel, Installer, Store-Einträge und Empfehlungen
+im Gespräch. Die bisherige Vorgabe, den Markennamen BücherRegal beizubehalten,
+ist aufgehoben. Bestehende technische Kennungen und Datenpfade werden durch
+diese Namensregel nicht geändert.
+Keine übersetzten Speicherfehler im Repository erzeugen.
 `StorageException.Code` wird erst in der UI übersetzt. Neue Schlüssel in allen
 sechs Dateien ergänzen. Sprachwechsel dürfen Buchdaten nicht verändern.
 
