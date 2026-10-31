@@ -1,5 +1,20 @@
 # Prüfbericht
 
+## Sichtbares Versetzen beim Öffnen vermeiden, 31. Oktober 2026
+
+Der Nutzer bestätigt die Zentrierung, sieht aber die Bewegung von der anfänglichen
+zur endgültigen Position. Der Dialog bleibt deshalb beim ersten Öffnen unsichtbar,
+bis Größenkorrekturen abgeklungen sind und die Position angewendet wurde.
+Nach der Zentrierung wird er mit weiteren 100 ms Abstand sichtbar. Neue
+Größenmeldungen verschieben diesen Zeitpunkt. Beim Schließen werden beide Timer
+gestoppt. Die Größe bleibt erhalten.
+
+Auf Nutzerwunsch nur Formatter und Paketbau mit `-Dmaven.test.skip=true`, keine
+Tests und kein GUI-Prüflauf. Der Build besteht. Protokoll:
+`target/privacy-reveal-manual-build.log`. Die visuelle Abnahme übernimmt der
+Nutzer. Die aktualisierte App wird mit derselben Testsammlung auf Desktop 2
+geöffnet. Dies ist eine lokale Startaktion und keine Plattformabhängigkeit im App-Code.
+
 ## Erneute Dialogpositionierung zur Nutzerprüfung, 31. Oktober 2026
 
 Die Größe bleibt erhalten. Die Zentrierung wartet nach dem Öffnen und nach

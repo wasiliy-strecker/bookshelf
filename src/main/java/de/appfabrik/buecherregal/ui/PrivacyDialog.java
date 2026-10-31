@@ -20,6 +20,7 @@ import javafx.util.Duration;
 final class PrivacyDialog {
   private final Stage stage = new Stage();
   private final PauseTransition placement = new PauseTransition(Duration.millis(150));
+  private final PauseTransition reveal = new PauseTransition(Duration.millis(100));
 
   PrivacyDialog(Window owner, Messages messages) {
     stage.initOwner(owner);
@@ -48,15 +49,31 @@ final class PrivacyDialog {
     stage.setMinWidth(560);
     stage.setMinHeight(420);
     // Native window decorations can change the size after the shown event.
-    placement.setOnFinished(event -> centerOnOwner());
-    stage.widthProperty().addListener(observable -> placement.playFromStart());
-    stage.heightProperty().addListener(observable -> placement.playFromStart());
+    placement.setOnFinished(
+        event -> {
+          centerOnOwner();
+          if (stage.isShowing() && stage.getOpacity() == 0) {
+            reveal.playFromStart();
+          }
+        });
+    reveal.setOnFinished(event -> stage.setOpacity(1));
+    stage.widthProperty().addListener(observable -> schedulePlacement());
+    stage.heightProperty().addListener(observable -> schedulePlacement());
     stage.setOnShown(
         event -> {
           stage.sizeToScene();
-          placement.playFromStart();
+          schedulePlacement();
         });
-    stage.setOnHidden(event -> placement.stop());
+    stage.setOnHidden(
+        event -> {
+          placement.stop();
+          reveal.stop();
+        });
+  }
+
+  private void schedulePlacement() {
+    reveal.stop();
+    placement.playFromStart();
   }
 
   private void centerOnOwner() {
@@ -75,6 +92,7 @@ final class PrivacyDialog {
   }
 
   void show() {
+    stage.setOpacity(0);
     stage.show();
   }
 }
