@@ -42,6 +42,7 @@ final class BookEditor {
   private final Input original;
   private final Consumer<Book> onSaved;
   private boolean saving;
+  private final CloseRequests closeRequests = new CloseRequests(this::closeIfApproved);
 
   BookEditor(
       Window owner,
@@ -217,10 +218,21 @@ final class BookEditor {
   }
 
   void requestClose() {
-    if (saving) {
-      return;
+    requestClose(() -> {});
+  }
+
+  void requestClose(Runnable afterClose) {
+    if (!saving) {
+      closeRequests.request(afterClose);
     }
-    if (input().equals(original)
+  }
+
+  private boolean closeIfApproved() {
+    if (saving) {
+      return false;
+    }
+    if (!stage.isShowing()
+        || input().equals(original)
         || UiSupport.confirm(
             stage,
             messages.text("discard.title"),
@@ -228,7 +240,9 @@ final class BookEditor {
             messages.text("action.discard"),
             messages.text("action.keep"))) {
       stage.hide();
+      return true;
     }
+    return false;
   }
 
   private record Input(String title, String author, String location, String note) {}
