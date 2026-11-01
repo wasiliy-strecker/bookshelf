@@ -52,6 +52,16 @@ Doppelklick oder Enter auf einer Tabellenzeile öffnet die Bearbeitung.
 Löschen verlangt eine Bestätigung. Ungespeicherte Änderungen werden vor dem
 Verwerfen abgefragt. Nach einem Speicherfehler bleiben deine Eingaben erhalten.
 
+Ein Klick auf „Buchtitel“, „Autor“ oder „Aufbewahrungsort“ sortiert die Tabelle
+alphabetisch. Weitere Klicks wechseln zwischen A–Z und Z–A. Die dauerhaft
+sichtbaren Pfeile zeigen die aktive Richtung. Die Sortierung berücksichtigt
+die App-Sprache und ignoriert Groß-/Kleinschreibung. Die Spalten bleiben an
+ihrem Platz. Beim Start ist der Buchtitel aufsteigend sortiert.
+
+Die gewählte Sortierung bleibt beim Suchen, Speichern, Löschen und Importieren
+aktiv. Das ausgewählte Buch bleibt ausgewählt, solange es noch in der Liste
+sichtbar ist. Nach dem Speichern folgt es seiner neuen Position in der Tabelle.
+
 | Taste | Aktion |
 | --- | --- |
 | Strg+N / Cmd+N | Buch hinzufügen |

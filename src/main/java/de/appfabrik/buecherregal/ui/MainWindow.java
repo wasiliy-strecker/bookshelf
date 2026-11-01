@@ -5,6 +5,7 @@ import de.appfabrik.buecherregal.application.CollectionTransfer;
 import de.appfabrik.buecherregal.domain.Book;
 import de.appfabrik.buecherregal.i18n.Messages;
 import de.appfabrik.buecherregal.persistence.LanguagePreferences;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -130,9 +131,12 @@ final class MainWindow {
     HBox searchBar = new HBox(10, search, clear);
     table.setId("books-table");
     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-    table.getColumns().add(column(messages.text("field.title"), Book::title, 360));
+    TableColumn<Book, String> titleColumn = column(messages.text("field.title"), Book::title, 360);
+    table.getColumns().add(titleColumn);
     table.getColumns().add(column(messages.text("field.author"), Book::author, 220));
     table.getColumns().add(column(messages.text("field.location"), Book::location, 240));
+    BookTableSorting.configure(table);
+    table.getSortOrder().add(titleColumn);
     table
         .getSelectionModel()
         .selectedItemProperty()
@@ -255,12 +259,14 @@ final class MainWindow {
         });
   }
 
-  private static TableColumn<Book, String> column(
-      String title, Function<Book, String> value, int width) {
+  private TableColumn<Book, String> column(String title, Function<Book, String> value, int width) {
     TableColumn<Book, String> column = new TableColumn<>(title);
     column.setCellValueFactory(cell -> new ReadOnlyStringWrapper(value.apply(cell.getValue())));
     column.setPrefWidth(width);
-    column.setSortable(false);
+    column.setReorderable(false);
+    Collator collator = Collator.getInstance(messages.locale());
+    collator.setStrength(Collator.SECONDARY);
+    column.setComparator(collator::compare);
     return column;
   }
 
@@ -302,6 +308,7 @@ final class MainWindow {
     Long selection = preferredId != null ? preferredId : selected == null ? null : selected.id();
     List<Book> matches = BookService.search(books, search.getText(), messages.locale());
     table.getItems().setAll(matches);
+    table.sort();
     if (selection != null) {
       matches.stream()
           .filter(book -> book.id() == selection)

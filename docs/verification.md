@@ -1,5 +1,33 @@
 # Prüfbericht
 
+## Alphabetische Tabellensortierung, 1. November 2026
+
+Buchtitel, Autor und Aufbewahrungsort sind über ihre Überschriften sortierbar.
+Die permanenten Pfeile und der Wechsel zwischen A–Z und Z–A entsprechen den
+anderen Java-Apps. Ein sprachabhängiger Collator ignoriert Groß-/Kleinschreibung.
+Die aktive Sortierung wird nach jeder Aktualisierung erneut angewendet.
+Die vorhandene Wiederherstellung der Auswahl verwendet weiterhin die Buch-ID.
+
+Mit Eclipse Temurin 21.0.13+9 und einem eigenen Xvfb-Bildschirm ausgeführt:
+
+```bash
+./mvnw --batch-mode --no-transfer-progress spotless:apply verify -Dbuecherregal.uiTests=true -Dprism.order=sw
+```
+
+107 Tests bestanden, keine Fehler oder ausgelassenen Fälle. Compiler-Lint,
+Enforcer, Spotless und SpotBugs bestanden. Sieben neue GUI-Fälle prüfen mit
+echten JavaFX-Mausklicks alle drei Spalten und vier aufeinanderfolgende Klicks
+in allen sechs Sprachen. Auswahl, Notiz, Pfeile, feste Spaltenreihenfolge und
+Sortierung nach dem Suchen bleiben erhalten. Ein Bearbeitungsablauf bestätigt
+die neue Position und Auswahl nach dem Speichern. Reine Sortierung und Suche
+lassen die synthetische Datenbank bytegleich. Alle Tests nutzen temporäre Daten.
+
+Protokoll: `target/sorting-verify.log`. Die deutsche Aufnahme
+`target/sorting-preview.png` wurde visuell geprüft. Das lokale Linux-App-Image
+enthält das verifizierte JAR mit identischer SHA-256-Prüfsumme und wurde mit
+dem bisherigen Datenverzeichnis auf dem zweiten Desktop geöffnet.
+Native Windows- und Mac-Abnahme bleiben separat.
+
 ## Mac-Beenden, 1. November 2026
 
 Cmd+Q kann für Hauptfenster und Editor mehrere Schließanfragen auslösen.
