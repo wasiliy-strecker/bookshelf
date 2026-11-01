@@ -109,3 +109,11 @@ verwenden jetzt **Bookshelf**. Online-Store-Einträge und Namensreservierungen
 wurden dadurch nicht geändert.
 Die Mac-Erstveröffentlichung wird für Apple Silicon und Intel vorbereitet.
 Native Mac-Abnahme, Signierung und Upload erfolgen separat auf macOS.
+
+## Getrennte App-Informationen, 1. November 2026
+
+„Info“ enthält drei getrennte Einträge: Über die App, Datenschutz und Lizenzen.
+Alle eigenen Erläuterungen und Menütexte in den sechs vorhandenen Katalogen
+pflegen. Die vollständige Datenschutzerklärung bleibt identisch zum Textexport.
+Original-Lizenztexte unverändert einbetten. Neue Fremdkomponenten auch im
+app-lokalen Lizenzindex ergänzen. Versionsangaben stammen aus dem Maven-Build.

@@ -105,7 +105,7 @@ Vorhandene Exporte werden bei einem Fehler nicht durch unvollständige Dateien e
 
 ## Datenschutz in der App
 
-Unter „Info“ → „Datenschutzerklärung für Bookshelf“ ist die vollständige
+Unter „Info“ → „Datenschutz“ ist die vollständige
 Erklärung in der gewählten App-Sprache enthalten. Der Dialog funktioniert
 offline. Du kannst scrollen, mit Strg+A und Strg+C beziehungsweise Cmd+A und
 Cmd+C den Text kopieren und mit Escape oder „Schließen“ zurückkehren.
@@ -277,3 +277,14 @@ Mit `--data-dir=/absoluter/pfad` kann der Eintrag eine bereits verwendete eigene
 Sammlung öffnen. Ohne diese Option gelten die normalen Datenpfade der App.
 Beim Verschieben des App-Images den Installer vom neuen Speicherort erneut
 aufrufen. Einen geöffneten Prozess anschließend regulär neu starten.
+
+## Informationen zur App
+
+Das Menü „Info“ bietet drei getrennte Fenster. „Über die App“ zeigt den
+Produktnamen, die gebaute Version, eine kurze Beschreibung und den Supportkontakt.
+„Datenschutz“ zeigt die vollständige Erklärung in der gewählten Sprache.
+„Lizenzen“ enthält die Hinweise und Originaltexte zu den Fremdkomponenten.
+Alle Inhalte sind offline verfügbar, kopierbar und schreibgeschützt.
+Überschriften und Erläuterungen sind in allen sechs Sprachen vorhanden.
+Rechtliche Originaltexte bleiben in ihrer Originalsprache. Weitere Hinweise
+der eingebetteten Java-Laufzeit bleiben in deren Lizenzordnern erhalten.

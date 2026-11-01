@@ -511,6 +511,7 @@ public final class GuiJourney {
     byte[] preference = Files.readAllBytes(data.resolve("language.txt"));
     click("app-info");
     key(KeyCode.DOWN);
+    key(KeyCode.DOWN);
     key(KeyCode.ENTER);
     waitFor(() -> find("privacy-text") != null);
     String expected = PrivacyNotice.text(messages);
@@ -555,6 +556,7 @@ public final class GuiJourney {
     key(KeyCode.ESCAPE);
     waitFor(() -> find("privacy-text") == null);
     click("app-info");
+    key(KeyCode.DOWN);
     key(KeyCode.DOWN);
     key(KeyCode.ENTER);
     waitFor(() -> find("privacy-close") != null);
