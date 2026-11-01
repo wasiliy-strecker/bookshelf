@@ -96,12 +96,13 @@ gewählten App-Sprache. Die persönliche Sprachwahl ist nicht Teil der Sammlung.
 Die Schaltfläche „Neu laden“ entfällt. Nach Änderungen aktualisiert sich die
 Liste weiterhin automatisch.
 
-Neue Exportdateien benötigen Hardlinks, das bestätigte Ersetzen benötigt einen
-atomaren Dateiaustausch. FAT32 und exFAT unterstützen den sicheren direkten
-Export nicht. Exportiere zuerst in einen geeigneten lokalen Ordner, unter
-Windows etwa auf NTFS. Kopiere danach die fertige JSON-Datei auf den USB-Datenträger.
-Auch ein Netzwerk- oder Cloud-Dateisystem kann diese Funktionen einschränken.
-Vorhandene Exporte werden bei einem Fehler nicht durch unvollständige Dateien ersetzt.
+Neue Exportdateien funktionieren auch ohne Hardlinks, beispielsweise auf FAT32
+und exFAT. In diesem Fall wird die Zieldatei exklusiv neu angelegt und der bereits
+vollständige Export kopiert. Vorhandene Dateien werden dabei nicht überschrieben.
+Das bestätigte Ersetzen benötigt weiterhin einen atomaren Dateiaustausch. Wenn
+ein Datenträger dies nicht unterstützt, bleibt die alte Datei erhalten und ein
+neuer Dateiname kann verwendet werden. Auch Netzwerk- und Cloud-Dateisysteme
+können Zugriffe einschränken. Details zum Fehlerschutz stehen im Prüfbericht.
 
 ## Datenschutz in der App
 

@@ -1,5 +1,48 @@
 # Prüfbericht
 
+## Portable JSON-Exporte, 1. November 2026
+
+Neue JSON-Exporte benötigen nicht mehr zwingend Hardlinks. Die bestehende
+Mac-Ordnerauswahl und die Sandbox-Rechte bleiben erhalten. Spracheinstellung,
+Datenpfad und Benutzeroberfläche sind unverändert.
+
+Der Export wird vor der Veröffentlichung vollständig in einer temporären Datei
+erzeugt. Unterstützt das Dateisystem Hardlinks, bleibt die bisherige atomare
+Veröffentlichung neuer Dateien erhalten. Andernfalls wird das neue Ziel exklusiv
+angelegt (`CREATE_NEW` beziehungsweise `NewOnly`) und mit dem fertigen Inhalt
+beschrieben. Eine zwischenzeitlich entstandene Datei oder ein symbolischer
+Verweis wird nicht überschrieben. Erfolge werden erst nach geschlossenem
+Ausgabestrom gemeldet. Kontrollierte Schreibfehler entfernen die eigene
+Teildatei, sofern ihre Identität noch nachweisbar ist. Eine inzwischen ersetzte
+Datei wird nicht zur Fehlerbereinigung gelöscht. Bestehende Exporte werden
+weiterhin nur nach Bestätigung atomar ersetzt, ohne unsicheren Überschreibfallback.
+
+Grenze des Ausweichwegs: Das Kopieren einer neuen Datei ist selbst kein atomarer
+Vorgang. Bei hartem Prozessabbruch, abgezogenem Datenträger oder fehlender
+Dateiidentität kann eine unvollständige neue Exportdatei zurückbleiben. Die
+interne Sammlung und zuvor vorhandene Exportdateien werden dadurch nicht
+ersetzt. Die neue Exportdatei dann erneut unter einem neuen Namen erstellen.
+Die Tests simulieren fehlende Hardlink-Unterstützung und Schreibfehler. Ein
+physischer exFAT-Datenträger und native Mac-Sandbox-Ausführung waren hier nicht
+verfügbar. Daraus folgt keine native macOS- oder Store-Freigabe.
+
+Mit Eclipse Temurin 21.0.13+9 und einem eigenen Xvfb-/Openbox-Bildschirm geprüft:
+
+```bash
+./mvnw --batch-mode --no-transfer-progress spotless:apply verify -Dbuecherregal.uiTests=true -Dprism.order=sw
+```
+
+124 Tests ohne Fehler oder ausgelassene Fälle. Enforcer, Compiler-Lint,
+Spotless und SpotBugs bestanden. Für diesen Lauf wurden native Hardlink-Aufrufe
+auf Export-Stagingdateien gezielt mit `EOPNOTSUPP` abgewiesen. Zwei reale
+JSON-Veröffentlichungen durchliefen dadurch den Ausweichweg. Fünf zusätzliche
+Regressionen prüfen vollständige Inhalte, native Dateisystemfehler, vorhandene
+und spät entstandene Ziele, Schreibfehler mit Wiederholung sowie den Erhalt
+einer während des Fehlers ausgetauschten Datei. Nur synthetische Testdaten.
+
+Nachweis: `target/portable-exports-verify.log`. Persönliche Exporte unberührt.
+Keine neue Paketierung, Veröffentlichung oder Änderung laufender Nutzerfenster.
+
 ## Getrennte Info-Fenster, 1. November 2026
 
 „Info“ enthält jetzt „Über die App“, „Datenschutz“ und „Lizenzen“. Die kurze

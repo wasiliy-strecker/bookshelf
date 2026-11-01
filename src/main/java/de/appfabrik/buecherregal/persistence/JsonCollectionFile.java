@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-/** Versioned UTF-8 JSON with strict validation and atomic publication. */
+/** Versioned UTF-8 JSON with strict validation and protected export destinations. */
 public final class JsonCollectionFile implements CollectionFile {
   public static final int MAX_BYTES = 10 * 1024 * 1024;
   public static final int MAX_BOOKS = 10_000;
@@ -230,7 +230,7 @@ public final class JsonCollectionFile implements CollectionFile {
             StandardCopyOption.REPLACE_EXISTING);
       } else {
         // Publish without overwriting a concurrently created target.
-        Files.createLink(target.path(), temporary);
+        NewFilePublisher.publish(temporary, target.path());
       }
     } catch (IOException | SecurityException | UnsupportedOperationException exception) {
       throw new TransferException(TransferException.Code.WRITE, exception);
