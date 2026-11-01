@@ -1,1 +1,1 @@
-Erste Veröffentlichung von Bookshelf by Appfabrik. Erfasse deine Bücher mit Autoren, Aufbewahrungsorten und Notizen. Durchsuche deine lokale Sammlung und übertrage sie mit JSON-Import und Export.
+Erste Veröffentlichung von Bookshelf. Erfasse deine Bücher mit Autoren, Aufbewahrungsorten und Notizen. Durchsuche deine lokale Sammlung und übertrage sie mit JSON-Import und Export.

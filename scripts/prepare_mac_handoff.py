@@ -72,7 +72,7 @@ def main():
         mac.run(ROOT / "scripts/export_privacy.sh", export)
         text = (export / "de-DE.txt").read_text()
     (privacy / "de-DE.txt").write_text(text)
-    rendered = "<!doctype html><html lang=\"de\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width\"><title>Datenschutz – Bookshelf by Appfabrik</title><style>body{max-width:52rem;margin:3rem auto;padding:0 1rem;font:18px/1.6 system-ui}p{white-space:pre-line}</style><main>"
+    rendered = "<!doctype html><html lang=\"de\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width\"><title>Datenschutz – Bookshelf</title><style>body{max-width:52rem;margin:3rem auto;padding:0 1rem;font:18px/1.6 system-ui}p{white-space:pre-line}</style><main>"
     rendered += "".join("<p>" + html.escape(part) + "</p>" for part in text.split("\n\n"))
     (privacy / "index.html").write_text(rendered + "</main></html>\n")
     (privacy / "URL-NOCH-OFFEN.txt").write_text(
@@ -116,7 +116,7 @@ def main():
               "publicPrivacyURL": "pending", "runtimeSourcePublication": "pending", "storeReady": False}
     (output / "preparation-info.json").write_text(json.dumps(report, indent=2) + "\n")
     (output / "ZUERST-LESEN.txt").write_text(
-        "Bookshelf by Appfabrik – Mac App Store, Version 1.0, Build 1\n\n"
+        "Bookshelf – Mac App Store, Version 1.0, Build 1\n\n"
         "Jetzt: JETZT-IN-APP-STORE-CONNECT.md öffnen und deutsche Texte eintragen.\n"
         "Danach: Den gesamten Ordner auf den Mac kopieren und AUF-DEM-MAC.md folgen.\n"
         "Bilder unter Screenshot-Drafts-Linux sind Entwürfe. Finale Mac-Bilder fehlen.\n"

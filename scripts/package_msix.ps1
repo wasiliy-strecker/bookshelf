@@ -69,8 +69,8 @@ if (Test-Path -LiteralPath (Join-Path $Root ".git")) {
 
 # Always rebuild on Windows. No tests, launcher, install, signing or upload.
 & (Join-Path $PSScriptRoot "package.ps1") -PackageType app-image -SkipLauncherCheck
-$AppImage = Join-Path $Root "target\app-image\Bookshelf by Appfabrik"
-foreach ($File in @("Bookshelf by Appfabrik.exe", "runtime\bin\server\jvm.dll", "app\legal\BUILD_JAVA_RELEASE.txt")) {
+$AppImage = Join-Path $Root "target\app-image\Bookshelf"
+foreach ($File in @("Bookshelf.exe", "runtime\bin\server\jvm.dll", "app\legal\BUILD_JAVA_RELEASE.txt")) {
     if (-not (Test-Path -LiteralPath (Join-Path $AppImage $File))) {
         throw "Unvollstaendiges Windows-App-Image: $File"
     }

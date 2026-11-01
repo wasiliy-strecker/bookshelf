@@ -1,5 +1,45 @@
 # Prüfbericht
 
+## Öffentlicher Name Bookshelf, 1. November 2026
+
+Auf Nutzerauftrag entfällt der Zusatz „by Appfabrik“. Hauptfenster, Startfehler,
+Versionsausgabe, Texte aller sechs Sprachen einschließlich Datenschutz,
+lokale Store-Texte und Paketvorlagen verwenden jetzt Bookshelf. Die
+Beispielkonfiguration für den Microsoft Store verwendet denselben Namen.
+Technische Kennungen, Datenverzeichnisse, Dateiformate und Versionsnummern
+sind unverändert. Historische Prüfberichte und Übergaben behalten ihren Stand.
+
+Mit Eclipse Temurin 21.0.13+9 auf einem isolierten Xvfb-Bildschirm geprüft:
+
+```bash
+./mvnw --batch-mode --no-transfer-progress spotless:apply verify dependency:build-classpath -Dmdep.outputFile=target/gui-classpath.txt -Dbuecherregal.uiTests=true -Dprism.order=sw
+python3 -m unittest discover -s scripts -p 'test_*.py' -v
+python3 scripts/store_assets/run_gui.py --output target/bookshelf-name-gui --mode verify --locales de-DE en-US
+```
+
+107 Java-Tests und fünf Python-Tests bestanden. Compiler-Lint, Enforcer,
+Spotless und SpotBugs ohne Fehler. Die echten GUI-Abläufe auf Deutsch und
+Englisch einschließlich Datenschutzdialog, Kopieren, Scrollen, Schließen und
+Sprachwechsel mit Neustart bestanden. Hauptansicht und Datenschutz wurden
+visuell geprüft. Die übrigen Sprachen sind durch Ressourcen- und UI-Tests
+abgedeckt. Die Java-Info-Menüs wurden in diesem Auftrag nicht erweitert.
+
+`scripts/package.sh app-image` lief aus einer eigenen Kopie der aktuellen
+versionierten Quellen. So blieben vorhandene App-Images erhalten. Der neue
+Starter liegt unter `target/app-image/Bookshelf/bin/Bookshelf`. Sein JAR
+enthält dieselben Klassen und Ressourcen wie der geprüfte Maven-Build.
+Das paketierte Hauptfenster wurde auf einem isolierten Bildschirm geöffnet,
+mit dem Titel Bookshelf geprüft und über die native Fensterfunktion geschlossen.
+Das neue App-Image startet mit der bisherigen technischen Datenbankbezeichnung.
+
+Der vorhandene verwaltete Linux-Anwendungseintrag heißt jetzt Bookshelf.
+Sein bisheriger expliziter Datenpfad bleibt exakt erhalten. Persönliche
+Sammlungen und die zwei unversionierten Nutzerexporte wurden nicht verändert.
+Bereits laufende Nutzerfenster wurden nicht geschlossen. Native Windows- und
+Mac-Pakete sowie vorhandene Online-Store-Einträge wurden nicht aktualisiert.
+
+Prüflogs und Bilder liegen unter `target/bookshelf-name-*`.
+
 ## Alphabetische Tabellensortierung, 1. November 2026
 
 Buchtitel, Autor und Aufbewahrungsort sind über ihre Überschriften sortierbar.

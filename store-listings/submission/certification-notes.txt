@@ -1,4 +1,4 @@
-Bookshelf by Appfabrik is an offline desktop application for a personal book collection. No account, subscription, external hardware or credentials are required.
+Bookshelf is an offline desktop application for a personal book collection. No account, subscription, external hardware or credentials are required.
 
 The runFullTrust capability is required to run the bundled JavaFX desktop application and its SQLite JDBC native library. The package includes its Java runtime. Users do not need to install Java separately. The application stores the collection locally and supports user-initiated JSON import and export through native file dialogs. It does not require administrator privileges for normal operation.
 

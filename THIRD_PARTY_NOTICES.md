@@ -7,7 +7,7 @@ mit den übrigen Hinweisen in jedes App-Image übernommen.
 Quellen: [Gson](https://github.com/google/gson/tree/gson-parent-2.13.2)
 und [Error Prone](https://github.com/google/error-prone/tree/v2.41.0).
 
-Bookshelf by Appfabrik verwendet OpenJFX unter GPLv2 mit Classpath Exception und SQLite
+Bookshelf verwendet OpenJFX unter GPLv2 mit Classpath Exception und SQLite
 JDBC von Xerial unter Apache License 2.0 und BSD-2-Clause. SQLite selbst ist
 Public Domain. Die eingebettete Java-Laufzeit unterliegt den Lizenzbedingungen
 der beim Bauen gewählten JDK-Distribution. Die aktuelle Build-Basis ist
@@ -62,7 +62,7 @@ weiterhin erforderlich. Details: `packaging/runtime-sources-readme.txt`.
 
 Maven, Spotless, SpotBugs und JUnit sind Entwicklungswerkzeuge und werden nicht
 in das App-Image aufgenommen. Dieses Dokument vergibt keine Lizenz für den
-eigenen Bookshelf by Appfabrik-Quellcode.
+eigenen Bookshelf-Quellcode.
 
 ## Schrift der Benutzeroberfläche
 

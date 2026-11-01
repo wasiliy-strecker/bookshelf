@@ -1,4 +1,4 @@
-Gib jedem Buch einen Platz. Bookshelf by Appfabrik hält Titel, Autoren, Aufbewahrungsorte und persönliche Notizen in einer übersichtlichen Desktop-App zusammen.
+Gib jedem Buch einen Platz. Bookshelf hält Titel, Autoren, Aufbewahrungsorte und persönliche Notizen in einer übersichtlichen Desktop-App zusammen.
 
 Lege ein Buch zunächst nur mit seinem Titel an und ergänze die Angaben später. Die Suche durchsucht alle vier Textfelder. So findest du Leseeindrücke, Geschenknotizen oder den richtigen Regalplatz schnell wieder.
 

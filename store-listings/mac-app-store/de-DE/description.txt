@@ -1,9 +1,9 @@
-Gib jedem Buch einen Platz. Bookshelf by Appfabrik hält Titel, Autoren, Aufbewahrungsorte und persönliche Notizen in einer übersichtlichen Anwendung zusammen.
+Gib jedem Buch einen Platz. Bookshelf hält Titel, Autoren, Aufbewahrungsorte und persönliche Notizen in einer übersichtlichen Anwendung zusammen.
 
 Lege ein Buch zunächst nur mit seinem Titel an und ergänze die Angaben später. Bearbeite deine Einträge oder entferne Bücher aus deiner Sammlung. Die Suche berücksichtigt Titel, Autor, Aufbewahrungsort und Notiz. So findest du Leseeindrücke, Geschenknotizen oder den richtigen Regalplatz schnell wieder.
 
-Deine Sammlung wird lokal auf deinem Computer gespeichert. Du benötigst kein Benutzerkonto und keinen Cloud-Dienst. Bookshelf by Appfabrik enthält keine Werbung und keine Nutzungsanalyse.
+Deine Sammlung wird lokal auf deinem Computer gespeichert. Du benötigst kein Benutzerkonto und keinen Cloud-Dienst. Bookshelf enthält keine Werbung und keine Nutzungsanalyse.
 
 Exportiere deine gesamte Büchersammlung als JSON-Datei und importiere sie später wieder. Vorhandene Bücher bleiben erhalten. Bereits vorhandene identische Exemplare werden beim Import übersprungen.
 
-Bookshelf by Appfabrik konzentriert sich auf das Wesentliche: deine Bücher erfassen, wiederfinden und persönliche Notizen festhalten.
+Bookshelf konzentriert sich auf das Wesentliche: deine Bücher erfassen, wiederfinden und persönliche Notizen festhalten.

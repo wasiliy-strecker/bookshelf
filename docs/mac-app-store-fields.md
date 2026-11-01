@@ -1,11 +1,17 @@
 # Jetzt in App Store Connect eintragen
 
-Produkt: **Bookshelf by Appfabrik**. Plattform: **macOS**.
+Produkt: **Bookshelf**. Plattform: **macOS**.
 Erste Veröffentlichung: **Deutsch**, Version **1.0**, Apple-Buildnummer **1**.
 
 Deutsch bezeichnet hier die Store- und Release-Texte. Die App startet ohne
 gespeicherte Sprachwahl auf Englisch. Vorhandene UI-Sprachen bleiben auswählbar.
 Der lokale Ordnername und die technische Kennung bleiben unverändert.
+
+Namensstand vom 1. November 2026: Der Nutzer hat den Zusatz „by Appfabrik“
+entfernt. Die aktuellen lokalen Vorlagen verwenden **Bookshelf**. Bestehende
+Online-Einträge, Namensreservierungen und bereits ausgelieferte Übergabeordner
+wurden damit nicht geändert. Vor einer späteren Einreichung den Namen im
+bestehenden Store-Eintrag abgleichen.
 
 ## Aktuelle Versionsseite
 

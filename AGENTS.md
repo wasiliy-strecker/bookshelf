@@ -61,13 +61,13 @@ sind deutsch. Das betrifft die Release- und Store-Sprache. Die App startet ohne
 gespeicherte Sprachwahl auf Englisch, unabhängig von der Systemsprache.
 Vorhandene Sprachwahlen einschließlich ausdrücklich gewähltem „Automatisch“
 bleiben erhalten. Alle vorhandenen UI-Übersetzungen bleiben auswählbar.
-Der App- und Store-Name bleibt **Bookshelf by Appfabrik**. Weitere Store-Sprachen
+Der App- und Store-Name bleibt **Bookshelf**. Weitere Store-Sprachen
 werden erst später auf Nutzerauftrag hinzugefügt. Bereits vorbereitete
 Übersetzungen sind keine Freigabe für ein mehrsprachiges erstes Store-Angebot.
 
 Vorhandene Ressourcen: de-DE, en-US, es-ES, fr-FR, it-IT und pt-BR. Alle eigenen
 sichtbaren Texte liegen in UTF-8-ResourceBundles. Auf ausdrücklichen Nutzerauftrag
-vom 31. Oktober 2026 heißen App und Store-Produkt in allen Sprachen **Bookshelf by Appfabrik**,
+vom 1. November 2026 heißen App und Store-Produkt in allen Sprachen **Bookshelf**,
 passend zum englischen GitHub-Repository `bookshelf`. Das gilt auch für deutsche
 Oberflächen, Launcher, Fenstertitel, Installer, Store-Einträge und Empfehlungen
 im Gespräch. Die bisherige Vorgabe, den Markennamen BücherRegal beizubehalten,
@@ -102,7 +102,10 @@ Lieferpakete sind Linux-Vorschauen. Keine Windows-Abnahme daraus ableiten.
 Generierte Lieferungen gehören unter `build/` und nicht in Git. Roadmap unter
 `/tmp/app-factory-cpp-roadmap.lock` frisch lesen und gezielt aktualisieren.
 
-Am 31. Oktober 2026 wurde der bereits reservierte Store-Name
-**Bookshelf by Appfabrik** ausdrücklich auch für die App gewählt.
+Am 1. November 2026 hat der Nutzer den öffentlichen Namen auf **Bookshelf**
+gekürzt. Dies ersetzt die Namensentscheidung vom 31. Oktober 2026. Der damals
+reservierte Store-Name war **Bookshelf by Appfabrik**. Die lokalen Vorlagen
+verwenden jetzt **Bookshelf**. Online-Store-Einträge und Namensreservierungen
+wurden dadurch nicht geändert.
 Die Mac-Erstveröffentlichung wird für Apple Silicon und Intel vorbereitet.
 Native Mac-Abnahme, Signierung und Upload erfolgen separat auf macOS.

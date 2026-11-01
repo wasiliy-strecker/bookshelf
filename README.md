@@ -1,12 +1,12 @@
-# Bookshelf by Appfabrik
+# Bookshelf
 
 Eine kleine Desktop-App für deine eigene Büchersammlung. Erfasse Titel, Autor,
 Aufbewahrungsort und eine Notiz. Finde Bücher über alle vier Felder wieder.
 Die Sammlung bleibt lokal auf deinem Computer und ist nach dem Neustart erhalten.
 
-![Bookshelf by Appfabrik mit synthetischen Beispieldaten](docs/screenshots/buecherregal.png)
+![Bookshelf mit synthetischen Beispieldaten](docs/screenshots/buecherregal.png)
 
-Bookshelf by Appfabrik ist Stufe 1 des Java-Hobby-Portfolios. Die Reihe führt über GarnBox
+Bookshelf ist Stufe 1 des Java-Hobby-Portfolios. Die Reihe führt über GarnBox
 (Foto), StrickProjekt (Status) und NähPlan (Checkliste) bis zur fünften Stufe
 KostümPlan (PDF-Export). Diese weiteren Apps bleiben eigenständige Projekte.
 
@@ -42,7 +42,7 @@ fehlendem `JAVA_HOME` ein vorhandenes vollständiges JDK unter
 Das lokal erzeugte App-Image startet ohne separat installiertes Java:
 
 ```bash
-'./target/app-image/Bookshelf by Appfabrik/bin/Bookshelf by Appfabrik'
+'./target/app-image/Bookshelf/bin/Bookshelf'
 ```
 
 ## Bedienung
@@ -105,7 +105,7 @@ Vorhandene Exporte werden bei einem Fehler nicht durch unvollständige Dateien e
 
 ## Datenschutz in der App
 
-Unter „Info“ → „Datenschutzerklärung für Bookshelf by Appfabrik“ ist die vollständige
+Unter „Info“ → „Datenschutzerklärung für Bookshelf“ ist die vollständige
 Erklärung in der gewählten App-Sprache enthalten. Der Dialog funktioniert
 offline. Du kannst scrollen, mit Strg+A und Strg+C beziehungsweise Cmd+A und
 Cmd+C den Text kopieren und mit Escape oder „Schließen“ zurückkehren.
@@ -146,7 +146,7 @@ und Release-Hinweise. Sie bestimmt nicht die App-Sprache.
 Über „Sprache“ wählst du eine feste Sprache oder „Automatisch“ nach Systemsprache.
 Die Auswahl wird nach dem nächsten App-Start übernommen. Die App startet nicht
 selbständig neu. Die Sammlung und offene Buchentwürfe bleiben erhalten.
-Der Markenname Bookshelf by Appfabrik bleibt in allen Sprachen gleich.
+Der Markenname Bookshelf bleibt in allen Sprachen gleich.
 
 Die Einstellung liegt in `language.txt` neben der Datenbank. Ein ungültiger
 Sprachwert fällt auf Englisch zurück. Bei einem Lesefehler nutzt die App die
@@ -223,7 +223,7 @@ Hinweise zu Fremdkomponenten stehen in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTI
 
 ## Erste Veröffentlichung im Mac App Store
 
-Produktname **Bookshelf by Appfabrik**, Version **1.0**, Build **1**.
+Produktname **Bookshelf**, Version **1.0**, Build **1**.
 Die erste Store-Beschreibung ist deutsch. Die Store-Vorbereitung enthält
 deutsche Feldtexte, Datenschutz, synthetische Beispieldaten und Bildentwürfe.
 Die [Feldanleitung](docs/mac-app-store-fields.md) beschreibt, was sich jetzt
@@ -267,7 +267,7 @@ Anwendungseintrag demselben Icon zu.
 Nach dem Linux-App-Image-Bau aus diesem App-Verzeichnis registrieren:
 
 ```bash
-python3 'target/app-image/Bookshelf by Appfabrik/install_desktop.py'
+python3 'target/app-image/Bookshelf/install_desktop.py'
 ```
 
 Danach lässt sich die App über ihren Namen in der Ubuntu-Anwendungsübersicht

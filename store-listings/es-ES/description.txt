@@ -1,4 +1,4 @@
-Dale un lugar a cada libro. Bookshelf by Appfabrik reúne títulos, autores, ubicaciones y notas personales en una aplicación de escritorio clara y sencilla.
+Dale un lugar a cada libro. Bookshelf reúne títulos, autores, ubicaciones y notas personales en una aplicación de escritorio clara y sencilla.
 
 Añade un libro solo con su título y completa los detalles cuando quieras. Busca en los cuatro campos de texto para encontrar impresiones de lectura, dedicatorias o el estante correcto.
 

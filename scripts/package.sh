@@ -44,9 +44,9 @@ for library in "$INPUT"/javafx-*.jar; do
     *) rm "$library" ;;
   esac
 done
-APP_NAME="Bookshelf by Appfabrik"
+APP_NAME="Bookshelf"
 common=(--name "$APP_NAME" --app-version "$VERSION" --vendor "Wasiliy Strecker"
-  --description "Bookshelf by Appfabrik – deine lokale Büchersammlung"
+  --description "Bookshelf – deine lokale Büchersammlung"
   --input "$INPUT" --main-jar "buecherregal-$VERSION.jar"
   --main-class de.appfabrik.buecherregal.Launcher
   --module-path "$JAVA_HOME/jmods:$MODULES"
@@ -76,7 +76,7 @@ if [[ "$PLATFORM" == linux ]]; then
   cp "$ROOT/scripts/install_desktop.py" "$APP_IMAGE/"
 fi
 ACTUAL_VERSION=$("$LAUNCHER" --version)
-if [[ "$ACTUAL_VERSION" != "Bookshelf by Appfabrik $VERSION" ]]; then
+if [[ "$ACTUAL_VERSION" != "Bookshelf $VERSION" ]]; then
   printf 'Versionsprüfung des paketierten Launchers fehlgeschlagen.\n' >&2
   exit 1
 fi

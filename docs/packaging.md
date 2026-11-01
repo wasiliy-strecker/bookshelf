@@ -26,7 +26,7 @@ Build-JDK. `legal/USER_GUIDE.md` enthält die Bedienungsanleitung mit Datenpfade
 
 ```bash
 ./scripts/package.sh app-image
-'./target/app-image/Bookshelf by Appfabrik/bin/Bookshelf by Appfabrik'
+'./target/app-image/Bookshelf/bin/Bookshelf'
 ```
 
 Linux dient hier als Entwicklungs- und Prüfplattform. Ein App-Image ist ein
@@ -40,7 +40,7 @@ wird WiX Toolset 3.14.1 benötigt, dessen `bin`-Verzeichnis im `PATH` liegt.
 ```powershell
 .\mvnw.cmd verify
 .\scripts\package.ps1 -PackageType app-image
-& '.\target\app-image\Bookshelf by Appfabrik\Bookshelf by Appfabrik.exe'
+& '.\target\app-image\Bookshelf\Bookshelf.exe'
 .\scripts\package.ps1 -PackageType exe
 ```
 
@@ -59,7 +59,7 @@ Auf der jeweiligen Mac-Architektur mit passendem Temurin-JDK 21.0.13+9 ausführe
 ```bash
 ./mvnw verify
 ./scripts/package.sh app-image
-open 'target/app-image/Bookshelf by Appfabrik.app'
+open 'target/app-image/Bookshelf.app'
 ./scripts/package.sh dmg
 ```
 
@@ -255,6 +255,6 @@ Referenzen:
 
 Der DMG-Weg oben ist kein Mac-App-Store-Paket. Für die gemeinsame Ausgabe
 für Apple Silicon und Intel gilt die [Mac-Store-Anleitung](mac-app-store-release.md).
-Öffentlicher Name ist Bookshelf by Appfabrik. Der ältere DMG-Helfer verwendet
+Öffentlicher Name ist Bookshelf. Der ältere DMG-Helfer verwendet
 wegen der Längenbegrenzung von `--mac-package-name` den kurzen Menünamen Bookshelf.
 Datenverzeichnisse und Bundle-ID bleiben unverändert.

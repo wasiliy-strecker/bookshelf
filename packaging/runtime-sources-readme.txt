@@ -1,4 +1,4 @@
-Bookshelf by Appfabrik: lokale Laufzeitquellen und Herkunft
+Bookshelf: lokale Laufzeitquellen und Herkunft
 
 Eclipse Temurin 21.0.13+9, OpenJFX 21.0.11+4
 
@@ -12,6 +12,6 @@ runtime-sources.json nennt feste Download-URLs, Größen und SHA-256 aller sechs
 
 Diese Dateien sind lokale Release-Begleitmaterialien. Es wurde nichts öffentlich bereitgestellt. Vor öffentlicher Binärverteilung die passenden Quellen und erforderlichen Buildinformationen zugänglich machen und im Store darauf verweisen. Das endgültige Windows-Paket einschließlich zusätzlicher nativer Bibliotheken muss noch gegen Herkunft, Versionen und Lizenzumfang abgeglichen werden. Diese Vorbereitung bestätigt keine abschließende Lizenzabnahme.
 
-Der eigene Bookshelf by Appfabrik-Quellcode ist nicht Bestandteil dieser Fremdkomponentenfreigabe.
+Der eigene Bookshelf-Quellcode ist nicht Bestandteil dieser Fremdkomponentenfreigabe.
 
 Mac-App-Store-Vorbereitung: Die Mac-Übergabe ergänzt diese gemeinsame Quelllieferung um die beiden Original-Buildmetadaten für Temurin ARM64 und Intel. Beide nennen dieselbe oben genannte Buildskriptrevision. Die zugehörigen Binärarchive und JavaFX-Mac-Module liegen separat unter MacInputs/dependencies. Ihre festen URLs, Prüfsummen und Architekturzuordnung stehen in Source/packaging/macos/dependencies.json. Auch die tatsächlich gebaute Mac-Ausgabe ist vor Veröffentlichung gegen diese Herkunft und ihren Lizenzumfang abzugleichen.

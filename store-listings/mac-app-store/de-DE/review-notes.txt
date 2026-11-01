@@ -1,4 +1,4 @@
-Bookshelf by Appfabrik verwaltet eine lokale Büchersammlung. Es sind weder Benutzerkonto noch Anmeldung, Abonnement oder zusätzliche Hardware erforderlich.
+Bookshelf verwaltet eine lokale Büchersammlung. Es sind weder Benutzerkonto noch Anmeldung, Abonnement oder zusätzliche Hardware erforderlich.
 
 Zum Prüfen können Sie ein Buch mit Titel, Autor, Aufbewahrungsort und Notiz anlegen, bearbeiten und suchen. Die Sammlung kann als JSON-Datei exportiert und wieder importiert werden. Beim Export wählen Sie zunächst einen Zielordner und anschließend einen Dateinamen. Vorhandene Bücher bleiben beim Import erhalten.
 

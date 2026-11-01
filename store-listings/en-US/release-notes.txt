@@ -1,1 +1,1 @@
-First release of Bookshelf by Appfabrik. Manage books with authors, storage locations and notes, search your collection and transfer it with JSON import and export. Includes six interface languages and an offline privacy policy.
+First release of Bookshelf. Manage books with authors, storage locations and notes, search your collection and transfer it with JSON import and export. Includes six interface languages and an offline privacy policy.

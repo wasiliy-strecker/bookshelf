@@ -1,7 +1,7 @@
-# Bookshelf by Appfabrik für den Microsoft Store vorbereiten
+# Bookshelf für den Microsoft Store vorbereiten
 
 Stand: 31. Oktober 2026. **Noch nicht bereit.** Diese Anleitung betrifft nur
-Bookshelf by Appfabrik. Der lokale MSIX-Helfer ist implementiert, aber noch nicht auf
+Bookshelf. Der lokale MSIX-Helfer ist implementiert, aber noch nicht auf
 Windows ausgeführt. Der Nutzer hat noch keine App im Partner Center angelegt.
 Es gibt deshalb keine bestätigte Store-Identität und kein fertiges MSIX.
 In diesem Arbeitsschritt werden auf ausdrücklichen Nutzerwunsch keine Tests
@@ -23,7 +23,7 @@ bleiben Vorschauen. Finale Windows-Aufnahmen werden separat erstellt.
 
 ## 1. App im Partner Center anlegen
 
-Windows-App als MSIX/APPX anlegen und den Namen Bookshelf by Appfabrik reservieren.
+Windows-App als MSIX/APPX anlegen und den Namen Bookshelf reservieren.
 Aus der Produktidentität exakt übernehmen:
 
 | Partner Center | `store.local.json` |

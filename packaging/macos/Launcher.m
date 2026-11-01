@@ -13,7 +13,7 @@ typedef int (*LaunchJava)(int, char **, int, const char **, int, const char **,
 static int fail(NSString *message) {
     fprintf(stderr, "%s\n", message.UTF8String);
     NSAlert *alert = [[NSAlert alloc] init];
-    alert.messageText = @"Bookshelf by Appfabrik";
+    alert.messageText = @"Bookshelf";
     alert.informativeText = message;
     [alert runModal];
     return 1;
@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
             [@"-Dorg.sqlite.lib.path=" stringByAppendingString:native],
             @"-Dorg.sqlite.lib.name=libsqlitejdbc.dylib",
             [@"-Djava.library.path=" stringByAppendingString:native],
-            @"-Dfile.encoding=UTF-8", @"-Xdock:name=Bookshelf by Appfabrik",
+            @"-Dfile.encoding=UTF-8", @"-Xdock:name=Bookshelf",
             [@"-Xdock:icon=" stringByAppendingString:[contents stringByAppendingPathComponent:@"Resources/icon.icns"]],
             @"--module-path", modules, @"--add-modules=javafx.controls",
             @"-cp", [contents stringByAppendingPathComponent:@"app/classpath/*"],
