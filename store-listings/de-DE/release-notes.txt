@@ -1,1 +1,1 @@
-Erste Veröffentlichung von Bookshelf. Verwalte Bücher mit Autor, Aufbewahrungsort und Notizen, durchsuche deine Sammlung und übertrage sie per JSON-Import und -Export. Mit sechs Oberflächensprachen und einer offline lesbaren Datenschutzerklärung.
+Erste Veröffentlichung von Bookshelf. Verwalte Bücher mit Autor, Aufbewahrungsort und Notizen, durchsuche deine Sammlung und übertrage sie per JSON-Import und -Export. Mit sechs Oberflächensprachen und einem Link zur englischen Datenschutzerklärung auf GitHub.

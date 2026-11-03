@@ -718,3 +718,27 @@ Mac-Abnahme. Die Linux-Prüfung ersetzt diese nicht.
 
 Microsoft-Store- und Mac-App-Store-Schritte sind in `packaging.md` aufgeführt.
 Es gibt noch keine geprüfte Store-Version und keine Veröffentlichung.
+
+## 3. November 2026: kanonische englische Datenschutzerklärung
+
+Die bisherigen vollständigen englischen Datenschutztexte wurden einschließlich
+aller app-spezifischen Ergänzungen nach `PRIVACY.md` übernommen. Der neue
+Browserabschnitt beschreibt das ausdrückliche Öffnen auf GitHub.
+„Info“ → „Datenschutz“ verwendet in allen sechs Sprachen dieselbe eigene URL.
+Vollständige Datenschutztexte und ihre alten Exportklassen wurden aus der
+Runtime entfernt. Store-Felder und Übergabehelfer verwenden die kanonische Datei.
+
+Linux-Prüfung mit Temurin 21: `./mvnw spotless:apply verify` erfolgreich.
+116 gemeldete Tests, davon 10 standardmäßig deaktivierte UI-Prüfungen.
+Compiler-Lint, Enforcer, Spotless und SpotBugs bestanden. Separat lief
+`./mvnw test -Dtest=InfoMenuUiTest -Dbuecherregal.uiTests=true -Dprism.order=sw`
+auf einem isolierten Xvfb erfolgreich mit 12 Prüfungen ohne übersprungene Fälle.
+Geprüft wurden pro Sprache die feste Browseradresse, getrennte App- und
+Lizenzinformationen sowie der Startfehler mit auswählbarer, kopierbarer URL.
+
+`python3 -m unittest discover -s scripts -p "test_*.py"` bestand mit 8 Tests.
+Der Datenschutzexport ist bytegleich zur Originaldatei, ersetzt keine vorhandene
+Lieferung und stimmt mit README, Runtime und allen Store-URL-Feldern überein.
+Python-Syntax und Git-Whitespace sind geprüft. Bestehende Lieferordner blieben
+unverändert. Native Browseraufrufe unter Windows und macOS wurden in dieser
+Linux-Prüfung nicht ausgeführt. Es wurde kein neues Store-Paket erstellt.

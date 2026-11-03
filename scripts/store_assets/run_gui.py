@@ -17,7 +17,7 @@ LOCALES = ('de-DE', 'en-US', 'es-ES', 'fr-FR', 'it-IT', 'pt-BR')
 
 
 def source_hashes():
-    files = [ROOT / 'pom.xml', ROOT / 'mvnw', ROOT / 'THIRD_PARTY_NOTICES.md']
+    files = [ROOT / 'pom.xml', ROOT / 'mvnw', ROOT / 'THIRD_PARTY_NOTICES.md', ROOT / 'PRIVACY.md']
     for folder in ('src', 'assets', 'scripts', '.mvn', 'store-listings', 'third-party-licenses'):
         files.extend(path for path in (ROOT / folder).rglob('*')
                      if path.is_file() and '__pycache__' not in path.parts)

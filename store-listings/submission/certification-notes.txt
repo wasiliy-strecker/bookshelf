@@ -4,7 +4,7 @@ The runFullTrust capability is required to run the bundled JavaFX desktop applic
 
 Suggested review flow: add a book with a title, author, storage location and note. Edit it, search for it, export the collection as JSON, restart the app and import the file. Importing the same collection again should not create additional identical copies. Existing books are retained.
 
-The Language button offers German, English, Spanish, French, Italian and Brazilian Portuguese. The Info menu includes the complete offline privacy policy in the selected language.
+The Language button offers German, English, Spanish, French, Italian and Brazilian Portuguese. The Info menu opens this app’s English privacy policy on GitHub in the default browser. Reading the website requires an internet connection.
 
 Collection transfer accepts up to 10,000 books and files up to 10 MiB. For FAT32 or exFAT drives, export to a local NTFS folder first and then copy the completed JSON file to the removable drive.
 

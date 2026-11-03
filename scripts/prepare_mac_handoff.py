@@ -2,14 +2,13 @@
 """Create a new German Mac Store handoff folder from committed sources and checked inputs."""
 import argparse
 from datetime import datetime, timezone
-import html
 import json
 from pathlib import Path
 import shutil
 import struct
 import subprocess
-import tempfile
 
+from export_privacy import export_privacy, privacy_url
 import macos_release as mac
 from prepare_store_release import acquire_sources
 from store_assets.run_gui import source_hashes
@@ -65,20 +64,7 @@ def main():
     shutil.copytree(args.inputs.resolve(), output / "MacInputs")
     shutil.copytree(ROOT / "store-listings/mac-app-store/de-DE", output / "Store/de-DE")
     shutil.copytree(ROOT / "assets/branding", output / "Branding")
-    privacy = output / "Privacy"
-    privacy.mkdir()
-    with tempfile.TemporaryDirectory(prefix="bookshelf-privacy-") as temporary:
-        export = Path(temporary) / "export"
-        mac.run(ROOT / "scripts/export_privacy.sh", export)
-        text = (export / "de-DE.txt").read_text()
-    (privacy / "de-DE.txt").write_text(text)
-    rendered = "<!doctype html><html lang=\"de\"><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width\"><title>Datenschutz – Bookshelf</title><style>body{max-width:52rem;margin:3rem auto;padding:0 1rem;font:18px/1.6 system-ui}p{white-space:pre-line}</style><main>"
-    rendered += "".join("<p>" + html.escape(part) + "</p>" for part in text.split("\n\n"))
-    (privacy / "index.html").write_text(rendered + "</main></html>\n")
-    (privacy / "URL-NOCH-OFFEN.txt").write_text(
-        "Diese vollständige Erklärung vor der Einreichung öffentlich ohne Anmeldung bereitstellen.\n"
-        "Die lokale Datei ist noch keine öffentliche URL. Kein Upload wurde ausgeführt.\n"
-        "Für die erste Store-Veröffentlichung nur die deutsche Erklärung verwenden.\n")
+    export_privacy(output / "Privacy")
     drafts = output / "Screenshot-Drafts-Linux/de-DE"
     drafts.mkdir(parents=True)
     for name in ("01-overview.png", "02-edit.png", "03-search.png", "04-json-export.png"):
@@ -113,7 +99,7 @@ def main():
               "createdUtc": datetime.now(timezone.utc).isoformat(),
               "localPreparation": "verified", "screenshots": "Linux drafts only",
               "macBuild": False, "macAcceptance": False, "signing": False, "upload": False,
-              "publicPrivacyURL": "pending", "runtimeSourcePublication": "pending", "storeReady": False}
+              "publicPrivacyURL": privacy_url(), "runtimeSourcePublication": "pending", "storeReady": False}
     (output / "preparation-info.json").write_text(json.dumps(report, indent=2) + "\n")
     (output / "ZUERST-LESEN.txt").write_text(
         "Bookshelf – Mac App Store, Version 1.0, Build 1\n\n"
@@ -121,7 +107,7 @@ def main():
         "Danach: Den gesamten Ordner auf den Mac kopieren und AUF-DEM-MAC.md folgen.\n"
         "Bilder unter Screenshot-Drafts-Linux sind Entwürfe. Finale Mac-Bilder fehlen.\n"
         "MacInputs enthält geprüfte Eingaben für ARM64 und Intel, noch keine fertige App.\n"
-        "Datenschutzseite und Laufzeitquellen sind vorbereitet, noch nicht veröffentlicht.\n"
+        "Privacy enthält die englische Erklärung und ihre GitHub-URL. Laufzeitquellen separat prüfen.\n"
         "Es wurde nichts in einen Store hochgeladen. Keine persönlichen Sammlungen enthalten.\n"
         f"Quellcommit: {revision}\n")
     sums = [f"{mac.sha256(p)}  {p.relative_to(output).as_posix()}\n"

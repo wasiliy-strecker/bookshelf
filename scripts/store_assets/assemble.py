@@ -50,12 +50,8 @@ def main():
     shutil.copy2(ROOT / 'store-listings/default-language.txt', destination / 'Store/default-language.txt')
     shutil.copytree(ROOT / 'assets/branding', destination / 'Branding')
     shutil.copytree(captures, destination / 'Verification')
-    java_home = Path(os.environ.get('JAVA_HOME', str(
-        Path.home() / '.local/share/buecherregal/jdk-21.0.13+9')))
-    subprocess.run([str(java_home / 'bin/java'), '-cp',
-                    os.pathsep.join([str(ROOT / 'target/classes'), str(ROOT / 'target/test-classes')]),
-                    'de.appfabrik.buecherregal.i18n.PrivacyTextExport', str(destination / 'Privacy')],
-                   cwd=ROOT, check=True)
+    subprocess.run(["python3", str(ROOT / "scripts/export_privacy.py"),
+                    str(destination / "Privacy")], cwd=ROOT, check=True)
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     manifest['verified_source_commit'] = commit
     manifest['source_commit_confirmed_by_file_hashes'] = True
@@ -69,7 +65,7 @@ def main():
         'Die Aufnahmen sind eine Vorschau und keine Windows-Store-Abnahme.\n\n'
         'Store enthält je Sprache vier Bilder und direkt kopierbare Textdateien.\n'
         'Branding enthält SVG, PNG und Windows-ICO.\n'
-        'Privacy enthält dieselben Datenschutztexte wie der Offline-Dialog.\n'
+        'Privacy enthält die kanonische englische PRIVACY.md und ihre GitHub-URL.\n'
         'Verification enthält die GUI-Prüfungen und Herkunftsnachweise.\n'
         f'Geprüfter lokaler Quellcommit: {commit}\n\n'
         'Offen: Windows-Paketierung, native Windows-Abnahme, endgültige\n'

@@ -5,4 +5,4 @@ Ungespeicherte Änderungen durch eine Rückfrage schützen
 Die Sammlung lokal auf dem Computer speichern
 Aus sechs Oberflächensprachen wählen
 Die gesamte Sammlung als JSON exportieren und importieren
-Die Datenschutzerklärung direkt in der App offline lesen
+Die englische Datenschutzerklärung über GitHub im Browser öffnen

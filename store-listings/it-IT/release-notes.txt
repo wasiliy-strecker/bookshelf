@@ -1,1 +1,1 @@
-Prima versione di Bookshelf. Organizza i libri con autori, posizioni e note, cerca nella tua raccolta e trasferiscila tramite importazione ed esportazione JSON. Include sei lingue dell’interfaccia e un’informativa sulla privacy consultabile offline.
+Prima versione di Bookshelf. Organizza i libri con autori, posizioni e note, cerca nella tua raccolta e trasferiscila tramite importazione ed esportazione JSON. Include sei lingue dell’interfaccia e un link all’informativa sulla privacy in inglese su GitHub.

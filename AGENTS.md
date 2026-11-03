@@ -84,8 +84,8 @@ Vor Aufnahmen `test-compile` und den Test-Classpath aktualisieren. Nach finalen
 Quelländerungen Aufnahmen neu erstellen, damit die Prüfsummen übereinstimmen.
 Die Anleitung steht in `docs/internationalization.md`.
 
-Der Datenschutzdialog und die exportierten Store-Datenschutztexte verwenden
-dieselben ResourceBundles. Die Vorschau-Lieferung ist ein Ordner ohne ZIP.
+Der Datenschutz-Link und sämtliche Store-Sprachen verwenden die eigene
+englische `PRIVACY.md` auf GitHub. Die Vorschau-Lieferung ist ein Ordner ohne ZIP.
 Microsoft Store: MSIX. Kostenloser GitHub-Download: EXE. Beide Wege verwenden
 denselben Anwendungscode. Native Windows-Paketierung und Abnahme bleiben separat.
 
@@ -114,6 +114,22 @@ Native Mac-Abnahme, Signierung und Upload erfolgen separat auf macOS.
 
 „Info“ enthält drei getrennte Einträge: Über die App, Datenschutz und Lizenzen.
 Alle eigenen Erläuterungen und Menütexte in den sechs vorhandenen Katalogen
-pflegen. Die vollständige Datenschutzerklärung bleibt identisch zum Textexport.
+pflegen. Datenschutz führt zur eigenen englischen `PRIVACY.md` auf GitHub.
 Original-Lizenztexte unverändert einbetten. Neue Fremdkomponenten auch im
 app-lokalen Lizenzindex ergänzen. Versionsangaben stammen aus dem Maven-Build.
+
+## Kanonische Datenschutzerklärung, 3. November 2026
+
+Auf ausdrücklichen Nutzerauftrag wird ausschließlich die englische `PRIVACY.md`
+im eigenen Repository als vollständige Erklärung gepflegt. Sie übernimmt die
+bisherigen englischen App-Texte mit aktualisierten Hinweisen zum Browseraufruf.
+Die feste Adresse für diese App und alle Store-Sprachen lautet:
+
+https://github.com/wasiliy-strecker/bookshelf/blob/main/PRIVACY.md
+
+„Info“ → „Datenschutz“ öffnet diese Adresse im externen Standardbrowser.
+Keine vollständigen Datenschutztexte zusätzlich in Sprachkatalogen, Dialogen
+oder GitHub Pages pflegen. Menütexte und Startfehler bleiben lokalisiert.
+Der Python-Export kopiert ausschließlich die Originaldatei und ihre URL in
+einen neuen Lieferordner. Alte Lieferungen sind historische Nachweise.
+Diese Entscheidung ersetzt die älteren Vorgaben zum Offline-Datenschutzdialog.

@@ -5,4 +5,4 @@ Proteger los cambios sin guardar mediante una confirmación
 Guardar la colección localmente en el ordenador
 Elegir entre seis idiomas para la interfaz
 Exportar e importar toda la colección como JSON
-Leer la política de privacidad sin conexión dentro de la aplicación
+Abrir la política de privacidad en inglés en GitHub desde el navegador

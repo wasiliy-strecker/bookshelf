@@ -162,16 +162,10 @@ Die nächsten Schritte erfolgen in dieser Reihenfolge:
 
 ## Datenschutz für App und Store
 
-Die Erklärung liegt vollständig in sechs Sprachen in der App. „Info“ öffnet
-den Offline-Dialog. `scripts/export_privacy.sh` erzeugt aus denselben Ressourcen
-sechs direkt kopierbare Dateien. Vorschau-Lieferungen enthalten sie unter `Privacy`.
-Die Texte sind zusätzlich in der Store-Einreichung zu hinterlegen.
-
-Laut der am 30. Oktober 2026 gelesenen Microsoft-MSIX-Anleitung kann neben
-einer Datenschutz-URL auch der Text direkt angegeben werden. Die konkreten
-Felder sind bei der späteren Einreichung im Partner Center zu überprüfen.
-Wenn dort eine URL verlangt wird, muss dieselbe Erklärung zuvor öffentlich
-bereitgestellt werden. Dieses Arbeitspaket veröffentlicht keine Website.
+Die vollständige Erklärung ist die englische `PRIVACY.md`. App und alle
+Store-Sprachen verwenden https://github.com/wasiliy-strecker/bookshelf/blob/main/PRIVACY.md.
+`python3 scripts/export_privacy.py neuer-ordner` kopiert die Originaldatei und
+ihre URL in eine neue Übergabe. Dafür ist kein App-Build erforderlich.
 
 Aktuelle Microsoft-Quellen:
 

@@ -104,34 +104,28 @@ ein Datenträger dies nicht unterstützt, bleibt die alte Datei erhalten und ein
 neuer Dateiname kann verwendet werden. Auch Netzwerk- und Cloud-Dateisysteme
 können Zugriffe einschränken. Details zum Fehlerschutz stehen im Prüfbericht.
 
-## Datenschutz in der App
+## Datenschutz
 
-Unter „Info“ → „Datenschutz“ ist die vollständige
-Erklärung in der gewählten App-Sprache enthalten. Der Dialog funktioniert
-offline. Du kannst scrollen, mit Strg+A und Strg+C beziehungsweise Cmd+A und
-Cmd+C den Text kopieren und mit Escape oder „Schließen“ zurückkehren.
-Die Erklärung beschreibt die lokale Speicherung, unverschlüsselte JSON-Dateien,
-eigene Sicherungskopien und freiwillige Supportanfragen. Sie sendet keine Daten
-und verändert weder Sammlung noch Spracheinstellung.
+Die vollständige [englische Datenschutzerklärung](https://github.com/wasiliy-strecker/bookshelf/blob/main/PRIVACY.md) liegt als
+[`PRIVACY.md`](PRIVACY.md) im eigenen GitHub-Repository. „Info“ → „Datenschutz“
+öffnet genau diese Adresse im Standardbrowser, unabhängig von der App-Sprache.
+Zum Lesen der Webseite ist eine Internetverbindung erforderlich. Die lokale
+Sammlung wird dabei nicht übertragen. Falls der Browser nicht gestartet werden
+kann, zeigt die App die Adresse zum Kopieren an.
 
-Die identischen Texte für die Store-Einreichung lassen sich in einen neuen
-Ordner exportieren, dessen übergeordnetes Verzeichnis bereits existiert:
+Diese eine Datei ist die gepflegte vollständige Erklärung für App und Store.
+Alle Store-Sprachen verwenden dieselbe URL. Die Menüs und Fehlermeldungen
+bleiben in den sechs vorhandenen Oberflächensprachen verfügbar.
+
+Für eine neue Übergabe den vorhandenen Elternordner und einen noch nicht
+existierenden Ausgabeordner verwenden:
 
 ```bash
-./scripts/export_privacy.sh target/privacy-texts
+python3 scripts/export_privacy.py build/privacy-handoff
 ```
 
-Windows nach `mvnw.cmd test-compile`:
-
-```powershell
-& "$env:JAVA_HOME\bin\java.exe" -cp 'target/classes;target/test-classes' `
-  de.appfabrik.buecherregal.i18n.PrivacyTextExport target/privacy-texts
-```
-
-Es entstehen sechs UTF-8-Textdateien aus denselben Ressourcen wie der App-Dialog.
-Ein vorhandener Zielordner wird nicht überschrieben. Der Text muss zusätzlich
-im Partner Center hinterlegt werden. Eine erfolgte Einreichung wird damit
-nicht behauptet. Details stehen in [packaging.md](docs/packaging.md).
+Der Helfer kopiert `PRIVACY.md` und `privacy-url.txt` ohne App-Build oder Zugriff
+auf Nutzerdaten. Vorhandene Lieferungen werden nicht überschrieben.
 
 ## Sprachen
 
@@ -226,7 +220,8 @@ Hinweise zu Fremdkomponenten stehen in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTI
 
 Produktname **Bookshelf**, Version **1.0**, Build **1**.
 Die erste Store-Beschreibung ist deutsch. Die Store-Vorbereitung enthält
-deutsche Feldtexte, Datenschutz, synthetische Beispieldaten und Bildentwürfe.
+deutsche Feldtexte, die englische Datenschutzerklärung, synthetische Beispieldaten
+und Bildentwürfe.
 Die [Feldanleitung](docs/mac-app-store-fields.md) beschreibt, was sich jetzt
 in App Store Connect speichern lässt. Die [Mac-Anleitung](docs/mac-app-store-release.md)
 führt durch Bau, native Abnahme, Signierung und die spätere manuelle Einreichung.
@@ -281,11 +276,12 @@ aufrufen. Einen geöffneten Prozess anschließend regulär neu starten.
 
 ## Informationen zur App
 
-Das Menü „Info“ bietet drei getrennte Fenster. „Über die App“ zeigt den
+Das Menü „Info“ bietet drei getrennte Einträge. „Über die App“ zeigt den
 Produktnamen, die gebaute Version, eine kurze Beschreibung und den Supportkontakt.
-„Datenschutz“ zeigt die vollständige Erklärung in der gewählten Sprache.
+„Datenschutz“ öffnet die eigene englische `PRIVACY.md` auf GitHub im Browser.
 „Lizenzen“ enthält die Hinweise und Originaltexte zu den Fremdkomponenten.
-Alle Inhalte sind offline verfügbar, kopierbar und schreibgeschützt.
+App-Informationen und Lizenzen sind offline verfügbar, kopierbar und schreibgeschützt.
+Zum Lesen der Datenschutzerklärung auf GitHub ist eine Internetverbindung nötig.
 Überschriften und Erläuterungen sind in allen sechs Sprachen vorhanden.
 Rechtliche Originaltexte bleiben in ihrer Originalsprache. Weitere Hinweise
 der eingebetteten Java-Laufzeit bleiben in deren Lizenzordnern erhalten.

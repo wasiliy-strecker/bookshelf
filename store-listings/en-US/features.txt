@@ -5,4 +5,4 @@ Protect unsaved changes with a confirmation
 Store your collection locally on your computer
 Choose from six interface languages
 Export and import the entire collection as JSON
-Read the privacy policy offline inside the app
+Open the English privacy policy on GitHub in your browser

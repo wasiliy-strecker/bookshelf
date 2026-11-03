@@ -13,7 +13,7 @@ ausgeführt. Die folgenden Prüfschritte sind Aufgaben für die manuelle Abnahme
 - Manifest mit sechs Sprachen, Desktop-Ziel und `runFullTrust` für JavaFX/SQLite.
 - PNG-Paketlogos, Windows-ICO und Store-Icon mit 300 × 300 Pixeln.
 - Store-Texte und Erstveröffentlichungshinweise in allen sechs Sprachen.
-- Datenschutztexte aus denselben Ressourcen wie der Offline-Dialog der App.
+- Eine englische `PRIVACY.md` und die eigene GitHub-URL für alle Store-Sprachen.
 - Vollständige Temurin- und OpenJFX-Quellarchive, Herkunft und Buildinformationen
   als lokale Begleitmaterialien. Öffentliche Bereitstellung bleibt offen.
 - Übergabeordner mit Quellstand, Texten und dieser Anleitung, ohne ZIP.
@@ -132,7 +132,7 @@ Eine Ubuntu-Abnahme ersetzt die folgenden Windows-Nachweise nicht.
 | Export in getrennte leere Beispielsammlung importieren, danach nochmals | Gleiche Daten, wiederholter Import erzeugt keine zusätzlichen identischen Exemplare | offen |
 | Ungültige JSON-Datei importieren und Dateidialog abbrechen | Verständliche Meldung beziehungsweise Abbruch, Sammlung unverändert | offen |
 | Alle sechs Sprachen nacheinander, jeweils App neu öffnen | Vollständige Texte, Sprachwahl gespeichert, Bücher unverändert | offen |
-| Info → Datenschutz, scrollen, kopieren, Escape und Schließen | Vollständiger Offline-Text, passende Sprache, Dialog ohne sichtbaren Sprung | offen |
+| Info → Datenschutz, Browser und fehlender Browser | Eigene englische GitHub-Erklärung in allen App-Sprachen. Bei Startfehler lokalisierter Hinweis mit kopierbarer URL | offen |
 | Fokus mit Tab auf Bearbeiten und Löschen, App-Icon | Bearbeiten grün, Löschen rot. Eigenes App-Icon | offen |
 
 Zusätzlich **auf echtem Windows** mit dem gebauten MSIX und synthetischen Daten:
@@ -160,9 +160,8 @@ Beobachtung notieren. Historische CI-Ergebnisse gelten nicht für dieses Paket.
 ## 5. Store-Unterlagen abschließen
 
 `Store/<Sprache>/` enthält direkt kopierbare Feldtexte. `Privacy/` enthält die
-vollständigen sechs Erklärungen aus den App-Ressourcen. Laut Microsoft kann im
-MSIX-Supportbereich auch der Erklärungstext direkt angegeben werden. Die
-In-App-Erklärung bleibt zusätzlich erhalten. Die Angaben im Partner Center
+englische `PRIVACY.md` und ihre eigene GitHub-URL aus `privacy-url.txt`.
+Die Angaben im Partner Center
 müssen dieselbe Datenverarbeitung beschreiben. „Offline“ allein beantwortet
 die Frage nach Zugriff auf personenbezogene Inhalte nicht mit „Nein“, denn
 selbst eingegebene Bücher und Notizen können personenbezogene Angaben enthalten.

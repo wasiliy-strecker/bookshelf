@@ -100,10 +100,10 @@ Der Zielordner muss neu sein. Es wird ausschließlich ein Ordner erzeugt. Die Ve
 prüft Quellhashes, sauberen Git-Stand, alle 18 erfolgreichen GUI-Prozesse,
 Bildanzahl, PNG-Format und Abmessungen. Sie liefert sechs Text- und Bildpakete,
 Branding, Prüfnachweise, einen Herkunftsnachweis mit dem tatsächlichen lokalen
-Commit und Dateiprüfsummen. Zusätzlich enthält `Privacy` die sechs Datenschutztexte aus der produktiven App.
-Der Dialog wird je Sprache auch bei kleiner Fenstergröße, mit Tastaturkopie,
-Scrollen, Escape und Schließen geprüft. Sammlung und Spracheinstellung bleiben
-dabei bytegenau unverändert. Diese zusätzlichen Bilder liegen in `Verification`.
+Commit und Dateiprüfsummen. Zusätzlich enthält `Privacy` die unveränderte
+englische `PRIVACY.md` und `privacy-url.txt`. Der Browseraufruf und die
+lokalisierte Fehleranzeige mit kopierbarer URL werden in `InfoMenuUiTest`
+geprüft. Frühere Vorschauordner behalten ihren damaligen Quellstand.
 
 ## Branding
 

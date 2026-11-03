@@ -98,7 +98,7 @@ def main():
     shutil.copy2(ROOT / "docs/microsoft-store-release.md", output / "WINDOWS-UND-STORE.md")
     acquire_sources(arguments.source_cache.resolve(), output / "RuntimeSources")
 
-    # Compile the text exporter only. No JUnit, GUI, user database or test execution.
+    # Copy the canonical document and URL. No application build or user-data access.
     subprocess.run(
         [str(ROOT / "scripts/export_privacy.sh"), str(output / "Privacy")],
         cwd=ROOT,
@@ -124,7 +124,7 @@ def main():
         "Dafür die beiliegende store.example.json kopieren. Keine Zugangsdaten weitergeben.\n\n"
         "WINDOWS-UND-STORE.md enthält Paketierung, lokale Signierung und manuelle Prüfschritte.\n"
         "Source ist eine interne Quellübergabe, keine zur Veröffentlichung freigegebene Lizenz.\n"
-        "Store enthält Feldtexte, Privacy die sechs vollständigen Erklärungen der App.\n"
+        "Store enthält Feldtexte, Privacy die englische PRIVACY.md und ihre GitHub-URL.\n"
         "Screenshots enthält noch keine finalen Windows-Bilder.\n"
         "RuntimeSources enthält lokale Fremdkomponenten-Quellen und Herkunft.\n"
         "Öffentliche Bereitstellung und Abgleich mit dem endgültigen Windows-Paket sind offen.\n\n"
