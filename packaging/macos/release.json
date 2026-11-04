@@ -2,7 +2,7 @@
   "displayName": "Bookshelf",
   "bundleId": "de.appfabrik.buecherregal",
   "version": "1.0",
-  "build": "1",
+  "build": "2",
   "minimumMacOS": "11.0",
   "category": "public.app-category.productivity",
   "architectures": [

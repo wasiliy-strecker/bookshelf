@@ -1,6 +1,6 @@
 # Bookshelf auf dem Mac abschließen
 
-Diese Lieferung bereitet Version **1.0**, Apple-Build **1**, für Apple Silicon
+Diese Lieferung bereitet Version **1.0**, Apple-Build **2**, für Apple Silicon
 und Intel vor. Sie enthält noch kein nativ geprüftes oder signiertes Mac-Paket.
 Die vollständige Arbeit erfolgt im mitgelieferten Ordner `Source`.
 `MacInputs` enthält bereits geprüfte Java-Klassen und originale Mac-Abhängigkeiten.
@@ -28,6 +28,12 @@ Library Validation nicht ab und ergänzt weder Netzwerkrechte noch pauschale
 Dateisystemausnahmen. Bei einem nativen Fehler zuerst dessen Ursache ermitteln.
 Ein signiertes Paket allein ist kein Beleg für erfolgreiche GUI- oder Store-Abnahme.
 
+Die Bundle-Prüfung kontrolliert auch die Kennungen eingebetteter Laufzeiten und
+für alle Benutzer lesbare Dateien sowie betretbare Verzeichnisse. Der Intel-Pfad
+bleibt `Runtime-x86_64.bundle`; seine Bundle-ID endet auf `runtime.x86-64`.
+Das eingebettete Provisioning-Profil erhält vor der Signierung die Dateirechte
+`0644`. Das lokale Originalprofil behält seine privaten Dateirechte.
+
 ## 1. Quellen und Eingaben prüfen
 
 Den gesamten Übergabeordner kopieren. Im Terminal in dessen `Source` wechseln.
@@ -53,8 +59,8 @@ python3 scripts/macos_release.py prepare --output build/mac-inputs-neu
 Im Beispiel ist `JAVA_HOME` bereits auf das passende entpackte Temurin-JDK gesetzt.
 
 ```bash
-python3 scripts/macos_release.py build --inputs ../MacInputs --output ../MacBuild-1.0-1
-python3 scripts/macos_release.py inspect --app "../MacBuild-1.0-1/Bookshelf.app"
+python3 scripts/macos_release.py build --inputs ../MacInputs --output ../MacBuild-1.0-2
+python3 scripts/macos_release.py inspect --app "../MacBuild-1.0-2/Bookshelf.app"
 ```
 
 Der Helfer erzeugt neue Ordner und überschreibt keine frühere Lieferung.
@@ -81,8 +87,8 @@ Die bestehende Kennung lautet `de.appfabrik.buecherregal`. Bei einem abweichende
 Store-Eintrag nicht eigenmächtig Paket-ID oder Datenpfade ändern.
 
 ```bash
-python3 scripts/macos_release.py sign --app "../MacBuild-1.0-1/Bookshelf.app" --config packaging/macos/development.local.json --mode development
-open "../MacBuild-1.0-1/Bookshelf.app"
+python3 scripts/macos_release.py sign --app "../MacBuild-1.0-2/Bookshelf.app" --config packaging/macos/development.local.json --mode development
+open "../MacBuild-1.0-2/Bookshelf.app"
 ```
 
 Für die Abnahme einen separaten macOS-Testbenutzer mit synthetischen Büchern
@@ -109,7 +115,7 @@ Auf Apple Silicon lässt sich der Intel-Pfad nach Installation von Rosetta
 gezielt ausführen. Die App zuvor schließen. Dieser Befehl verändert keine Daten:
 
 ```bash
-arch -x86_64 "../MacBuild-1.0-1/Bookshelf.app/Contents/MacOS/Bookshelf"
+arch -x86_64 "../MacBuild-1.0-2/Bookshelf.app/Contents/MacOS/Bookshelf"
 ```
 
 Sandbox-Verstöße in der macOS-Konsole untersuchen. Eine fehlgeschlagene
@@ -144,8 +150,8 @@ Die Entwicklungssignatur wird jetzt ausdrücklich durch die Store-Signatur erset
 Das fertige `.pkg` wird unter einem neuen Namen abgelegt und nie überschrieben.
 
 ```bash
-python3 scripts/macos_release.py sign --app "../MacBuild-1.0-1/Bookshelf.app" --config packaging/macos/store.local.json --mode store
-python3 scripts/macos_release.py inspect --app "../MacBuild-1.0-1/Bookshelf.app" --signed
+python3 scripts/macos_release.py sign --app "../MacBuild-1.0-2/Bookshelf.app" --config packaging/macos/store.local.json --mode store
+python3 scripts/macos_release.py inspect --app "../MacBuild-1.0-2/Bookshelf.app" --signed
 ```
 
 Die Datei `packaging/macos/acceptance.example.json` nach
@@ -154,7 +160,7 @@ Prüfungen auf `true` setzen. Bei `x86_64Method` `native` oder `rosetta` angeben
 Das Abnahmeprotokoll beschreibt die Umgebung, Fehlerbefunde und das Ergebnis.
 
 ```bash
-python3 scripts/macos_release.py package --app "../MacBuild-1.0-1/Bookshelf.app" --config packaging/macos/store.local.json --acceptance packaging/macos/acceptance.local.json --output "../Bookshelf-1.0-build-1-universal.pkg"
+python3 scripts/macos_release.py package --app "../MacBuild-1.0-2/Bookshelf.app" --config packaging/macos/store.local.json --acceptance packaging/macos/acceptance.local.json --output "../Bookshelf-1.0-build-2-universal.pkg"
 ```
 
 Das Paket anschließend in Transporter öffnen und validieren. Nach erfolgreichem

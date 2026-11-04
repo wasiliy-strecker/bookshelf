@@ -2,10 +2,16 @@
 """Host-independent checks for native input validation and safe packaging."""
 import hashlib
 import importlib.util
+import json
 from pathlib import Path
+import plistlib
+import stat
 import struct
+import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
+from datetime import datetime, timedelta, timezone
 import zipfile
 
 SPEC = importlib.util.spec_from_file_location("macos_release", Path(__file__).with_name("macos_release.py"))
@@ -18,6 +24,69 @@ def macho(cpu):
 
 
 class MacPreparationTest(unittest.TestCase):
+    def test_runtime_identifiers_are_valid_and_distinct_for_both_architectures(self):
+        identifiers = [release.runtime_bundle_id("de.appfabrik.buecherregal", arch)
+                       for arch in release.ARCHITECTURES]
+        self.assertEqual(2, len(set(identifiers)))
+        for identifier in identifiers:
+            self.assertRegex(identifier, r"^de\.appfabrik\.buecherregal\.runtime\.[A-Za-z0-9.-]+$")
+
+    def test_inspection_rejects_legacy_underscore_in_nested_bundle_identifier(self):
+        with tempfile.TemporaryDirectory() as directory:
+            app = Path(directory) / "Bookshelf.app"
+            contents = app / "Contents/PlugIns/Runtime-x86_64.bundle/Contents"
+            contents.mkdir(parents=True)
+            info = contents / "Info.plist"
+            info.write_bytes(plistlib.dumps({"CFBundleIdentifier":
+                                            "de.appfabrik.buecherregal.runtime.x86_64"}))
+            with self.assertRaisesRegex(ValueError, "Invalid bundle identifier"):
+                release.inspect_bundle_resources(app)
+            info.write_bytes(plistlib.dumps({"CFBundleIdentifier":
+                                            "de.appfabrik.buecherregal.runtime.x86-64"}))
+            release.inspect_bundle_resources(app)
+
+    def test_inspection_rejects_private_files_and_untraversable_directories(self):
+        with tempfile.TemporaryDirectory() as directory:
+            app = Path(directory) / "Bookshelf.app"
+            contents = app / "Contents"
+            contents.mkdir(parents=True)
+            profile = contents / "embedded.provisionprofile"
+            profile.write_bytes(b"profile")
+            profile.chmod(0o600)
+            with self.assertRaisesRegex(ValueError, "not readable by all users"):
+                release.inspect_bundle_resources(app)
+            profile.chmod(0o644)
+            contents.chmod(0o744)
+            with self.assertRaisesRegex(ValueError, "not readable by all users"):
+                release.inspect_bundle_resources(app)
+            contents.chmod(0o755)
+            release.inspect_bundle_resources(app)
+
+    def test_embedding_private_profile_preserves_source_permissions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            app = root / "Bookshelf.app"
+            (app / "Contents").mkdir(parents=True)
+            source = root / "private.provisionprofile"
+            source.write_bytes(b"original signed profile")
+            source.chmod(0o600)
+            config = root / "signing.json"
+            config.write_text(json.dumps({"teamId": "ABCDEFGHIJ", "applicationIdentity": "test",
+                                         "appStoreConnectBundleId": "de.appfabrik.buecherregal",
+                                         "provisioningProfile": str(source)}))
+            decoded = {"ExpirationDate": datetime.now(timezone.utc) + timedelta(days=1),
+                       "TeamIdentifier": ["ABCDEFGHIJ"], "Entitlements": {
+                           "com.apple.application-identifier": "ABCDEFGHIJ.de.appfabrik.buecherregal"}}
+            with patch.object(release, "settings", return_value={"bundleId": "de.appfabrik.buecherregal"}), \
+                    patch.object(release, "run", return_value=subprocess.CompletedProcess(
+                        [], 0, stdout=plistlib.dumps(decoded))):
+                release.signing_config(config, app)
+            embedded = app / "Contents/embedded.provisionprofile"
+            self.assertEqual(source.read_bytes(), embedded.read_bytes())
+            self.assertEqual(0o600, stat.S_IMODE(source.stat().st_mode))
+            self.assertEqual(0o644, stat.S_IMODE(embedded.stat().st_mode))
+            release.inspect_bundle_resources(app)
+
     def test_recognizes_both_real_header_layouts_and_universal_launcher(self):
         self.assertEqual({"arm64"}, release.macho_architectures(macho(0x100000c)))
         self.assertEqual({"x86_64"}, release.macho_architectures(macho(0x1000007)))
