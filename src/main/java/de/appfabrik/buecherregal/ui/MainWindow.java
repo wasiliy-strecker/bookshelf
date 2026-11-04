@@ -350,6 +350,9 @@ final class MainWindow {
             saved -> {
               books.removeIf(existing -> existing.id() == saved.id());
               books.add(saved);
+              if (book == null) {
+                search.clear();
+              }
               refresh(saved.id());
               showStatus(
                   BookService.search(List.of(saved), search.getText(), messages.locale()).isEmpty()
